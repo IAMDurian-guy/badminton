@@ -340,7 +340,8 @@ nav.bn button.on{color:var(--accent-d)}
   <div class="card">
     <h2>🧾 ใครจ่ายเท่าไหร่</h2>
     <div id="moneyList"></div>
-    <button class="btn ghost block sm" id="copyMoneyBtn" style="margin-top:12px">📄 คัดลอกข้อความสรุป (ส่งเข้าไลน์)</button>
+    <button class="btn block sm" id="imgMoneyBtn" style="margin-top:12px">🖼️ บันทึกสรุปเป็นรูปภาพ</button>
+    <button class="btn ghost block sm" id="copyMoneyBtn" style="margin-top:8px">📄 คัดลอกข้อความสรุป</button>
   </div>
 </section>
 
@@ -1446,6 +1447,7 @@ function renderMoney(rebuild){
       '<span class="amt">'+x.pay.toLocaleString()+' ฿</span></div>';
   }).join("") : '<div class="empty">ยังไม่มีคนในชั่วโมงไหนเลย<br><span class="tiny">ไปแท็บ 👥 ผู้เล่น เช็คชื่อคนที่มาก่อน</span></div>';
 
+  $("#imgMoneyBtn").onclick = costImage;
   $("#copyMoneyBtn").onclick = function(){
     var L = ["🏸 "+(S.clubName||"ก๊วนแบด")+" — สรุปค่าใช้จ่าย",
              "ลูกละ "+m.shuttlePrice+" ฿ · คอร์ทละ "+m.courtRate+" ฿/ชม.", ""];
@@ -1460,6 +1462,89 @@ function renderMoney(rebuild){
     });
     copyText(L.join("\n"));
   };
+}
+function costImage(){
+  var r = E.computeCosts(S.players, S.history, moneyCfg());
+  if(!r.rows.length){ toast("ยังไม่มีข้อมูลให้สรุป"); return; }
+  var en = S.lang === "en";
+  var L = en
+    ? {title:"Cost Summary", hr:"", name:"Name", hours:"Hours", games:"Games", pay:"Pay (฿)",
+       total:"Total", collected:"Collected", diff:"Diff", courts:" courts", sh:" shuttles", ppl:" ppl", min:" min"}
+    : {title:"สรุปค่าใช้จ่าย", hr:"", name:"ชื่อ", hours:"ชั่วโมง", games:"ตา", pay:"จ่าย (฿)",
+       total:"รวมทั้งหมด", collected:"เก็บได้", diff:"ส่วนต่าง", courts:" คอร์ท", sh:" ลูก", ppl:" คน", min:" นาที"};
+  var W = 700, pad = 26;
+  var headH = 104, hourH = r.blocks.length*26 + 14, thH = 40, rowH = 36, totH = 86;
+  var H = headH + hourH + thH + r.rows.length*rowH + totH + 14;
+  var cv = document.createElement("canvas");
+  var sc = 2; cv.width = W*sc; cv.height = H*sc;
+  var x = cv.getContext("2d"); x.scale(sc,sc);
+  var FONT = '"Noto Sans Thai","Sarabun",-apple-system,"Segoe UI",sans-serif';
+  function txt(t,px,py,size,color,bold,align){
+    x.font = (bold?"700 ":"400 ")+size+"px "+FONT;
+    x.fillStyle = color; x.textAlign = align||"left"; x.textBaseline = "middle";
+    x.fillText(t, px, py);
+  }
+  // พื้นหลัง
+  x.fillStyle = "#ffffff"; x.fillRect(0,0,W,H);
+  // หัว
+  x.fillStyle = "#0f766e"; x.fillRect(0,0,W,headH);
+  var dstr = new Date().toLocaleDateString(en?"en-GB":"th-TH",{day:"numeric",month:"short",year:"numeric"});
+  var logo = document.getElementById("logoImg");
+  var lw = 64, lx = pad, ly = (headH-lw)/2, tx = pad;
+  if(logo && logo.complete && logo.naturalWidth){
+    x.save();
+    x.beginPath(); x.arc(lx+lw/2, ly+lw/2, lw/2, 0, Math.PI*2); x.closePath(); x.clip();
+    x.drawImage(logo, lx, ly, lw, lw);
+    x.restore();
+    x.beginPath(); x.arc(lx+lw/2, ly+lw/2, lw/2, 0, Math.PI*2);
+    x.strokeStyle = "rgba(255,255,255,.6)"; x.lineWidth = 3; x.stroke();
+    tx = lx + lw + 16;
+  }
+  txt("🏸 "+(S.clubName||"ก๊วนแบด"), tx, headH/2 - 12, 21, "#ffffff", true);
+  txt(L.title+" · "+dstr, tx, headH/2 + 15, 14.5, "rgba(255,255,255,.85)");
+  // สรุปรายชั่วโมง
+  var y = headH + 8;
+  r.blocks.forEach(function(b){
+    txt("🕐 "+b.name+" — "+b.courts+L.courts+" "+(b.minutes)+L.min+", "+b.shuttles+L.sh+", "+b.headcount+L.ppl,
+        pad, y+13, 13.5, "#475569");
+    txt(Math.round(b.total).toLocaleString()+" ฿", W-pad, y+13, 13.5, "#0f172a", true, "right");
+    y += 26;
+  });
+  y += 6;
+  // หัวตาราง
+  x.fillStyle = "#f1f5f9"; x.fillRect(0,y,W,thH);
+  var cName=pad, cHours=W-292, cGames=W-176, cPay=W-pad;
+  txt(L.name, cName, y+thH/2, 13.5, "#475569", true);
+  txt(L.hours, cHours, y+thH/2, 13.5, "#475569", true);
+  txt(L.games, cGames, y+thH/2, 13.5, "#475569", true, "right");
+  txt(L.pay, cPay, y+thH/2, 13.5, "#475569", true, "right");
+  y += thH;
+  // แถวรายคน
+  r.rows.forEach(function(row, i){
+    if(i%2===1){ x.fillStyle = "#f8fafc"; x.fillRect(0,y,W,rowH); }
+    var hrs = row.blocks.map(function(bi){ return bi+1; }).join(",");
+    txt((i+1)+". "+row.name, cName, y+rowH/2, 15, "#0f172a", true);
+    txt(hrs, cHours, y+rowH/2, 13, "#64748b");
+    txt(String(row.games), cGames, y+rowH/2, 14, "#64748b", false, "right");
+    txt(row.pay.toLocaleString(), cPay, y+rowH/2, 16, "#0f766e", true, "right");
+    y += rowH;
+  });
+  // สรุปท้าย
+  x.fillStyle = "#0f766e"; x.fillRect(0,y,W,totH);
+  txt(L.total+" "+Math.round(r.total).toLocaleString()+" ฿", pad, y+30, 17, "#ffffff", true);
+  txt(L.collected+" "+r.collected.toLocaleString()+" ฿ · "+L.diff+" "+(r.diff>=0?"+":"")+Math.round(r.diff)+" ฿",
+      pad, y+58, 13.5, "rgba(255,255,255,.85)");
+  // แชร์ / ดาวน์โหลด
+  cv.toBlob(function(blob){
+    if(!blob){ toast("สร้างรูปไม่สำเร็จ"); return; }
+    var fname = "badminton-cost-"+new Date().toISOString().slice(0,10)+".png";
+    var url = URL.createObjectURL(blob);
+    var aEl = document.createElement("a");
+    aEl.href = url; aEl.download = fname; aEl.rel = "noopener";
+    document.body.appendChild(aEl); aEl.click(); document.body.removeChild(aEl);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
+    toast("บันทึกรูปแล้ว 📸");
+  }, "image/png");
 }
 function copyText(txt){
   if(S.lang==="en") txt = trText(txt);
@@ -1542,6 +1627,12 @@ var I18N = [
   [/^ชื่อ$/, 'Name'],
   [/^เพศ$/, 'Gender'],
   [/^จัดก๊วนแบด$/, 'Badminton Group'],
+  [/🖼️ บันทึกสรุปเป็นรูปภาพ/g, '🖼️ Save summary as image'],
+  [/บันทึกรูปแล้ว 📸/g, 'Image saved 📸'],
+  [/📄 คัดลอกข้อความสรุป/g, '📄 Copy text summary'],
+  [/ยังไม่มีข้อมูลให้สรุป/g, 'Nothing to summarize yet'],
+  [/บันทึกรูปแล้ว/g, 'Image saved'],
+  [/สร้างรูปไม่สำเร็จ/g, 'Could not create image'],
   // ── ประโยคยาว/เฉพาะ (ต้องมาก่อน) ──
   [/ตั้งไว้ (\d+) คอร์ท แต่มีคนอยู่ (\d+) คน — ตานี้ใช้ได้จริง (\d+) คอร์ท \(ต้องมี (\d+) คน จึงจะเต็มทุกคอร์ท\)/g, 'Set to $1 courts but only $2 players here — this round uses $3 court(s) (need $4 players to fill all)'],
   [/คนพอสำหรับ (\d+) คอร์ท — ถ้าเพิ่มคอร์ทได้ ทุกคนจะได้ลงบ่อยขึ้น/g, 'Enough players for $1 courts — add a court and everyone plays more'],
