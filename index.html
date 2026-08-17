@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d9488">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ก๊วนแบด">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+<title>จัดก๊วนแบด — Badminton Rotation Manager</title>
+<style>
+:root{
+  --bg:#eef2f5; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+  --accent:#0d9488; --accent-d:#0f766e; --accent-l:#ccfbf1;
+  --warn:#f59e0b; --danger:#dc2626; --ok:#16a34a;
+  --r:14px; --sh:0 1px 3px rgba(15,23,42,.08),0 1px 2px rgba(15,23,42,.04);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai","Sarabun",Roboto,sans-serif;
+  background:var(--bg); color:var(--ink); font-size:15px; line-height:1.5;
+  padding-bottom:calc(72px + env(safe-area-inset-bottom));
+  overscroll-behavior-y:contain;
+}
+h1,h2,h3{margin:0}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit;font-size:16px}
+
+/* ---------- header ---------- */
+header{
+  position:sticky;top:0;z-index:40;background:var(--accent-d);color:#fff;
+  padding:calc(10px + env(safe-area-inset-top)) 14px 10px;
+  display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(15,23,42,.15)
+}
+header .logo{font-size:20px}
+header h1{font-size:16px;font-weight:700;flex:1;letter-spacing:.2px}
+header .round-pill{background:rgba(255,255,255,.18);padding:4px 11px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap}
+
+/* ---------- layout ---------- */
+main{max-width:760px;margin:0 auto;padding:12px}
+section.tab{display:none}
+section.tab.active{display:block;animation:fade .18s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:14px;margin-bottom:12px}
+.card h2{font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card h2 .sub{font-weight:400;color:var(--muted);font-size:12px;margin-left:auto}
+.row{display:flex;gap:8px;align-items:center}
+.muted{color:var(--muted);font-size:13px}
+.tiny{font-size:12px}
+.center{text-align:center}
+hr{border:none;border-top:1px solid var(--line);margin:12px 0}
+
+/* ---------- buttons ---------- */
+.btn{
+  background:var(--accent);color:#fff;border-radius:10px;padding:11px 16px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:.12s;min-height:44px
+}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:#fff;color:var(--accent-d);border:1.5px solid var(--accent);}
+.btn.gray{background:#e2e8f0;color:#334155}
+.btn.danger{background:var(--danger)}
+.btn.sm{padding:7px 11px;font-size:13px;min-height:36px;border-radius:9px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.45;pointer-events:none}
+.btn-big{font-size:17px;padding:15px;min-height:54px;box-shadow:0 4px 14px rgba(13,148,136,.32)}
+
+/* ---------- inputs ---------- */
+label.fld{display:block;margin-bottom:10px}
+label.fld > span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px;font-weight:600}
+input[type=text],input[type=number],select,textarea{
+  width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+
+/* ---------- level badges ---------- */
+.lv{
+  display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:22px;padding:0 6px;
+  border-radius:6px;font-size:12px;font-weight:800;color:#fff;letter-spacing:.3px;flex:none
+}
+.lvpick{display:flex;flex-wrap:wrap;gap:6px}
+.lvpick button{
+  border-radius:9px;padding:8px 4px;font-weight:800;font-size:13px;color:#fff;opacity:.35;
+  flex:1 1 0;min-width:42px;border:2px solid transparent
+}
+.lvpick button.on{opacity:1;border-color:var(--ink);transform:scale(1.03)}
+
+/* ---------- player list ---------- */
+.plist{display:flex;flex-direction:column;gap:6px}
+.prow{
+  display:flex;align-items:center;gap:9px;padding:9px 10px;border:1.5px solid var(--line);
+  border-radius:11px;background:#fff;transition:.12s
+}
+.prow.off{opacity:.45;background:#f8fafc}
+.prow .nm{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prow .gtag{font-size:11px;color:var(--muted);white-space:nowrap}
+.chk{
+  width:26px;height:26px;border-radius:8px;border:2px solid var(--line);display:flex;align-items:center;
+  justify-content:center;font-size:15px;color:#fff;flex:none;background:#fff
+}
+.chk.on{background:var(--ok);border-color:var(--ok)}
+.iconbtn{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:#f1f5f9;font-size:15px;flex:none}
+.iconbtn.on{background:var(--warn);color:#fff}
+
+/* ---------- court cards ---------- */
+.court{border:2px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:11px;background:#fff}
+.court-head{
+  display:flex;align-items:center;gap:8px;padding:8px 11px;background:#f8fafc;border-bottom:1px solid var(--line)
+}
+.court-head .cname{font-weight:800;font-size:14px;color:var(--accent-d)}
+.court-head .qual{margin-left:auto;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px}
+.q-good{background:#dcfce7;color:#15803d}
+.q-mid{background:#fef3c7;color:#b45309}
+.q-bad{background:#fee2e2;color:#b91c1c}
+.team{padding:8px 10px;display:flex;flex-direction:column;gap:6px;position:relative}
+.team.locked{background:#fffbeb}
+.slot{
+  display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;background:#f8fafc;
+  border:2px solid transparent;transition:.12s
+}
+.slot .nm{flex:1;font-weight:700;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.slot .gm{font-size:11px;color:var(--muted);white-space:nowrap}
+.slot.sel{border-color:var(--accent);background:var(--accent-l);box-shadow:0 0 0 3px rgba(13,148,136,.15)}
+.vs{display:flex;align-items:center;gap:8px;padding:0 12px}
+.vs span{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:1px}
+.vs .ln{flex:1;height:1px;background:var(--line)}
+.teamfoot{display:flex;align-items:center;gap:6px;padding:0 12px 8px}
+.teamfoot .sum{font-size:11.5px;color:var(--muted)}
+.lockbtn{margin-left:auto;font-size:11.5px;padding:4px 9px;border-radius:8px;background:#f1f5f9;color:var(--muted);font-weight:700}
+.lockbtn.on{background:var(--warn);color:#fff}
+
+/* ---------- แถบชั่วโมง ---------- */
+.hourbar{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.hchip{
+  flex:none;border:1.5px solid var(--line);border-radius:11px;padding:6px 11px;background:#fff;
+  font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-direction:column;align-items:flex-start;line-height:1.3
+}
+.hchip i{font-style:normal;font-size:10.5px;font-weight:500;opacity:.8}
+.hchip.on{border-color:var(--accent);background:var(--accent-l);color:var(--accent-d)}
+.hchip.add{color:var(--accent-d);border-style:dashed;align-items:center;justify-content:center}
+.blockcard{border:1.5px solid var(--line);border-radius:12px;padding:11px;margin-bottom:9px}
+.blockcard.on{border-color:var(--accent);background:#f0fdfa}
+.tag{font-size:10.5px;font-weight:700;background:var(--accent);color:#fff;padding:2px 7px;border-radius:999px}
+.tag.gray{background:#e2e8f0;color:#475569}
+.grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(min-width:520px){.grid4{grid-template-columns:repeat(4,1fr)}}
+.pickgrid{display:flex;flex-wrap:wrap;gap:6px;max-height:46vh;overflow:auto;padding:2px}
+.pickgrid button{
+  border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;
+  background:#fff;color:var(--muted);display:flex;align-items:center;gap:6px
+}
+.pickgrid button.on{border-color:var(--ok);background:#f0fdf4;color:var(--ink)}
+
+/* ---------- ตัวเลือกจำนวนคอร์ท ---------- */
+.courtpick{display:flex;align-items:center;gap:10px;background:#f8fafc;border-radius:12px;padding:9px 12px}
+.courtpick .lbl{font-size:13px;font-weight:700;flex:1}
+.courtpick .step{
+  width:38px;height:38px;border-radius:11px;background:#fff;border:1.5px solid var(--line);
+  font-size:20px;font-weight:700;color:var(--accent-d);display:flex;align-items:center;justify-content:center;flex:none
+}
+.courtpick .step:disabled{opacity:.35}
+.courtpick .cnum{min-width:34px;text-align:center;font-size:20px;font-weight:800;color:var(--accent-d)}
+.courtwarn{font-size:12px;color:#b45309;background:#fef3c7;border-radius:9px;padding:6px 10px;margin-top:8px}
+
+.bench{display:flex;flex-wrap:wrap;gap:6px}
+.bench .slot{flex:1 1 46%;min-width:130px}
+
+/* ---------- stats ---------- */
+.bar{height:9px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--accent);border-radius:6px}
+.srow{display:flex;align-items:center;gap:9px;padding:6px 0}
+.srow .nm{width:88px;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.srow .val{width:56px;text-align:right;font-size:12px;color:var(--muted);white-space:nowrap}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.kpi{background:#f8fafc;border-radius:11px;padding:10px}
+.kpi b{display:block;font-size:20px;line-height:1.2}
+.kpi span{font-size:11.5px;color:var(--muted)}
+.matrix{overflow:auto;-webkit-overflow-scrolling:touch}
+.matrix table{border-collapse:collapse;font-size:11px}
+.matrix th,.matrix td{border:1px solid var(--line);padding:3px 5px;text-align:center;min-width:26px}
+.matrix th{background:#f8fafc;position:sticky;top:0;white-space:nowrap;font-weight:600}
+.matrix th.rh{position:sticky;left:0;z-index:2;text-align:left;max-width:78px;overflow:hidden}
+.matrix td.c1{background:#fef9c3}.matrix td.c2{background:#fed7aa}.matrix td.c3{background:#fecaca}
+
+/* ---------- money ---------- */
+.mrow{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+.mrow:last-child{border:none}
+.mrow .nm{flex:1;font-weight:600;font-size:14px}
+.mrow .amt{font-weight:800;font-size:15px}
+.seg{display:flex;background:#f1f5f9;border-radius:10px;padding:3px;gap:3px}
+.seg button{flex:1;padding:8px;border-radius:8px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button.on{background:#fff;color:var(--accent-d);box-shadow:var(--sh)}
+
+/* ---------- bottom nav ---------- */
+nav.bn{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:1px solid var(--line);
+  display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -2px 10px rgba(15,23,42,.06)
+}
+nav.bn button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;color:var(--muted);font-size:10.5px;font-weight:600}
+nav.bn button .ic{font-size:19px;line-height:1}
+nav.bn button.on{color:var(--accent-d)}
+
+/* ---------- toast / modal ---------- */
+#toast{
+  position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);
+  background:#0f172a;color:#fff;padding:10px 16px;border-radius:999px;font-size:13.5px;font-weight:600;
+  z-index:90;opacity:0;pointer-events:none;transition:.2s;max-width:90vw;text-align:center
+}
+#toast.show{opacity:.95}
+.modal{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.45);display:none;align-items:flex-end;justify-content:center}
+.modal.show{display:flex}
+.modal .sheet{background:#fff;width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));max-height:88vh;overflow:auto}
+@media(min-width:640px){
+  .modal{align-items:center}
+  .modal .sheet{border-radius:18px}
+  .kpis{grid-template-columns:repeat(4,1fr)}
+  .bench .slot{flex:1 1 30%}
+}
+#noSaveBar:not(:empty){background:#fef3c7;border-bottom:1px solid #fcd34d;color:#92400e;padding:9px 14px;font-size:12.5px;font-weight:600;position:sticky;top:0;z-index:39}
+.hint{background:#f0fdfa;border-left:3px solid var(--accent);padding:8px 10px;border-radius:8px;font-size:12.5px;color:#134e4a}
+.empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:14px}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">🏸</span>
+  <h1 id="clubName">จัดก๊วนแบด</h1>
+  <span class="round-pill" id="roundPill">ตาที่ 1</span>
+</header>
+
+<div id="noSaveBar"></div>
+
+<main>
+
+<!-- ============ TAB: จัดตา ============ -->
+<section class="tab active" id="tab-play">
+  <div id="playHead"></div>
+  <div id="lockList"></div>
+  <div id="courtsWrap"></div>
+  <div id="benchWrap"></div>
+  <div id="playActions"></div>
+</section>
+
+<!-- ============ TAB: ผู้เล่น ============ -->
+<section class="tab" id="tab-players">
+  <div class="card">
+    <h2>➕ เพิ่มผู้เล่น</h2>
+    <label class="fld"><span>ชื่อเล่น</span>
+      <input type="text" id="newName" placeholder="เช่น ต้น" autocomplete="off">
+    </label>
+    <label class="fld"><span>ระดับมือ</span>
+      <div class="lvpick" id="newLevel"></div>
+    </label>
+    <label class="fld"><span>เพศ (ใช้ตอนจัดคู่ผสมในอนาคต)</span>
+      <div class="seg" id="newGender">
+        <button data-g="M" class="on">ชาย</button><button data-g="F">หญิง</button>
+      </div>
+    </label>
+    <button class="btn block" id="addPlayerBtn">เพิ่มเข้าก๊วน</button>
+    <hr>
+    <button class="btn ghost block sm" id="bulkBtn">📋 เพิ่มทีละหลายคน (วางรายชื่อ)</button>
+  </div>
+
+  <div class="card">
+    <h2>👥 รายชื่อ <span class="sub" id="presentCount"></span></h2>
+    <div id="whichHour" class="tiny muted" style="margin-bottom:8px"></div>
+    <div class="row" style="margin-bottom:10px">
+      <button class="btn gray sm" id="allInBtn">มาครบทุกคน</button>
+      <button class="btn gray sm" id="allOutBtn">ล้างสถานะมา</button>
+    </div>
+    <div class="hint" style="margin-bottom:10px">แตะ ✓ = มา/ไม่มา &nbsp;·&nbsp; ⚡ = บังคับให้ได้ลงตาหน้า &nbsp;·&nbsp; แตะชื่อเพื่อแก้ไข</div>
+    <div class="plist" id="playerList"></div>
+  </div>
+</section>
+
+<!-- ============ TAB: สถิติ ============ -->
+<section class="tab" id="tab-stats">
+  <div class="card">
+    <h2>📊 ภาพรวมก๊วน</h2>
+    <div class="kpis" id="kpis"></div>
+  </div>
+  <div class="card">
+    <h2>⚖️ จำนวนตาที่ได้ลง <span class="sub">รวมทุกชั่วโมง</span></h2>
+    <div id="fairList"></div>
+  </div>
+  <div class="card">
+    <h2>🤝 ตารางคู่ขา <span class="sub">เคยคู่กันกี่ครั้ง</span></h2>
+    <div class="matrix" id="partnerMatrix"></div>
+  </div>
+  <div class="card">
+    <h2>🕘 ประวัติการเล่น</h2>
+    <div id="historyList"></div>
+    <button class="btn gray block sm" id="undoBtn" style="margin-top:10px">↩️ ยกเลิกตาล่าสุด</button>
+  </div>
+</section>
+
+<!-- ============ TAB: ค่าใช้จ่าย ============ -->
+<section class="tab" id="tab-money">
+  <div class="card">
+    <h2>💵 ราคาของวันนี้</h2>
+    <div class="row">
+      <label class="fld" style="flex:1"><span>ค่าคอร์ท (บาท/คอร์ท/ชม.)</span><input type="number" id="courtRate" min="0" step="10"></label>
+      <label class="fld" style="flex:1"><span>ราคาลูกแบด (บาท/ลูก)</span><input type="number" id="shuttlePrice" min="0" step="5"></label>
+    </div>
+    <label class="fld"><span>ค่าอื่น ๆ ทั้งวัน (น้ำ ฯลฯ) — หารเท่ากันทุกคน</span><input type="number" id="otherFee" min="0" step="10"></label>
+    <div class="hint">ราคาลูกไม่เท่ากันทุกวัน — แก้ตรงนี้ครั้งเดียว ทุกชั่วโมงคำนวณใหม่ให้เอง</div>
+  </div>
+
+  <div class="card">
+    <h2>🕐 แยกตามชั่วโมง <span class="sub" id="blockSub"></span></h2>
+    <div id="blockEditor"></div>
+    <button class="btn ghost block sm" id="addBlockBtn" style="margin-top:4px">➕ เพิ่มชั่วโมง</button>
+    <div class="hint" style="margin-top:10px">คนมาสายหรือกลับก่อน จ่ายเฉพาะชั่วโมงที่ตัวเองอยู่ · ยุบเหลือ 1 คอร์ทในชั่วโมงสุดท้ายก็แค่แก้ช่อง “คอร์ท”</div>
+  </div>
+
+  <div class="card">
+    <h2>🧮 วิธีหารในแต่ละชั่วโมง</h2>
+    <div class="seg" id="splitMode" style="margin-bottom:10px">
+      <button data-m="equal">หารเท่ากัน</button>
+      <button data-m="games">หารตามจำนวนตาที่ลง</button>
+    </div>
+    <label class="fld"><span>ปัดเศษขึ้นทีละ</span>
+      <select id="roundTo"><option value="1">1 บาท</option><option value="5">5 บาท</option><option value="10">10 บาท</option><option value="20">20 บาท</option></select>
+    </label>
+    <div id="moneySummary"></div>
+  </div>
+  <div class="card">
+    <h2>🧾 ใครจ่ายเท่าไหร่</h2>
+    <div id="moneyList"></div>
+    <button class="btn ghost block sm" id="copyMoneyBtn" style="margin-top:12px">📄 คัดลอกข้อความสรุป (ส่งเข้าไลน์)</button>
+  </div>
+</section>
+
+<!-- ============ TAB: ตั้งค่า ============ -->
+<section class="tab" id="tab-settings">
+  <div class="card">
+    <h2>⚙️ ตั้งค่าก๊วน</h2>
+    <label class="fld"><span>ชื่อก๊วน</span><input type="text" id="clubNameInput" placeholder="ก๊วนแบดของเรา"></label>
+    <label class="fld"><span>จำนวนคอร์ทของชั่วโมงที่กำลังเล่น</span><input type="number" id="courtCount" min="1" max="10" step="1"></label>
+    <div class="hint">แต่ละชั่วโมงตั้งคอร์ทแยกกันได้ — ปรับได้จากหน้า 🏸 จัดตา หรือแท็บ 💰 ค่าใช้จ่าย</div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 สไตล์การจัดคู่</h2>
+    <div class="seg" id="presetMode" style="margin-bottom:12px">
+      <button data-p="mix">คละมือ+สูสี</button>
+      <button data-p="similar">ระดับใกล้กัน</button>
+      <button data-p="random">สุ่มล้วน</button>
+    </div>
+    <label class="fld"><span>ความสูสีของสองฝั่ง — <b id="wBalV"></b></span><input type="range" id="wBal" min="0" max="100" step="5"></label>
+    <label class="fld"><span>คละมือหนัก/มือเบาในคู่เดียวกัน — <b id="wMixV"></b></span><input type="range" id="wMix" min="-100" max="100" step="5"></label>
+    <label class="fld"><span>เลี่ยงการซ้ำคู่ขา/คู่แข่ง — <b id="wRepV"></b></span><input type="range" id="wRep" min="0" max="100" step="5"></label>
+    <div class="hint">สไลเดอร์ “คละมือ” ดันไปทางซ้าย = อยากให้ทั้งคอร์ทระดับใกล้กัน, ดันไปทางขวา = อยากให้มือหนักจับคู่มือเบา</div>
+  </div>
+
+  <div class="card">
+    <h2>🏸 น้ำหนักระดับมือ <span class="sub">ใช้คำนวณความสูสี</span></h2>
+    <div id="levelWeights"></div>
+    <div class="hint" style="margin-top:8px">ปรับได้ถ้าก๊วนคุณเห็นว่าช่องว่างระหว่างมือไม่ตรงกับความจริง</div>
+  </div>
+
+  <div class="card">
+    <h2>💾 ข้อมูล</h2>
+    <button class="btn ghost block sm" id="exportBtn" style="margin-bottom:8px">⬇️ ดาวน์โหลดไฟล์สำรอง (.json)</button>
+    <button class="btn ghost block sm" id="importBtn" style="margin-bottom:8px">⬆️ นำเข้าไฟล์สำรอง</button>
+    <input type="file" id="importFile" accept="application/json" hidden>
+    <button class="btn ghost block sm" id="copyDataBtn" style="margin-bottom:8px">📋 คัดลอกข้อมูลสำรอง (สำหรับ iPhone)</button>
+    <button class="btn ghost block sm" id="pasteDataBtn" style="margin-bottom:8px">📥 วางข้อมูลสำรองกลับเข้ามา</button>
+    <button class="btn gray block sm" id="newDayBtn" style="margin-bottom:8px">🔄 เริ่มวันใหม่ (เก็บรายชื่อ ล้างสถิติ)</button>
+    <button class="btn danger block sm" id="wipeBtn">🗑️ ล้างข้อมูลทั้งหมด</button>
+    <p class="muted tiny" style="margin-top:10px" id="storeNote"></p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bn">
+  <button data-tab="play" class="on"><span class="ic">🏸</span>จัดตา</button>
+  <button data-tab="players"><span class="ic">👥</span>ผู้เล่น</button>
+  <button data-tab="stats"><span class="ic">📊</span>สถิติ</button>
+  <button data-tab="money"><span class="ic">💰</span>ค่าใช้จ่าย</button>
+  <button data-tab="settings"><span class="ic">⚙️</span>ตั้งค่า</button>
+</nav>
+
+<div id="toast"></div>
+
+<div class="modal" id="modal"><div class="sheet" id="modalSheet"></div></div>
+
+<script>
+/*ENGINE_START*/
+(function(root){
+"use strict";
+
+/* ============================================================
+   ระดับมือแบบไทย  (น้ำหนัก = ค่าที่ใช้คำนวณความสูสี)
+   ============================================================ */
+var DEFAULT_LEVELS = [
+  {code:"N",  label:"มือ N",  note:"มือใหม่ / หน้าบ้าน", w:1.0,  color:"#94a3b8"},
+  {code:"S",  label:"มือ S",  note:"มือสังคม",           w:2.5,  color:"#38bdf8"},
+  {code:"P-", label:"มือ P-", note:"เริ่มเข้าที่",         w:4.0,  color:"#3b82f6"},
+  {code:"P",  label:"มือ P",  note:"เล่นคล่อง",           w:5.5,  color:"#22c55e"},
+  {code:"C",  label:"มือ C",  note:"แข่งระดับต้น",        w:7.0,  color:"#f59e0b"},
+  {code:"B",  label:"มือ B",  note:"แข่งระดับกลาง",       w:8.5,  color:"#f97316"},
+  {code:"A",  label:"มือ A",  note:"ระดับแข่งขัน",        w:10.0, color:"#dc2626"}
+];
+
+var PRESETS = {
+  mix:     {wBal:100, wMix:40,  wRep:70},
+  similar: {wBal:100, wMix:-60, wRep:45},
+  random:  {wBal:0,   wMix:0,   wRep:20}
+};
+
+function pk(a,b){ return a<b ? a+"|"+b : b+"|"+a; }
+
+/* ============================================================
+   คำนวณสถิติทั้งหมดจากประวัติ (single source of truth)
+   ทำให้ "ยกเลิกตาล่าสุด" = แค่ pop ประวัติ แล้วคำนวณใหม่
+   ============================================================ */
+function deriveStats(players, history){
+  var st = {games:{}, rests:{}, lastPlayed:{}, partner:{}, partnerLast:{}, opp:{}, oppLast:{}};
+  players.forEach(function(p){
+    st.games[p.id]=0; st.rests[p.id]=0;
+    st.lastPlayed[p.id] = (p.joinRound||0) - 1;
+  });
+  history.forEach(function(h, r){
+    (h.courts||[]).forEach(function(c){
+      var t1=c.t1, t2=c.t2, all=t1.concat(t2);
+      all.forEach(function(id){
+        if(st.games[id]===undefined) return;
+        st.games[id]++; st.lastPlayed[id]=r;
+      });
+      [t1,t2].forEach(function(t){
+        var k=pk(t[0],t[1]);
+        st.partner[k]=(st.partner[k]||0)+1; st.partnerLast[k]=r;
+      });
+      t1.forEach(function(a){ t2.forEach(function(b){
+        var k=pk(a,b); st.opp[k]=(st.opp[k]||0)+1; st.oppLast[k]=r;
+      });});
+    });
+    (h.resting||[]).forEach(function(id){ if(st.rests[id]!==undefined) st.rests[id]++; });
+  });
+  return st;
+}
+
+/* ============================================================
+   เลือกว่าใครได้ลง / ใครพัก  (ความเป็นธรรม)
+   urgency สูง = ควรได้ลงก่อน
+     + รอมานานกี่ตาแล้ว (ถ่วงหนักมาก → คนพักตาที่แล้วได้ลงแน่)
+     - ลงไปแล้วกี่ตา
+     + สุ่มเล็กน้อยกันผังซ้ำ
+   ============================================================ */
+function selectPlaying(available, slots, round, stats, forced, rnd){
+  rnd = rnd || Math.random;
+  var forcedSet = {}; (forced||[]).forEach(function(id){ forcedSet[id]=1; });
+  var scored = available.map(function(id){
+    var wait = round - (stats.lastPlayed[id]!==undefined ? stats.lastPlayed[id] : round-1);
+    var u = wait*100 - (stats.games[id]||0)*12 + rnd()*6;
+    if(forcedSet[id]) u += 100000;
+    return {id:id, u:u};
+  });
+  scored.sort(function(a,b){ return b.u - a.u; });
+  var playing = scored.slice(0, slots).map(function(o){return o.id;});
+  var resting = scored.slice(slots).map(function(o){return o.id;});
+  return {playing:playing, resting:resting};
+}
+
+/* ============================================================
+   Cost function ของหนึ่งคอร์ท  (ยิ่งน้อยยิ่งดี)
+   ============================================================ */
+function courtCost(a,b,c,d, ctx){
+  var L=ctx.W, w=ctx.w;
+  var t1=L[a]+L[b], t2=L[c]+L[d];
+  var balance = Math.abs(t1-t2);                       // ความสูสีของสองฝั่ง
+  var mix = Math.abs(L[a]-L[b]) + Math.abs(L[c]-L[d]); // ช่องว่างภายในคู่ (คละมือ)
+  var hi = Math.max(L[a],L[b],L[c],L[d]), lo = Math.min(L[a],L[b],L[c],L[d]);
+  var spread = hi - lo;                                // ช่วงระดับของทั้งคอร์ท
+
+  // สไลเดอร์ "คละมือ": บวก = อยากให้มือหนักคู่มือเบา, ลบ = อยากให้ทั้งคอร์ทระดับใกล้กัน
+  var style = w.mix >= 0 ? -w.mix * mix
+                         : (-w.mix) * (spread * 5.0 + mix * 0.8);
+
+  var rep = pen(ctx,a,b,"p") + pen(ctx,c,d,"p")
+          + 0.35*(pen(ctx,a,c,"o")+pen(ctx,a,d,"o")+pen(ctx,b,c,"o")+pen(ctx,b,d,"o"));
+  return w.bal*balance + style + w.rep*rep;
+}
+function pen(ctx, x, y, kind){
+  var k = pk(x,y);
+  var cnt = (kind==="p" ? ctx.st.partner[k] : ctx.st.opp[k]) || 0;
+  var last = (kind==="p" ? ctx.st.partnerLast[k] : ctx.st.oppLast[k]);
+  var v = cnt * 1.0;
+  if(last !== undefined){
+    var ago = ctx.round - last;
+    if(ago <= 1) v += 4.0; else if(ago <= 2) v += 2.0; else if(ago <= 3) v += 0.8;
+  }
+  return v;
+}
+function totalCost(arr, nCourts, ctx){
+  var s=0;
+  for(var k=0;k<nCourts;k++){
+    var i=k*4;
+    s += courtCost(arr[i],arr[i+1],arr[i+2],arr[i+3], ctx);
+  }
+  return s;
+}
+
+/* ============================================================
+   จัดคนลงคอร์ท: random restart + pairwise-swap hill climbing
+   ============================================================ */
+function shuffle(a, rnd){
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; }
+  return a;
+}
+function assignCourts(playing, nCourts, ctx, locks, rnd){
+  rnd = rnd || Math.random;
+  var n = nCourts*4;
+  var fixed = new Array(n).fill(false);
+  var base = new Array(n).fill(null);
+
+  // วางคู่ที่ล็อกไว้ลงช่องทีมติดกัน (0-1, 2-3, 4-5, ...)
+  var used = {}, slot = 0;
+  (locks||[]).forEach(function(pair){
+    if(slot+1 >= n) return;
+    if(playing.indexOf(pair[0])<0 || playing.indexOf(pair[1])<0) return;
+    if(used[pair[0]] || used[pair[1]]) return;
+    base[slot]=pair[0]; base[slot+1]=pair[1];
+    fixed[slot]=fixed[slot+1]=true;
+    used[pair[0]]=used[pair[1]]=1;
+    slot += 2;
+  });
+  var rest = playing.filter(function(id){ return !used[id]; });
+
+  var best=null, bestC=Infinity;
+  var restarts = n<=8 ? 14 : (n<=16 ? 10 : 7);
+  for(var r=0;r<restarts;r++){
+    var pool = shuffle(rest.slice(), rnd);
+    var arr = base.slice(), pi=0;
+    for(var i=0;i<n;i++) if(arr[i]===null) arr[i]=pool[pi++];
+
+    var cost = totalCost(arr, nCourts, ctx);
+    var improved = true, guard = 0;
+    while(improved && guard < 40){
+      improved = false; guard++;
+      for(var x=0;x<n;x++){
+        if(fixed[x]) continue;
+        for(var y=x+1;y<n;y++){
+          if(fixed[y]) continue;
+          var t=arr[x]; arr[x]=arr[y]; arr[y]=t;
+          var c = totalCost(arr, nCourts, ctx);
+          if(c < cost - 1e-9){ cost=c; improved=true; }
+          else { t=arr[x]; arr[x]=arr[y]; arr[y]=t; }
+        }
+      }
+    }
+    if(cost < bestC){ bestC=cost; best=arr.slice(); }
+  }
+
+  var courts=[];
+  for(var k=0;k<nCourts;k++){
+    var i=k*4;
+    courts.push({t1:[best[i],best[i+1]], t2:[best[i+2],best[i+3]]});
+  }
+  return {courts:courts, cost:bestC};
+}
+
+/* ============================================================
+   สร้างตาถัดไป (ฟังก์ชันหลัก)
+   ============================================================ */
+function generateRound(opts){
+  var players = opts.players, history = opts.history || [];
+  var round = history.length;
+  var stats = opts.stats || deriveStats(players, history);
+  var levels = opts.levels || DEFAULT_LEVELS;
+
+  var available = players.filter(function(p){ return p.present && !p.pause; }).map(function(p){return p.id;});
+  if(available.length < 4) return {error:"ต้องมีผู้เล่นที่ 'มา' อย่างน้อย 4 คน (ตอนนี้มี "+available.length+" คน)"};
+
+  var maxCourts = Math.floor(available.length/4);
+  var nCourts = Math.min(opts.courts||1, maxCourts);
+  var slots = nCourts*4;
+
+  var forced = players.filter(function(p){ return p.forceNext && p.present && !p.pause; }).map(function(p){return p.id;});
+  (opts.locks||[]).forEach(function(pr){ forced.push(pr[0]); forced.push(pr[1]); });
+
+  var sel = selectPlaying(available, slots, round, stats, forced, opts.rnd);
+
+  var W = {};
+  players.forEach(function(p){ W[p.id] = (levels[p.level] || levels[0]).w; });
+  var wIn = opts.weights || PRESETS.mix;
+  var ctx = {
+    W:W, st:stats, round:round,
+    w:{ bal:(wIn.wBal||0)/100 * 1.0, mix:(wIn.wMix||0)/100 * 0.45, rep:(wIn.wRep||0)/100 * 1.6 }
+  };
+
+  var res = assignCourts(sel.playing, nCourts, ctx, opts.locks, opts.rnd);
+  return {
+    courts: res.courts,
+    resting: sel.resting,
+    nCourts: nCourts,
+    benched: available.length - slots,
+    quality: roundQuality(res.courts, W, stats, round)
+  };
+}
+
+/* คุณภาพของตา: ส่วนต่างแต้มทีม + จำนวนคู่ซ้ำ */
+function roundQuality(courts, W, stats, round){
+  var diffs = courts.map(function(c){
+    return Math.abs((W[c.t1[0]]+W[c.t1[1]]) - (W[c.t2[0]]+W[c.t2[1]]));
+  });
+  var repeats = 0;
+  courts.forEach(function(c){
+    [c.t1,c.t2].forEach(function(t){ if((stats.partner[pk(t[0],t[1])]||0) > 0) repeats++; });
+  });
+  var avg = diffs.reduce(function(a,b){return a+b;},0) / (diffs.length||1);
+  return {diffs:diffs, avgDiff:avg, repeatPairs:repeats};
+}
+
+/* ============================================================
+   หารค่าใช้จ่าย — คิดแยกเป็น "ช่วงชั่วโมง" (block)
+   แต่ละชั่วโมงมี: จำนวนคอร์ท, นาที, ลูกที่ใช้, และรายชื่อคนที่อยู่ช่วงนั้น
+   ค่าใช้จ่ายของชั่วโมงไหน หารเฉพาะคนที่อยู่ชั่วโมงนั้น
+   ============================================================ */
+function blockCost(b, cfg){
+  var hasOverride = b.feeOverride !== null && b.feeOverride !== undefined && b.feeOverride !== "";
+  var court = hasOverride ? (+b.feeOverride||0)
+            : (+b.courts||0) * (+cfg.courtRate||0) * ((+b.minutes||60)/60);
+  var shuttle = (+b.shuttles||0) * (+cfg.shuttlePrice||0);
+  return {court:court, shuttle:shuttle, total:court+shuttle};
+}
+
+function gamesInBlock(history, bi, memberIds){
+  var g = {}; memberIds.forEach(function(id){ g[id]=0; });
+  history.forEach(function(h){
+    if((h.block||0) !== bi) return;
+    (h.courts||[]).forEach(function(c){
+      c.t1.concat(c.t2).forEach(function(id){ if(g[id]!==undefined) g[id]++; });
+    });
+  });
+  return g;
+}
+
+function computeCosts(players, history, cfg){
+  var byId = {}; players.forEach(function(p){ byId[p.id]=p; });
+  var blocks = cfg.blocks || [];
+  var per = {};      // id -> {raw, games, blocks:[]}
+  var blockInfo = [];
+  var grand = 0;
+
+  blocks.forEach(function(b, bi){
+    var c = blockCost(b, cfg);
+    var members = (b.members||[]).filter(function(id){ return byId[id]; });
+    var g = gamesInBlock(history, bi, members);
+    var sumG = members.reduce(function(a,id){ return a + g[id]; }, 0);
+    var useGames = (cfg.mode === "games" && sumG > 0);
+
+    members.forEach(function(id){
+      var share = useGames ? c.total * g[id] / sumG : c.total / (members.length||1);
+      if(!per[id]) per[id] = {raw:0, games:0, blocks:[]};
+      per[id].raw += share;
+      per[id].games += g[id];
+      per[id].blocks.push(bi);
+    });
+
+    grand += c.total;
+    blockInfo.push({
+      index:bi, name:b.name || ("ชม.ที่ "+(bi+1)),
+      courts:+b.courts||0, minutes:+b.minutes||60, shuttles:+b.shuttles||0,
+      courtCost:c.court, shuttleCost:c.shuttle, total:c.total,
+      members:members, headcount:members.length, games:g,
+      perHead: members.length ? c.total/members.length : 0
+    });
+  });
+
+  // ค่าอื่น ๆ ทั้งวัน หารเท่ากันทุกคนที่มาอย่างน้อย 1 ชั่วโมง
+  var ids = Object.keys(per);
+  var other = +cfg.otherFee || 0;
+  if(other && ids.length) ids.forEach(function(id){ per[id].raw += other/ids.length; });
+  grand += other;
+
+  var step = +cfg.roundTo || 1;
+  var rows = ids.map(function(id){
+    var r = per[id];
+    return {
+      id:id, name: byId[id] ? byId[id].name : "?",
+      games:r.games, blocks:r.blocks.slice(), raw:r.raw,
+      pay: Math.ceil(r.raw/step)*step
+    };
+  }).sort(function(a,b){ return b.pay - a.pay || a.name.localeCompare(b.name,"th"); });
+
+  var collected = rows.reduce(function(a,r){ return a+r.pay; }, 0);
+  return {
+    rows:rows, blocks:blockInfo, total:grand, collected:collected,
+    diff:collected-grand, headcount:ids.length, otherFee:other
+  };
+}
+
+root.BadmintonEngine = {
+  DEFAULT_LEVELS: DEFAULT_LEVELS,
+  PRESETS: PRESETS,
+  pk: pk,
+  deriveStats: deriveStats,
+  selectPlaying: selectPlaying,
+  generateRound: generateRound,
+  computeCosts: computeCosts,
+  blockCost: blockCost,
+  gamesInBlock: gamesInBlock,
+  roundQuality: roundQuality
+};
+})(typeof module !== "undefined" && module.exports ? module.exports : window);
+/*ENGINE_END*/
+</script>
+
+<script>
+"use strict";
+var E = window.BadmintonEngine;
+var $ = function(s){ return document.querySelector(s); };
+var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+var KEY = "badminton_manager_v1";
+var storageOK = true;
+
+/* ---------------- state ---------------- */
+function newBlock(n, courts){
+  return {name:"ชม.ที่ "+n, courts:courts||3, minutes:60, shuttles:0, feeOverride:"", members:[]};
+}
+function blankState(){
+  return {
+    clubName:"จัดก๊วนแบด",
+    players:[],
+    history:[],
+    current:null,
+    locks:[],
+    weights: Object.assign({}, E.PRESETS.mix),
+    preset:"mix",
+    levels: JSON.parse(JSON.stringify(E.DEFAULT_LEVELS)),
+    blocks:[ newBlock(1,3) ],
+    activeBlock:0,
+    money:{courtRate:200, shuttlePrice:70, otherFee:0, mode:"equal", roundTo:5},
+    seq:1
+  };
+}
+var S = blankState();
+
+/* ชั่วโมงที่กำลังเล่นอยู่ */
+function AB(){
+  if(!S.blocks || !S.blocks.length) S.blocks = [newBlock(1,3)];
+  if(S.activeBlock >= S.blocks.length || S.activeBlock < 0) S.activeBlock = S.blocks.length-1;
+  return S.blocks[S.activeBlock];
+}
+/* คนที่ "มา" ตอนนี้ = สมาชิกของชั่วโมงที่กำลังเล่น (พักยาวก็ยังนับว่าอยู่ ต้องจ่ายเงิน) */
+function syncMembers(){
+  AB().members = S.players.filter(function(p){ return p.present; }).map(function(p){ return p.id; });
+}
+function applyMembers(){
+  var m={}; AB().members.forEach(function(id){ m[id]=1; });
+  S.players.forEach(function(p){ p.present = !!m[p.id]; if(!p.present) p.pause=false; });
+}
+var stats = E.deriveStats(S.players, S.history);
+var selection = null;   // {kind:'court'|'bench', ci, ti, pi} หรือ index บนม้านั่ง
+
+function save(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(S));
+    if(!storageOK){ storageOK=true; paintSaveBar(); }
+  }
+  catch(e){ if(storageOK){ storageOK=false; paintSaveBar(); } }
+}
+function paintSaveBar(){
+  var el = document.getElementById("noSaveBar");
+  if(!el) return;
+  el.innerHTML = storageOK ? "" :
+    "⚠️ เบราว์เซอร์นี้บันทึกข้อมูลอัตโนมัติไม่ได้ (มักเกิดตอนเปิดไฟล์ตรง ๆ บนมือถือ) — ถ้าปิดแท็บข้อมูลจะหาย ให้ไปแท็บ ⚙️ ตั้งค่า แล้วกด “คัดลอกข้อมูลสำรอง” เก็บไว้";
+}
+function load(){
+  try{ localStorage.setItem(KEY+"_t","1"); localStorage.removeItem(KEY+"_t"); }
+  catch(e){ storageOK=false; }
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw) S = migrate(JSON.parse(raw));
+  }catch(e){ storageOK=false; }
+  if(AB().members && AB().members.length) applyMembers(); else syncMembers();
+  recalc();
+}
+/* รองรับไฟล์/ข้อมูลรุ่นเก่าที่ยังไม่มีระบบชั่วโมง */
+function migrate(o){
+  var s = Object.assign(blankState(), o);
+  s.money = Object.assign(blankState().money, o.money||{});
+  s.weights = Object.assign({}, o.weights||E.PRESETS.mix);
+  if(!s.levels || !s.levels.length) s.levels = JSON.parse(JSON.stringify(E.DEFAULT_LEVELS));
+  if(!s.blocks || !s.blocks.length){
+    var b = newBlock(1, o.courts || 3);
+    b.shuttles = (o.money && +o.money.shuttleCount) || 0;
+    if(o.money && +o.money.courtFee) b.feeOverride = +o.money.courtFee;
+    b.members = (s.players||[]).filter(function(p){ return p.present; }).map(function(p){ return p.id; });
+    s.blocks = [b]; s.activeBlock = 0;
+  }
+  if(o.money && o.money.shuttlePrice !== undefined) s.money.shuttlePrice = +o.money.shuttlePrice;
+  (s.history||[]).forEach(function(h){ if(h.block === undefined) h.block = 0; });
+  delete s.courts;
+  return s;
+}
+function recalc(){ stats = E.deriveStats(S.players, S.history); }
+
+function toast(msg){
+  var t=$("#toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(t._h); t._h=setTimeout(function(){ t.classList.remove("show"); }, 1900);
+}
+function pById(id){ for(var i=0;i<S.players.length;i++) if(S.players[i].id===id) return S.players[i]; return null; }
+function lv(p){ return S.levels[p.level] || S.levels[0]; }
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]; }); }
+
+/* ---------------- tabs ---------------- */
+$$("nav.bn button").forEach(function(b){
+  b.addEventListener("click", function(){
+    $$("nav.bn button").forEach(function(x){ x.classList.remove("on"); });
+    b.classList.add("on");
+    $$("section.tab").forEach(function(s){ s.classList.remove("active"); });
+    $("#tab-"+b.dataset.tab).classList.add("active");
+    window.scrollTo(0,0);
+    render();
+  });
+});
+
+/* ---------------- modal ---------------- */
+function openModal(html){ $("#modalSheet").innerHTML = html; $("#modal").classList.add("show"); }
+function closeModal(){ $("#modal").classList.remove("show"); }
+$("#modal").addEventListener("click", function(e){ if(e.target.id==="modal") closeModal(); });
+
+/* ============================================================
+   TAB: ผู้เล่น
+   ============================================================ */
+var newLevelIdx = 3, newGender = "M";
+
+function renderLevelPicker(el, idx, onPick){
+  el.innerHTML = "";
+  S.levels.forEach(function(L, i){
+    var b=document.createElement("button");
+    b.textContent = L.code;
+    b.style.background = L.color;
+    if(i===idx) b.classList.add("on");
+    b.addEventListener("click", function(){ onPick(i); });
+    el.appendChild(b);
+  });
+}
+
+function renderPlayers(){
+  renderLevelPicker($("#newLevel"), newLevelIdx, function(i){ newLevelIdx=i; renderPlayers(); });
+  $$("#newGender button").forEach(function(b){
+    b.classList.toggle("on", b.dataset.g===newGender);
+    b.onclick = function(){ newGender=b.dataset.g; renderPlayers(); };
+  });
+
+  var present = S.players.filter(function(p){ return p.present && !p.pause; }).length;
+  $("#presentCount").textContent = "อยู่ "+present+" / ทั้งหมด "+S.players.length+" คน";
+  $("#whichHour").innerHTML = 'เครื่องหมาย ✓ = อยู่ใน <b>'+esc(AB().name)+'</b> (ชั่วโมงที่กำลังเล่น) — คนกลับก่อนให้เอา ✓ ออก แล้วเขาจะไม่โดนหารค่าใช้จ่ายชั่วโมงถัดไป';
+
+  var wrap = $("#playerList");
+  if(!S.players.length){ wrap.innerHTML = '<div class="empty">ยังไม่มีผู้เล่น — เพิ่มชื่อด้านบนได้เลย</div>'; return; }
+
+  var sorted = S.players.slice().sort(function(a,b){
+    if(a.present !== b.present) return a.present ? -1 : 1;
+    return b.level - a.level || a.name.localeCompare(b.name,"th");
+  });
+  wrap.innerHTML = "";
+  sorted.forEach(function(p){
+    var L = lv(p);
+    var row = document.createElement("div");
+    row.className = "prow" + (p.present ? "" : " off");
+    row.innerHTML =
+      '<div class="chk '+(p.present?"on":"")+'" data-a="toggle">'+(p.present?"✓":"")+'</div>'+
+      '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+
+      '<span class="nm" data-a="edit">'+esc(p.name)+'</span>'+
+      '<span class="gtag">'+(stats.games[p.id]||0)+' ตา</span>'+
+      '<button class="iconbtn '+(p.forceNext?"on":"")+'" data-a="force" title="บังคับให้ลงตาหน้า">⚡</button>';
+    row.querySelector('[data-a="toggle"]').onclick = function(){ p.present=!p.present; if(!p.present) p.pause=false; syncMembers(); save(); render(); };
+    row.querySelector('[data-a="edit"]').onclick = function(){ editPlayer(p); };
+    row.querySelector('[data-a="force"]').onclick = function(){ p.forceNext=!p.forceNext; save(); renderPlayers(); toast(p.forceNext?"⚡ "+p.name+" จะได้ลงตาหน้า":"ยกเลิกแล้ว"); };
+    wrap.appendChild(row);
+  });
+}
+
+function addPlayer(name, level, gender){
+  name = (name||"").trim();
+  if(!name) return false;
+  S.players.push({
+    id:"p"+(S.seq++), name:name, level:level, gender:gender||"M",
+    present:true, pause:false, forceNext:false, joinRound:S.history.length
+  });
+  syncMembers();
+  return true;
+}
+
+$("#addPlayerBtn").onclick = function(){
+  if(addPlayer($("#newName").value, newLevelIdx, newGender)){
+    $("#newName").value=""; save(); recalc(); render(); toast("เพิ่มแล้ว");
+  } else toast("ใส่ชื่อก่อนนะ");
+};
+$("#newName").addEventListener("keydown", function(e){ if(e.key==="Enter") $("#addPlayerBtn").click(); });
+
+$("#bulkBtn").onclick = function(){
+  openModal(
+    '<h2 style="font-size:16px;margin-bottom:8px">เพิ่มทีละหลายคน</h2>'+
+    '<p class="muted tiny" style="margin:0 0 8px">พิมพ์บรรทัดละคน ใส่ระดับมือต่อท้ายได้ เช่น <b>ต้น P</b> หรือ <b>เอ,C</b> (ไม่ใส่ = มือ P)</p>'+
+    '<textarea id="bulkText" rows="8" placeholder="ต้น P\nเอ C\nบี S\nนุ่น N"></textarea>'+
+    '<div class="row" style="margin-top:10px"><button class="btn gray sm" style="flex:1" id="bulkCancel">ยกเลิก</button>'+
+    '<button class="btn sm" style="flex:2" id="bulkOk">เพิ่มทั้งหมด</button></div>');
+  $("#bulkCancel").onclick = closeModal;
+  $("#bulkOk").onclick = function(){
+    var lines = $("#bulkText").value.split(/\n/), n=0;
+    lines.forEach(function(ln){
+      ln = ln.trim(); if(!ln) return;
+      var parts = ln.split(/[,\s]+/).filter(Boolean);
+      var code = parts.length>1 ? parts[parts.length-1].toUpperCase() : null;
+      var idx = -1;
+      if(code) S.levels.forEach(function(L,i){ if(L.code.toUpperCase()===code) idx=i; });
+      var nm = idx>=0 ? parts.slice(0,-1).join(" ") : parts.join(" ");
+      if(addPlayer(nm, idx>=0?idx:3, "M")) n++;
+    });
+    save(); recalc(); closeModal(); render(); toast("เพิ่ม "+n+" คน");
+  };
+};
+
+function editPlayer(p){
+  openModal(
+    '<h2 style="font-size:16px;margin-bottom:10px">แก้ไขผู้เล่น</h2>'+
+    '<label class="fld"><span>ชื่อ</span><input type="text" id="eName" value="'+esc(p.name)+'"></label>'+
+    '<label class="fld"><span>ระดับมือ</span><div class="lvpick" id="eLevel"></div></label>'+
+    '<label class="fld"><span>เพศ</span><div class="seg" id="eGender"><button data-g="M">ชาย</button><button data-g="F">หญิง</button></div></label>'+
+    '<label class="fld"><span>สถานะ</span><div class="seg" id="eStat">'+
+      '<button data-s="in">มาเล่น</button><button data-s="pause">พักยาว</button><button data-s="out">ไม่มา</button></div></label>'+
+    '<div class="row" style="margin-top:6px"><button class="btn danger sm" id="eDel">ลบ</button>'+
+    '<button class="btn gray sm" style="flex:1" id="eCancel">ยกเลิก</button>'+
+    '<button class="btn sm" style="flex:1" id="eOk">บันทึก</button></div>');
+  var tmp = {level:p.level, gender:p.gender, stat: p.pause ? "pause" : (p.present ? "in" : "out")};
+  function paint(){
+    renderLevelPicker($("#eLevel"), tmp.level, function(i){ tmp.level=i; paint(); });
+    $$("#eGender button").forEach(function(b){ b.classList.toggle("on", b.dataset.g===tmp.gender); b.onclick=function(){ tmp.gender=b.dataset.g; paint(); }; });
+    $$("#eStat button").forEach(function(b){ b.classList.toggle("on", b.dataset.s===tmp.stat); b.onclick=function(){ tmp.stat=b.dataset.s; paint(); }; });
+  }
+  paint();
+  $("#eCancel").onclick = closeModal;
+  $("#eDel").onclick = function(){
+    if(!confirm("ลบ "+p.name+" ออกจากก๊วน?")) return;
+    S.players = S.players.filter(function(x){ return x.id!==p.id; });
+    S.locks = S.locks.filter(function(pr){ return pr.indexOf(p.id)<0; });
+    S.blocks.forEach(function(b){ b.members = (b.members||[]).filter(function(id){ return id!==p.id; }); });
+    if(S.current) S.current = null;
+    save(); recalc(); closeModal(); render();
+  };
+  $("#eOk").onclick = function(){
+    p.name = $("#eName").value.trim() || p.name;
+    p.level = tmp.level; p.gender = tmp.gender;
+    p.present = tmp.stat !== "out"; p.pause = tmp.stat === "pause";
+    syncMembers(); save(); recalc(); closeModal(); render();
+  };
+}
+
+$("#allInBtn").onclick = function(){ S.players.forEach(function(p){ p.present=true; p.pause=false; }); syncMembers(); save(); render(); };
+$("#allOutBtn").onclick = function(){ S.players.forEach(function(p){ p.present=false; p.pause=false; }); syncMembers(); save(); render(); };
+
+/* ============================================================
+   TAB: จัดตา
+   ============================================================ */
+function slotHTML(id, sel){
+  var p = pById(id);
+  if(!p) return '<div class="slot"><span class="nm muted">—</span></div>';
+  var L = lv(p);
+  return '<div class="slot'+(sel?" sel":"")+'" data-id="'+p.id+'">'+
+    '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+
+    '<span class="nm">'+esc(p.name)+'</span>'+
+    '<span class="gm">'+(stats.games[p.id]||0)+' ตา</span></div>';
+}
+function teamSum(t){
+  var a=pById(t[0]), b=pById(t[1]);
+  return (a?lv(a).w:0) + (b?lv(b).w:0);
+}
+function isLocked(t){
+  return S.locks.some(function(pr){ return E.pk(pr[0],pr[1]) === E.pk(t[0],t[1]); });
+}
+
+function renderPlay(){
+  var present = S.players.filter(function(p){ return p.present && !p.pause; });
+  $("#roundPill").textContent = "ตาที่ " + (S.history.length + 1);
+  $("#clubName").textContent = S.clubName || "จัดก๊วนแบด";
+
+  var maxCourts = Math.floor(present.length/4);
+  var blk = AB(), nCourtsSet = blk.courts;
+  var use = Math.min(nCourtsSet, maxCourts);
+
+  var playCount = use*4, restCount = Math.max(0, present.length - playCount);
+  $("#playHead").innerHTML =
+    '<div class="card">'+
+      '<div class="hourbar">'+
+        S.blocks.map(function(b,i){
+          return '<button class="hchip'+(i===S.activeBlock?" on":"")+'" data-blk="'+i+'">'+
+                 esc(b.name)+'<i>'+b.courts+' คอร์ท · '+(b.members||[]).length+' คน</i></button>';
+        }).join("")+
+        '<button class="hchip add" id="newHourBtn">＋<i>ชม.ใหม่</i></button>'+
+      '</div>'+
+      '<div class="row" style="margin:10px 0">'+
+        '<div style="flex:1"><b style="font-size:15px">ตาที่ '+(S.history.length+1)+'</b>'+
+        '<div class="muted tiny">'+esc(blk.name)+' · อยู่ '+present.length+' คน · ลงสนาม '+playCount+' · พัก '+restCount+'</div></div>'+
+        '<button class="btn ghost sm" id="regenBtn">🎲 สุ่มใหม่</button>'+
+      '</div>'+
+      '<div class="courtpick">'+
+        '<span class="lbl">🏟️ คอร์ทของ'+esc(blk.name)+'</span>'+
+        '<button class="step" id="cMinus"'+(nCourtsSet<=1?" disabled":"")+'>−</button>'+
+        '<b class="cnum">'+nCourtsSet+'</b>'+
+        '<button class="step" id="cPlus"'+(nCourtsSet>=10?" disabled":"")+'>+</button>'+
+      '</div>'+
+      (use < nCourtsSet
+        ? '<div class="courtwarn">⚠️ ตั้งไว้ '+nCourtsSet+' คอร์ท แต่มีคนอยู่ '+present.length+' คน — ตานี้ใช้ได้จริง '+
+          (use||0)+' คอร์ท (ต้องมี '+(nCourtsSet*4)+' คน จึงจะเต็มทุกคอร์ท)</div>'
+        : (present.length - nCourtsSet*4 >= 4
+            ? '<div class="courtwarn">💡 คนพอสำหรับ '+maxCourts+' คอร์ท — ถ้าเพิ่มคอร์ทได้ ทุกคนจะได้ลงบ่อยขึ้น</div>' : ''))+
+    '</div>';
+  var rb = $("#regenBtn"); if(rb) rb.onclick = function(){ doGenerate(true); };
+  var setCourts = function(n){
+    AB().courts = Math.max(1, Math.min(10, n));
+    if(S.current) doGenerate(true); else { save(); render(); }
+    toast(AB().name+" = "+AB().courts+" คอร์ท");
+  };
+  var cm=$("#cMinus"), cp=$("#cPlus");
+  if(cm) cm.onclick = function(){ setCourts(AB().courts-1); };
+  if(cp) cp.onclick = function(){ setCourts(AB().courts+1); };
+  $$("#playHead [data-blk]").forEach(function(b){
+    b.onclick = function(){
+      var i = +b.dataset.blk;
+      if(i === S.activeBlock){ openHourEditor(i); return; }
+      syncMembers();
+      S.activeBlock = i; applyMembers(); S.current = null; selection = null;
+      save(); render(); toast("สลับไป "+AB().name);
+    };
+  });
+  var nh = $("#newHourBtn"); if(nh) nh.onclick = function(){ openNewHour(); };
+
+  // ล็อกคู่
+  if(S.locks.length){
+    $("#lockList").innerHTML = '<div class="card"><h2>🔒 คู่ที่ล็อกไว้สำหรับตานี้</h2>'+
+      S.locks.map(function(pr,i){
+        var a=pById(pr[0]), b=pById(pr[1]);
+        if(!a||!b) return "";
+        return '<div class="mrow"><span class="nm">'+esc(a.name)+' + '+esc(b.name)+'</span>'+
+               '<button class="btn gray sm" data-rm="'+i+'">ปลดล็อก</button></div>';
+      }).join("")+'</div>';
+    $$("#lockList [data-rm]").forEach(function(b){
+      b.onclick = function(){ S.locks.splice(+b.dataset.rm,1); save(); render(); };
+    });
+  } else $("#lockList").innerHTML = "";
+
+  var cur = S.current;
+  if(!cur){
+    $("#courtsWrap").innerHTML = '<div class="card"><div class="empty">'+
+      (present.length<4 ? "ต้องมีผู้เล่นที่ 'มา' อย่างน้อย 4 คน<br>ไปที่แท็บ 👥 ผู้เล่น เพื่อเพิ่ม/เช็คชื่อ"
+                        : "กดปุ่มด้านล่างเพื่อจัดตานี้")+'</div></div>';
+    $("#benchWrap").innerHTML = "";
+    $("#playActions").innerHTML =
+      '<button class="btn btn-big block" id="genBtn"'+(present.length<4?" disabled":"")+'>🏸 จัดตานี้เลย</button>';
+    var g=$("#genBtn"); if(g) g.onclick = function(){ doGenerate(false); };
+    return;
+  }
+
+  var html = "";
+  cur.courts.forEach(function(c, ci){
+    var s1=teamSum(c.t1), s2=teamSum(c.t2), diff=Math.abs(s1-s2);
+    var q = diff<=1 ? "q-good" : (diff<=2.5 ? "q-mid" : "q-bad");
+    var qt = diff<=1 ? "สูสีมาก" : (diff<=2.5 ? "พอสูสี" : "ห่างกัน");
+    html += '<div class="court">'+
+      '<div class="court-head"><span class="cname">คอร์ท '+(ci+1)+'</span>'+
+        '<span class="qual '+q+'">'+qt+' · ห่าง '+diff.toFixed(1)+'</span></div>';
+    [["t1",c.t1],["t2",c.t2]].forEach(function(pair, ti){
+      var t = pair[1], lk = isLocked(t);
+      html += '<div class="team'+(lk?" locked":"")+'" data-c="'+ci+'" data-t="'+ti+'">'+
+        slotHTML(t[0], isSel(ci,ti,0)) + slotHTML(t[1], isSel(ci,ti,1)) + '</div>'+
+        '<div class="teamfoot"><span class="sum">แต้มรวม '+(ti===0?s1:s2).toFixed(1)+'</span>'+
+        '<button class="lockbtn '+(lk?"on":"")+'" data-lock="'+ci+'-'+ti+'">'+(lk?"🔒 ล็อกแล้ว":"🔓 ล็อกคู่นี้")+'</button></div>';
+      if(ti===0) html += '<div class="vs"><i class="ln"></i><span>VS</span><i class="ln"></i></div>';
+    });
+    html += '</div>';
+  });
+  $("#courtsWrap").innerHTML = html;
+
+  // ม้านั่ง
+  if(cur.resting && cur.resting.length){
+    $("#benchWrap").innerHTML = '<div class="card"><h2>🪑 ตานี้พัก <span class="sub">'+cur.resting.length+' คน · แตะเพื่อสลับเข้าคอร์ท</span></h2>'+
+      '<div class="bench" id="benchList">'+ cur.resting.map(function(id,i){ return slotHTML(id, isSelBench(i)); }).join("") +'</div></div>';
+  } else {
+    $("#benchWrap").innerHTML = '<div class="card"><div class="muted center tiny">ตานี้ทุกคนได้ลงครบ 🎉</div></div>';
+  }
+
+  var qual = cur.quality || {};
+  $("#playActions").innerHTML =
+    '<div class="card"><div class="row tiny muted" style="justify-content:space-between">'+
+      '<span>ส่วนต่างเฉลี่ย '+ (qual.avgDiff!==undefined?qual.avgDiff.toFixed(1):"-") +'</span>'+
+      '<span>คู่ที่เคยจับกันแล้ว '+ (qual.repeatPairs!==undefined?qual.repeatPairs:"-") +' คู่</span>'+
+    '</div>'+
+    '<div class="hint" style="margin-top:8px">แตะชื่อคนหนึ่ง แล้วแตะอีกคน = สลับตำแหน่งกัน (สลับกับคนบนม้านั่งได้ด้วย)</div></div>'+
+    '<button class="btn btn-big block" id="commitBtn">✅ จบตานี้ → ไปตาถัดไป</button>'+
+    '<button class="btn gray block sm" id="clearBtn" style="margin-top:8px">ล้างผังตานี้</button>';
+
+  $("#commitBtn").onclick = commitRound;
+  $("#clearBtn").onclick = function(){ S.current=null; selection=null; save(); render(); };
+
+  // events
+  $$("#courtsWrap .slot").forEach(function(el){
+    el.onclick = function(){
+      var team = el.parentElement;
+      var ci = +team.dataset.c, ti = +team.dataset.t;
+      var pi = Array.prototype.indexOf.call(team.children, el);
+      tapSlot({kind:"court", ci:ci, ti:ti, pi:pi});
+    };
+  });
+  $$("#benchList .slot").forEach(function(el, i){
+    el.onclick = function(){ tapSlot({kind:"bench", bi:i}); };
+  });
+  $$("[data-lock]").forEach(function(b){
+    b.onclick = function(){
+      var pr = b.dataset.lock.split("-"), c=S.current.courts[+pr[0]];
+      var t = +pr[1]===0 ? c.t1 : c.t2;
+      var k = E.pk(t[0],t[1]);
+      var at = S.locks.findIndex(function(x){ return E.pk(x[0],x[1])===k; });
+      if(at>=0){ S.locks.splice(at,1); toast("ปลดล็อกแล้ว"); }
+      else { S.locks.push([t[0],t[1]]); toast("🔒 ล็อกคู่นี้ไว้ตาถัดไป"); }
+      save(); render();
+    };
+  });
+}
+
+/* ---------- ชั่วโมงใหม่ / แก้ไขชั่วโมง ---------- */
+function memberPickerHTML(sel){
+  return S.players.map(function(p){
+    var L=lv(p);
+    return '<button class="'+(sel[p.id]?"on":"")+'" data-pick="'+p.id+'">'+
+      '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+esc(p.name)+'</button>';
+  }).join("");
+}
+function bindPicker(sel, after){
+  $$("[data-pick]").forEach(function(b){
+    b.onclick = function(){
+      var id=b.dataset.pick;
+      if(sel[id]) delete sel[id]; else sel[id]=1;
+      b.classList.toggle("on", !!sel[id]);
+      if(after) after();
+    };
+  });
+}
+function openNewHour(){
+  syncMembers();
+  var sel = {}; AB().members.forEach(function(id){ sel[id]=1; });
+  var n = S.blocks.length + 1;
+  openModal(
+    '<h2 style="font-size:16px;margin-bottom:4px">⏭️ เริ่มชั่วโมงใหม่ (ชม.ที่ '+n+')</h2>'+
+    '<p class="muted tiny" style="margin:0 0 10px">ใครกลับบ้านแล้วก็เอาออก ใครเพิ่งมาก็เพิ่มเข้า — ค่าใช้จ่ายชั่วโมงนี้จะหารเฉพาะคนที่เลือกไว้</p>'+
+    '<div class="row"><label class="fld" style="flex:1"><span>จำนวนคอร์ท</span>'+
+      '<input type="number" id="nhCourts" min="1" max="10" value="'+AB().courts+'"></label>'+
+      '<label class="fld" style="flex:1"><span>ความยาว (นาที)</span>'+
+      '<input type="number" id="nhMin" min="15" step="15" value="60"></label></div>'+
+    '<label class="fld"><span>ใครเล่นชั่วโมงนี้ <b id="nhCount"></b></span>'+
+      '<div class="pickgrid" id="nhPick">'+memberPickerHTML(sel)+'</div></label>'+
+    '<div class="row" style="margin-top:8px"><button class="btn gray sm" style="flex:1" id="nhCancel">ยกเลิก</button>'+
+    '<button class="btn sm" style="flex:2" id="nhOk">เริ่มชั่วโมงใหม่</button></div>');
+  var upd = function(){ $("#nhCount").textContent = "("+Object.keys(sel).length+" คน)"; };
+  upd(); bindPicker(sel, upd);
+  $("#nhCancel").onclick = closeModal;
+  $("#nhOk").onclick = function(){
+    var ids = Object.keys(sel);
+    if(ids.length < 4){ toast("ต้องมีอย่างน้อย 4 คน"); return; }
+    var b = newBlock(n, Math.max(1,Math.min(10,+$("#nhCourts").value||1)));
+    b.minutes = Math.max(15, +$("#nhMin").value||60);
+    b.members = ids;
+    S.blocks.push(b); S.activeBlock = S.blocks.length-1;
+    applyMembers(); S.current=null; S.locks=[]; selection=null;
+    save(); closeModal(); render(); toast("เริ่ม "+b.name+" แล้ว 🏸");
+  };
+}
+function openHourEditor(i){
+  var b = S.blocks[i];
+  if(i === S.activeBlock) syncMembers();
+  var sel = {}; (b.members||[]).forEach(function(id){ sel[id]=1; });
+  openModal(
+    '<h2 style="font-size:16px;margin-bottom:10px">🕐 แก้ไข '+esc(b.name)+'</h2>'+
+    '<label class="fld"><span>ชื่อช่วงเวลา</span><input type="text" id="hbName" value="'+esc(b.name)+'"></label>'+
+    '<div class="grid4">'+
+      '<label class="fld"><span>คอร์ท</span><input type="number" id="hbCourts" min="1" max="10" value="'+b.courts+'"></label>'+
+      '<label class="fld"><span>นาที</span><input type="number" id="hbMin" min="15" step="15" value="'+(b.minutes||60)+'"></label>'+
+      '<label class="fld"><span>ลูกที่ใช้</span><input type="number" id="hbSh" min="0" value="'+(b.shuttles||0)+'"></label>'+
+      '<label class="fld"><span>ค่าคอร์ท (ระบุเอง)</span><input type="number" id="hbFee" min="0" placeholder="auto" value="'+(b.feeOverride===""||b.feeOverride===null||b.feeOverride===undefined?"":b.feeOverride)+'"></label>'+
+    '</div>'+
+    '<label class="fld"><span>คนที่อยู่ช่วงนี้ <b id="hbCount"></b></span>'+
+      '<div class="pickgrid" id="hbPick">'+memberPickerHTML(sel)+'</div></label>'+
+    '<div class="row" style="margin-top:8px">'+
+      (S.blocks.length>1 ? '<button class="btn danger sm" id="hbDel">ลบ</button>' : '')+
+      '<button class="btn gray sm" style="flex:1" id="hbCancel">ยกเลิก</button>'+
+      '<button class="btn sm" style="flex:1" id="hbOk">บันทึก</button></div>');
+  var upd = function(){ $("#hbCount").textContent = "("+Object.keys(sel).length+" คน)"; };
+  upd(); bindPicker(sel, upd);
+  $("#hbCancel").onclick = closeModal;
+  var del = $("#hbDel");
+  if(del) del.onclick = function(){
+    if(!confirm("ลบ "+b.name+"? ตาที่เล่นในช่วงนี้จะถูกลบด้วย")) return;
+    S.history = S.history.filter(function(h){ return (h.block||0) !== i; });
+    S.history.forEach(function(h){ if((h.block||0) > i) h.block--; });
+    S.blocks.splice(i,1);
+    if(S.activeBlock >= S.blocks.length) S.activeBlock = S.blocks.length-1;
+    applyMembers(); S.current=null; recalc(); save(); closeModal(); render(); toast("ลบแล้ว");
+  };
+  $("#hbOk").onclick = function(){
+    b.name = $("#hbName").value.trim() || b.name;
+    b.courts = Math.max(1,Math.min(10,+$("#hbCourts").value||1));
+    b.minutes = Math.max(15,+$("#hbMin").value||60);
+    b.shuttles = Math.max(0,+$("#hbSh").value||0);
+    var f = $("#hbFee").value.trim();
+    b.feeOverride = f==="" ? "" : Math.max(0,+f||0);
+    b.members = Object.keys(sel);
+    if(i === S.activeBlock){ applyMembers(); S.current=null; }
+    save(); closeModal(); render(); toast("บันทึกแล้ว");
+  };
+}
+
+function isSel(ci,ti,pi){ return selection && selection.kind==="court" && selection.ci===ci && selection.ti===ti && selection.pi===pi; }
+function isSelBench(bi){ return selection && selection.kind==="bench" && selection.bi===bi; }
+function getAt(sel){
+  if(sel.kind==="court"){ var c=S.current.courts[sel.ci]; return (sel.ti===0?c.t1:c.t2)[sel.pi]; }
+  return S.current.resting[sel.bi];
+}
+function setAt(sel, id){
+  if(sel.kind==="court"){ var c=S.current.courts[sel.ci]; (sel.ti===0?c.t1:c.t2)[sel.pi]=id; }
+  else S.current.resting[sel.bi]=id;
+}
+function tapSlot(sel){
+  if(!selection){ selection = sel; renderPlay(); return; }
+  if(JSON.stringify(selection)===JSON.stringify(sel)){ selection=null; renderPlay(); return; }
+  var a=getAt(selection), b=getAt(sel);
+  setAt(selection, b); setAt(sel, a);
+  selection = null;
+  var W={}; S.players.forEach(function(p){ W[p.id]=lv(p).w; });
+  S.current.quality = E.roundQuality(S.current.courts, W, stats, S.history.length);
+  save(); renderPlay(); toast("สลับแล้ว");
+}
+
+function doGenerate(isRegen){
+  var res = E.generateRound({
+    players:S.players, history:S.history, stats:stats, levels:S.levels,
+    courts:AB().courts, weights:S.weights, locks:S.locks
+  });
+  if(res.error){ toast(res.error); return; }
+  S.current = res; selection=null; save(); render();
+  if(isRegen) toast("สุ่มผังใหม่แล้ว");
+}
+
+function commitRound(){
+  if(!S.current) return;
+  syncMembers();
+  S.history.push({ courts:S.current.courts.map(function(c){ return {t1:c.t1.slice(), t2:c.t2.slice()}; }),
+                   resting:(S.current.resting||[]).slice(), at:Date.now(), block:S.activeBlock });
+  S.current = null; S.locks = [];
+  S.players.forEach(function(p){ p.forceNext=false; });
+  selection = null;
+  recalc(); save(); render();
+  toast("บันทึกตาแล้ว → ตาที่ "+(S.history.length+1));
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+/* ============================================================
+   TAB: สถิติ
+   ============================================================ */
+function renderStats(){
+  // นับทุกคนที่เล่นวันนี้ ไม่ใช่แค่คนที่อยู่ในชั่วโมงปัจจุบัน
+  var present = S.players.filter(function(p){ return p.present || (stats.games[p.id]||0) > 0; });
+  var gs = present.map(function(p){ return stats.games[p.id]||0; });
+  var maxG = Math.max.apply(null, gs.concat([0]));
+  var minG = gs.length ? Math.min.apply(null, gs) : 0;
+  var avgG = gs.length ? gs.reduce(function(a,b){return a+b;},0)/gs.length : 0;
+
+  $("#kpis").innerHTML =
+    '<div class="kpi"><b>'+S.history.length+'</b><span>ตาที่เล่นไปแล้ว</span></div>'+
+    '<div class="kpi"><b>'+present.length+'</b><span>คนที่เล่นวันนี้</span></div>'+
+    '<div class="kpi"><b>'+avgG.toFixed(1)+'</b><span>ตาเฉลี่ย/คน</span></div>'+
+    '<div class="kpi"><b>'+(maxG-minG)+'</b><span>ส่วนต่างมาก-น้อย</span></div>';
+
+  var rows = present.slice().sort(function(a,b){ return (stats.games[b.id]||0)-(stats.games[a.id]||0); });
+  $("#fairList").innerHTML = rows.length ? rows.map(function(p){
+    var g = stats.games[p.id]||0, L=lv(p);
+    return '<div class="srow"><span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+
+      '<span class="nm">'+esc(p.name)+'</span>'+
+      '<span class="bar" style="flex:1"><i style="width:'+(maxG? (g/maxG*100):0)+'%"></i></span>'+
+      '<span class="val">'+g+' ตา · พัก '+(stats.rests[p.id]||0)+'</span></div>';
+  }).join("") : '<div class="empty">ยังไม่มีข้อมูล</div>';
+
+  // ตารางคู่ขา
+  var ps = present.slice().sort(function(a,b){ return b.level-a.level; });
+  if(ps.length>1 && S.history.length){
+    var h = '<table><tr><th class="rh"></th>'+ps.map(function(p){ return '<th>'+esc(p.name.slice(0,4))+'</th>'; }).join("")+'</tr>';
+    ps.forEach(function(a){
+      h += '<tr><th class="rh">'+esc(a.name)+'</th>';
+      ps.forEach(function(b){
+        if(a.id===b.id){ h+='<td style="background:#f1f5f9">–</td>'; return; }
+        var n = stats.partner[E.pk(a.id,b.id)]||0;
+        var cls = n>=3?"c3":(n===2?"c2":(n===1?"c1":""));
+        h += '<td class="'+cls+'">'+(n||"")+'</td>';
+      });
+      h += '</tr>';
+    });
+    $("#partnerMatrix").innerHTML = h+'</table>';
+  } else $("#partnerMatrix").innerHTML = '<div class="empty">เล่นไปสักตาก่อนนะ</div>';
+
+  // ประวัติ
+  $("#historyList").innerHTML = S.history.length ? S.history.slice().reverse().map(function(h, i){
+    var r = S.history.length - i;
+    var line = h.courts.map(function(c, ci){
+      var nm = function(id){ var p=pById(id); return p?p.name:"?"; };
+      return '<div class="tiny" style="padding:2px 0"><b>C'+(ci+1)+':</b> '+esc(nm(c.t1[0]))+'+'+esc(nm(c.t1[1]))+' vs '+esc(nm(c.t2[0]))+'+'+esc(nm(c.t2[1]))+'</div>';
+    }).join("");
+    var rest = (h.resting||[]).map(function(id){ var p=pById(id); return p?p.name:"?"; }).join(", ");
+    return '<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b style="font-size:13px">ตาที่ '+r+'</b>'+line+
+           (rest?'<div class="tiny muted">พัก: '+esc(rest)+'</div>':'')+'</div>';
+  }).join("") : '<div class="empty">ยังไม่มีประวัติ</div>';
+
+  $("#undoBtn").disabled = !S.history.length;
+  $("#undoBtn").onclick = function(){
+    if(!S.history.length) return;
+    if(!confirm("ยกเลิกตาที่ "+S.history.length+"? สถิติจะถูกคำนวณใหม่")) return;
+    S.history.pop(); recalc(); save(); render(); toast("ยกเลิกแล้ว");
+  };
+}
+
+/* ============================================================
+   TAB: ค่าใช้จ่าย
+   ============================================================ */
+function blockCalcHTML(b, i, m){
+  var src = S.blocks[i];
+  var auto = src.feeOverride===""||src.feeOverride===null||src.feeOverride===undefined;
+  return 'คอร์ท '+Math.round(b.courtCost).toLocaleString()+' ฿'+
+    (auto?' ('+b.courts+'×'+m.courtRate+'×'+(b.minutes/60).toFixed(b.minutes%60?1:0)+' ชม.)':' (ระบุเอง)')+
+    ' + ลูก '+Math.round(b.shuttleCost).toLocaleString()+' ฿ = <b style="color:var(--ink)">'+
+    Math.round(b.total).toLocaleString()+' ฿</b>'+
+    (b.headcount? ' · ตกคนละ ~'+Math.round(b.perHead).toLocaleString()+' ฿' : ' · ⚠️ ยังไม่มีคนในช่วงนี้');
+}
+function moneyCfg(){
+  return {
+    blocks:S.blocks, courtRate:S.money.courtRate, shuttlePrice:S.money.shuttlePrice,
+    otherFee:S.money.otherFee, mode:S.money.mode, roundTo:S.money.roundTo
+  };
+}
+/* rebuild=false → อัปเดตเฉพาะตัวเลขที่คำนวณได้ ไม่สร้าง input ใหม่
+   (กันไม่ให้ช่องที่กำลังพิมพ์อยู่หลุดโฟกัสบนมือถือ) */
+function renderMoney(rebuild){
+  if(rebuild === undefined) rebuild = true;
+  var m = S.money;
+  syncMembers();
+  if(rebuild){
+    $("#courtRate").value = m.courtRate;
+    $("#shuttlePrice").value = m.shuttlePrice;
+    $("#otherFee").value = m.otherFee;
+    $("#roundTo").value = m.roundTo;
+  }
+  $$("#splitMode button").forEach(function(b){ b.classList.toggle("on", b.dataset.m===m.mode); });
+
+  var r = E.computeCosts(S.players, S.history, moneyCfg());
+  var totalMin = S.blocks.reduce(function(a,b){ return a+(+b.minutes||60); },0);
+  var totalSh  = S.blocks.reduce(function(a,b){ return a+(+b.shuttles||0); },0);
+  $("#blockSub").textContent = S.blocks.length+" ช่วง · รวม "+(totalMin/60).toFixed(totalMin%60?1:0)+" ชม. · "+totalSh+" ลูก";
+
+  // ── การ์ดแต่ละชั่วโมง (สร้างใหม่เฉพาะตอนจำเป็น)
+  if(rebuild || $$("#blockEditor .blockcard").length !== S.blocks.length){
+    $("#blockEditor").innerHTML = r.blocks.map(function(b, i){
+      var src = S.blocks[i];
+      var auto = src.feeOverride===""||src.feeOverride===null||src.feeOverride===undefined;
+      return '<div class="blockcard'+(i===S.activeBlock?" on":"")+'">'+
+        '<div class="row" style="margin-bottom:8px">'+
+          '<b style="font-size:14px">'+esc(b.name)+'</b>'+
+          (i===S.activeBlock?'<span class="tag">กำลังเล่น</span>':'')+
+          '<span class="tag gray" data-hc="'+i+'">'+b.headcount+' คน</span>'+
+          '<button class="btn gray sm" style="margin-left:auto" data-editblk="'+i+'">แก้รายชื่อ</button>'+
+        '</div>'+
+        '<div class="grid4">'+
+          '<label class="fld" style="margin:0"><span>คอร์ท</span><input type="number" inputmode="numeric" min="1" max="10" value="'+src.courts+'" data-bf="courts" data-bi="'+i+'"></label>'+
+          '<label class="fld" style="margin:0"><span>นาที</span><input type="number" inputmode="numeric" min="15" step="15" value="'+(src.minutes||60)+'" data-bf="minutes" data-bi="'+i+'"></label>'+
+          '<label class="fld" style="margin:0"><span>ลูกที่ใช้</span><input type="number" inputmode="numeric" min="0" value="'+(src.shuttles||0)+'" data-bf="shuttles" data-bi="'+i+'"></label>'+
+          '<label class="fld" style="margin:0"><span>ค่าคอร์ทเอง</span><input type="number" inputmode="numeric" min="0" placeholder="'+Math.round(b.courtCost)+'" value="'+(auto?"":src.feeOverride)+'" data-bf="feeOverride" data-bi="'+i+'"></label>'+
+        '</div>'+
+        '<div class="muted tiny" style="margin-top:8px" data-calc="'+i+'">'+blockCalcHTML(b,i,m)+'</div></div>';
+    }).join("");
+
+    $$("[data-bf]").forEach(function(inp){
+      inp.addEventListener("input", function(){
+        var b = S.blocks[+inp.dataset.bi], f = inp.dataset.bf, v = inp.value.trim();
+        if(f==="feeOverride") b[f] = v==="" ? "" : Math.max(0,+v||0);
+        else if(f==="courts")  b[f] = v==="" ? b[f] : Math.max(1,Math.min(10,+v||1));
+        else if(f==="minutes") b[f] = v==="" ? b[f] : Math.max(15,+v||60);
+        else b[f] = Math.max(0,+v||0);
+        save(); renderMoney(false);
+      });
+    });
+    $$("[data-editblk]").forEach(function(b){ b.onclick = function(){ openHourEditor(+b.dataset.editblk); }; });
+    $("#addBlockBtn").onclick = function(){ openNewHour(); };
+  } else {
+    r.blocks.forEach(function(b, i){
+      var el = $('[data-calc="'+i+'"]'); if(el) el.innerHTML = blockCalcHTML(b,i,m);
+      var hc = $('[data-hc="'+i+'"]'); if(hc) hc.textContent = b.headcount+" คน";
+    });
+  }
+
+  $("#moneySummary").innerHTML =
+    '<div class="kpis">'+
+      '<div class="kpi"><b>'+Math.round(r.total).toLocaleString()+'</b><span>ยอดรวมทั้งวัน (฿)</span></div>'+
+      '<div class="kpi"><b>'+r.headcount+'</b><span>คนที่ต้องจ่าย</span></div>'+
+      '<div class="kpi"><b>'+r.collected.toLocaleString()+'</b><span>เก็บได้จริง</span></div>'+
+      '<div class="kpi"><b style="color:'+(r.diff>=0?"var(--ok)":"var(--danger)")+'">'+(r.diff>=0?"+":"")+Math.round(r.diff)+'</b><span>'+(r.diff>=0?"เหลือ/ทบวันหน้า":"ขาด")+'</span></div>'+
+    '</div>';
+
+  $("#moneyList").innerHTML = r.rows.length ? r.rows.map(function(x){
+    var tags = x.blocks.map(function(bi){ return (S.blocks[bi]||{}).name || ("ชม."+(bi+1)); }).join(", ");
+    return '<div class="mrow"><span class="nm">'+esc(x.name)+
+      '<div class="muted tiny" style="font-weight:400">'+esc(tags)+' · '+x.games+' ตา</div></span>'+
+      '<span class="amt">'+x.pay.toLocaleString()+' ฿</span></div>';
+  }).join("") : '<div class="empty">ยังไม่มีคนในชั่วโมงไหนเลย<br><span class="tiny">ไปแท็บ 👥 ผู้เล่น เช็คชื่อคนที่มาก่อน</span></div>';
+
+  $("#copyMoneyBtn").onclick = function(){
+    var L = ["🏸 "+(S.clubName||"ก๊วนแบด")+" — สรุปค่าใช้จ่าย",
+             "ลูกละ "+m.shuttlePrice+" ฿ · คอร์ทละ "+m.courtRate+" ฿/ชม.", ""];
+    r.blocks.forEach(function(b){
+      L.push("🕐 "+b.name+" — "+b.courts+" คอร์ท "+(b.minutes)+" นาที, "+b.shuttles+" ลูก, "+b.headcount+" คน = "+Math.round(b.total).toLocaleString()+" ฿");
+    });
+    if(r.otherFee) L.push("➕ ค่าอื่น ๆ "+r.otherFee+" ฿");
+    L.push("", "รวม "+Math.round(r.total).toLocaleString()+" ฿ · หาร"+(m.mode==="games"?"ตามจำนวนตาที่ลง":"เท่ากันในแต่ละชั่วโมง"), "");
+    r.rows.forEach(function(x){
+      var tags = x.blocks.map(function(bi){ return (S.blocks[bi]||{}).name || ("ชม."+(bi+1)); }).join(",");
+      L.push("• "+x.name+" ("+tags+") = "+x.pay+" ฿");
+    });
+    copyText(L.join("\n"));
+  };
+}
+function copyText(txt){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){ toast("คัดลอกแล้ว ✓"); },function(){ fallbackCopy(txt); });
+  } else fallbackCopy(txt);
+}
+function fallbackCopy(txt){
+  var ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta);
+  ta.select(); try{ document.execCommand("copy"); toast("คัดลอกแล้ว ✓"); }catch(e){ openModal('<textarea rows="12">'+esc(txt)+'</textarea>'); }
+  document.body.removeChild(ta);
+}
+["courtRate","shuttlePrice","otherFee"].forEach(function(k){
+  $("#"+k).addEventListener("input", function(){ S.money[k]=+this.value||0; save(); renderMoney(false); });
+});
+$("#roundTo").addEventListener("change", function(){ S.money.roundTo=+this.value; save(); renderMoney(); });
+$$("#splitMode button").forEach(function(b){ b.onclick=function(){ S.money.mode=b.dataset.m; save(); renderMoney(); }; });
+
+/* ============================================================
+   TAB: ตั้งค่า
+   ============================================================ */
+function renderSettings(){
+  $("#clubNameInput").value = S.clubName;
+  $("#courtCount").value = AB().courts;
+  $$("#presetMode button").forEach(function(b){ b.classList.toggle("on", b.dataset.p===S.preset); });
+  $("#wBal").value = S.weights.wBal; $("#wBalV").textContent = S.weights.wBal;
+  $("#wMix").value = S.weights.wMix; $("#wMixV").textContent = (S.weights.wMix>0?"คละมือ ":(S.weights.wMix<0?"ระดับใกล้กัน ":"ปิด "))+Math.abs(S.weights.wMix);
+  $("#wRep").value = S.weights.wRep; $("#wRepV").textContent = S.weights.wRep;
+
+  $("#levelWeights").innerHTML = S.levels.map(function(L,i){
+    return '<div class="row" style="padding:5px 0">'+
+      '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+
+      '<span style="flex:1;font-size:13px">'+esc(L.label)+' <span class="muted tiny">'+esc(L.note)+'</span></span>'+
+      '<input type="number" step="0.5" min="0.5" max="20" value="'+L.w+'" data-lw="'+i+'" style="width:78px">'+
+    '</div>';
+  }).join("");
+  $$("[data-lw]").forEach(function(inp){
+    inp.onchange = function(){ S.levels[+inp.dataset.lw].w = +inp.value||1; save(); render(); };
+  });
+  $("#storeNote").textContent = storageOK
+    ? "ข้อมูลถูกบันทึกอัตโนมัติในเบราว์เซอร์เครื่องนี้ · แนะนำให้ดาวน์โหลดไฟล์สำรองเป็นระยะ"
+    : "⚠️ เบราว์เซอร์นี้บันทึกอัตโนมัติไม่ได้ — กรุณาดาวน์โหลดไฟล์สำรองก่อนปิดหน้า";
+}
+$("#clubNameInput").addEventListener("input", function(){ S.clubName=this.value; $("#clubName").textContent=this.value||"จัดก๊วนแบด"; save(); });
+$("#courtCount").addEventListener("input", function(){ AB().courts=Math.max(1,Math.min(10,+this.value||1)); save(); });
+$$("#presetMode button").forEach(function(b){
+  b.onclick = function(){ S.preset=b.dataset.p; S.weights=Object.assign({}, E.PRESETS[b.dataset.p]); save(); renderSettings(); toast("เปลี่ยนสไตล์แล้ว"); };
+});
+["wBal","wMix","wRep"].forEach(function(k){
+  $("#"+k).addEventListener("input", function(){ S.weights[k]=+this.value; S.preset="custom"; save(); renderSettings(); });
+});
+
+$("#exportBtn").onclick = function(){
+  var blob = new Blob([JSON.stringify(S,null,2)], {type:"application/json"});
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download = "badminton-"+new Date().toISOString().slice(0,10)+".json";
+  a.click(); URL.revokeObjectURL(a.href); toast("ดาวน์โหลดแล้ว");
+};
+$("#importBtn").onclick = function(){ $("#importFile").click(); };
+$("#importFile").addEventListener("change", function(e){
+  var f=e.target.files[0]; if(!f) return;
+  var fr=new FileReader();
+  fr.onload=function(){
+    try{
+      var o=JSON.parse(fr.result);
+      if(!o.players) throw 0;
+      S = migrate(o);
+      recalc(); save(); render(); toast("นำเข้าสำเร็จ");
+    }catch(err){ toast("ไฟล์ไม่ถูกต้อง"); }
+  };
+  fr.readAsText(f); e.target.value="";
+});
+$("#copyDataBtn").onclick = function(){
+  copyText(JSON.stringify(S));
+  toast("คัดลอกแล้ว — เอาไปวางในโน้ต/ไลน์เก็บไว้ได้");
+};
+$("#pasteDataBtn").onclick = function(){
+  openModal('<h2 style="font-size:16px;margin-bottom:8px">วางข้อมูลสำรอง</h2>'+
+    '<p class="muted tiny" style="margin:0 0 8px">วางข้อความ JSON ที่เคยคัดลอกไว้ลงในช่องนี้</p>'+
+    '<textarea id="pdText" rows="8" placeholder="{...}"></textarea>'+
+    '<div class="row" style="margin-top:10px"><button class="btn gray sm" style="flex:1" id="pdCancel">ยกเลิก</button>'+
+    '<button class="btn sm" style="flex:2" id="pdOk">นำเข้า</button></div>');
+  $("#pdCancel").onclick = closeModal;
+  $("#pdOk").onclick = function(){
+    try{
+      var o = JSON.parse($("#pdText").value.trim());
+      if(!o.players) throw 0;
+      S = migrate(o); recalc(); save(); closeModal(); render(); toast("นำเข้าสำเร็จ");
+    }catch(err){ toast("ข้อมูลไม่ถูกต้อง"); }
+  };
+};
+$("#newDayBtn").onclick = function(){
+  if(!confirm("เริ่มวันใหม่? รายชื่อผู้เล่นจะถูกเก็บไว้ แต่สถิติ/ประวัติ/ชั่วโมง/ค่าใช้จ่ายจะถูกล้าง")) return;
+  var keepCourts = AB().courts;
+  S.history=[]; S.current=null; S.locks=[];
+  S.players.forEach(function(p){ p.forceNext=false; p.joinRound=0; });
+  S.blocks=[ newBlock(1, keepCourts) ]; S.activeBlock=0;
+  S.money.otherFee=0;
+  syncMembers();
+  recalc(); save(); render(); toast("เริ่มวันใหม่แล้ว 🏸");
+};
+$("#wipeBtn").onclick = function(){
+  if(!confirm("ล้างข้อมูลทั้งหมดรวมถึงรายชื่อผู้เล่น?")) return;
+  S=blankState(); recalc(); save(); render(); toast("ล้างข้อมูลแล้ว");
+};
+
+/* ============================================================
+   render
+   ============================================================ */
+function render(){
+  var active = $("section.tab.active").id;
+  if(active==="tab-play") renderPlay();
+  else if(active==="tab-players") renderPlayers();
+  else if(active==="tab-stats") renderStats();
+  else if(active==="tab-money") renderMoney();
+  else if(active==="tab-settings") renderSettings();
+  $("#roundPill").textContent = "ตาที่ " + (S.history.length + 1);
+  $("#clubName").textContent = S.clubName || "จัดก๊วนแบด";
+}
+
+load();
+paintSaveBar();
+render();
+</script>
+</body>
+</html>
