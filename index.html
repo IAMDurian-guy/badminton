@@ -38,7 +38,9 @@ header{
 }
 header .logo{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.55);flex:none}
 header h1{font-size:16px;font-weight:700;flex:1;letter-spacing:.2px}
-header .round-pill{background:rgba(255,255,255,.18);padding:4px 11px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap}
+.langsw{display:flex;background:rgba(255,255,255,.16);border-radius:999px;padding:3px;gap:2px}
+.langsw button{padding:4px 11px;border-radius:999px;font-size:12.5px;font-weight:700;color:rgba(255,255,255,.75)}
+.langsw button.on{background:#fff;color:var(--accent-d)}
 
 /* ---------- layout ---------- */
 main{max-width:760px;margin:0 auto;padding:12px}
@@ -103,6 +105,9 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   justify-content:center;font-size:15px;color:#fff;flex:none;background:#fff
 }
 .chk.on{background:var(--ok);border-color:var(--ok)}
+.gi{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:6px;
+  font-size:10.5px;font-weight:800;color:#fff;flex:none}
+.gi.m{background:#3b82f6}.gi.f{background:#ec4899}
 .iconbtn{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:#f1f5f9;font-size:15px;flex:none}
 .iconbtn.on{background:var(--warn);color:#fff}
 
@@ -230,7 +235,7 @@ nav.bn button.on{color:var(--accent-d)}
 <header>
   <img class="logo" id="logoImg" alt="">
   <h1 id="clubName">จัดก๊วนแบด</h1>
-  <span class="round-pill" id="roundPill">ตาที่ 1</span>
+  <div class="langsw"><button id="langTH" class="on">TH</button><button id="langEN">EN</button></div>
 </header>
 
 <div id="noSaveBar"></div>
@@ -271,10 +276,13 @@ nav.bn button.on{color:var(--accent-d)}
     <div id="whichHour" class="tiny muted" style="margin-bottom:8px"></div>
     <div class="row" style="margin-bottom:10px">
       <button class="btn gray sm" id="allInBtn">มาครบทุกคน</button>
-      <button class="btn gray sm" id="allOutBtn">ล้างสถานะมา</button>
+      <button class="btn gray sm" id="allOutBtn">ล้างสถานะ</button>
     </div>
     <div class="hint" style="margin-bottom:10px">แตะ ✓ = มา/ไม่มา &nbsp;·&nbsp; ⚡ = บังคับให้ได้ลงตาหน้า &nbsp;·&nbsp; แตะชื่อเพื่อแก้ไข</div>
     <div class="plist" id="playerList"></div>
+    <hr>
+    <button class="btn danger block sm" id="clearPlayersBtn">🗑️ ล้างข้อมูลผู้เล่นทั้งหมด (เริ่มก๊วนใหม่)</button>
+    <p class="muted tiny center" style="margin:8px 0 0">ลบรายชื่อ สถิติ ประวัติ และชั่วโมงทั้งหมด — ใช้ตอนมาตีครั้งใหม่แล้วสมาชิกไม่เหมือนเดิม</p>
   </div>
 </section>
 
@@ -714,14 +722,14 @@ var storageOK = true;
 
 /* ---------------- state ---------------- */
 function newBlock(n, courts){
-  return {name:"ชม.ที่ "+n, courts:courts||3, minutes:60, shuttles:0, feeOverride:"", members:[]};
+  return {name:"ชม.ที่ "+n, courts:courts||3, minutes:60, shuttles:0, feeOverride:"", members:[], current:null};
 }
 function blankState(){
   return {
     clubName:"จัดก๊วนแบด",
+    lang:"th",
     players:[],
     history:[],
-    current:null,
     locks:[],
     weights: Object.assign({}, E.PRESETS.mix),
     preset:"mix",
@@ -793,17 +801,22 @@ function migrate(o){
   }
   if(o.money && o.money.shuttlePrice !== undefined) s.money.shuttlePrice = +o.money.shuttlePrice;
   (s.history||[]).forEach(function(h){ if(h.block === undefined) h.block = 0; });
-  delete s.courts;
+  if(o.current && s.blocks[s.activeBlock] && !s.blocks[s.activeBlock].current){
+    s.blocks[s.activeBlock].current = o.current;
+  }
+  delete s.current; delete s.courts;
   return s;
 }
 function recalc(){ stats = E.deriveStats(S.players, S.history); }
 
 function toast(msg){
+  if(S.lang==="en") msg = trText(msg);
   var t=$("#toast"); t.textContent=msg; t.classList.add("show");
   clearTimeout(t._h); t._h=setTimeout(function(){ t.classList.remove("show"); }, 1900);
 }
 function pById(id){ for(var i=0;i<S.players.length;i++) if(S.players[i].id===id) return S.players[i]; return null; }
 function lv(p){ return S.levels[p.level] || S.levels[0]; }
+function gIcon(p){ return p.gender==="F" ? '<span class="gi f">ญ</span>' : '<span class="gi m">ช</span>'; }
 function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]; }); }
 
 /* ---------------- tabs ---------------- */
@@ -819,7 +832,7 @@ $$("nav.bn button").forEach(function(b){
 });
 
 /* ---------------- modal ---------------- */
-function openModal(html){ $("#modalSheet").innerHTML = html; $("#modal").classList.add("show"); }
+function openModal(html){ $("#modalSheet").innerHTML = html; $("#modal").classList.add("show"); if(typeof applyLang==="function") applyLang(); }
 function closeModal(){ $("#modal").classList.remove("show"); }
 $("#modal").addEventListener("click", function(e){ if(e.target.id==="modal") closeModal(); });
 
@@ -866,6 +879,7 @@ function renderPlayers(){
     row.innerHTML =
       '<div class="chk '+(p.present?"on":"")+'" data-a="toggle">'+(p.present?"✓":"")+'</div>'+
       '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+
+      gIcon(p)+
       '<span class="nm" data-a="edit">'+esc(p.name)+'</span>'+
       '<span class="gtag">'+(stats.games[p.id]||0)+' ตา</span>'+
       '<button class="iconbtn '+(p.forceNext?"on":"")+'" data-a="force" title="บังคับให้ลงตาหน้า">⚡</button>';
@@ -898,6 +912,12 @@ $("#bulkBtn").onclick = function(){
   openModal(
     '<h2 style="font-size:16px;margin-bottom:8px">เพิ่มทีละหลายคน</h2>'+
     '<p class="muted tiny" style="margin:0 0 8px">พิมพ์บรรทัดละคน ใส่ระดับมือต่อท้ายได้ เช่น <b>ต้น P</b> หรือ <b>เอ,C</b> (ไม่ใส่ = มือ P)</p>'+
+    '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">'+
+      S.levels.map(function(L){
+        return '<span style="display:inline-flex;align-items:center;gap:5px;background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:3px 8px;font-size:11.5px">'+
+          '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+esc(L.note)+'</span>';
+      }).join("")+
+    '</div>'+
     '<textarea id="bulkText" rows="8" placeholder="ต้น P\nเอ C\nบี N\nนุ่น BG"></textarea>'+
     '<div class="row" style="margin-top:10px"><button class="btn gray sm" style="flex:1" id="bulkCancel">ยกเลิก</button>'+
     '<button class="btn sm" style="flex:2" id="bulkOk">เพิ่มทั้งหมด</button></div>');
@@ -934,14 +954,14 @@ function editPlayer(p){
     $$("#eGender button").forEach(function(b){ b.classList.toggle("on", b.dataset.g===tmp.gender); b.onclick=function(){ tmp.gender=b.dataset.g; paint(); }; });
     $$("#eStat button").forEach(function(b){ b.classList.toggle("on", b.dataset.s===tmp.stat); b.onclick=function(){ tmp.stat=b.dataset.s; paint(); }; });
   }
-  paint();
+  paint(); applyLang();
   $("#eCancel").onclick = closeModal;
   $("#eDel").onclick = function(){
-    if(!confirm("ลบ "+p.name+" ออกจากก๊วน?")) return;
+    if(!askConfirm("ลบ "+p.name+" ออกจากก๊วน?")) return;
     S.players = S.players.filter(function(x){ return x.id!==p.id; });
     S.locks = S.locks.filter(function(pr){ return pr.indexOf(p.id)<0; });
     S.blocks.forEach(function(b){ b.members = (b.members||[]).filter(function(id){ return id!==p.id; }); });
-    if(S.current) S.current = null;
+    S.blocks.forEach(function(bk){ bk.current = null; });
     save(); recalc(); closeModal(); render();
   };
   $("#eOk").onclick = function(){
@@ -952,6 +972,15 @@ function editPlayer(p){
   };
 }
 
+$("#clearPlayersBtn").onclick = function(){
+  if(!S.players.length){ toast("ยังไม่มีข้อมูลผู้เล่น"); return; }
+  if(!askConfirm("ล้างข้อมูลผู้เล่นทั้งหมด?\nรายชื่อ สถิติ ประวัติ และชั่วโมงทั้งหมดจะถูกลบถาวร")) return;
+  var keepCourts = AB().courts;
+  S.players = []; S.history = []; S.locks = []; S.seq = 1;
+  S.blocks = [ newBlock(1, keepCourts) ]; S.activeBlock = 0;
+  selection = null;
+  recalc(); save(); render(); toast("ล้างข้อมูลผู้เล่นแล้ว เริ่มก๊วนใหม่ได้เลย 🏸");
+};
 $("#allInBtn").onclick = function(){ S.players.forEach(function(p){ p.present=true; p.pause=false; }); syncMembers(); save(); render(); };
 $("#allOutBtn").onclick = function(){ S.players.forEach(function(p){ p.present=false; p.pause=false; }); syncMembers(); save(); render(); };
 
@@ -964,6 +993,7 @@ function slotHTML(id, sel){
   var L = lv(p);
   return '<div class="slot'+(sel?" sel":"")+'" data-id="'+p.id+'">'+
     '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+
+    gIcon(p)+
     '<span class="nm">'+esc(p.name)+'</span>'+
     '<span class="gm">'+(stats.games[p.id]||0)+' ตา</span></div>';
 }
@@ -977,7 +1007,6 @@ function isLocked(t){
 
 function renderPlay(){
   var present = S.players.filter(function(p){ return p.present && !p.pause; });
-  $("#roundPill").textContent = "ตาที่ " + (S.history.length + 1);
   $("#clubName").textContent = S.clubName || "จัดก๊วนแบด";
 
   var maxCourts = Math.floor(present.length/4);
@@ -1012,12 +1041,12 @@ function renderPlay(){
             ? '<div class="courtwarn">💡 คนพอสำหรับ '+maxCourts+' คอร์ท — ถ้าเพิ่มคอร์ทได้ ทุกคนจะได้ลงบ่อยขึ้น</div>' : ''))+
     '</div>';
   var rb = $("#regenBtn"); if(rb) rb.onclick = function(){
-    if(!S.current){ doGenerate(true); return; }
-    if(confirm("สุ่มผังตานี้ใหม่ทั้งหมด?\n(ผังปัจจุบันและการสลับมือที่ทำไว้จะหายไป)")) doGenerate(true);
+    if(!AB().current){ doGenerate(true); return; }
+    if(askConfirm("สุ่มผังตานี้ใหม่ทั้งหมด?\n(ผังปัจจุบันและการสลับมือที่ทำไว้จะหายไป)")) doGenerate(true);
   };
   var setCourts = function(n){
     AB().courts = Math.max(1, Math.min(10, n));
-    if(S.current) doGenerate(true); else { save(); render(); }
+    if(AB().current) doGenerate(true); else { save(); render(); }
     toast(AB().name+" = "+AB().courts+" คอร์ท");
   };
   var cm=$("#cMinus"), cp=$("#cPlus");
@@ -1028,7 +1057,7 @@ function renderPlay(){
       var i = +b.dataset.blk;
       if(i === S.activeBlock){ openHourEditor(i); return; }
       syncMembers();
-      S.activeBlock = i; applyMembers(); S.current = null; selection = null;
+      S.activeBlock = i; applyMembers(); selection = null;
       save(); render(); toast("สลับไป "+AB().name);
     };
   });
@@ -1048,7 +1077,7 @@ function renderPlay(){
     });
   } else $("#lockList").innerHTML = "";
 
-  var cur = S.current;
+  var cur = AB().current;
   if(!cur){
     $("#courtsWrap").innerHTML = '<div class="card"><div class="empty">'+
       (present.length<4 ? "ต้องมีผู้เล่นที่ 'มา' อย่างน้อย 4 คน<br>ไปที่แท็บ 👥 ผู้เล่น เพื่อเพิ่ม/เช็คชื่อ"
@@ -1099,7 +1128,7 @@ function renderPlay(){
     '<button class="btn gray block sm" id="clearBtn" style="margin-top:8px">ล้างผังตานี้</button>';
 
   $("#commitBtn").onclick = commitRound;
-  $("#clearBtn").onclick = function(){ S.current=null; selection=null; save(); render(); };
+  $("#clearBtn").onclick = function(){ AB().current=null; selection=null; save(); render(); };
 
   // events
   $$("#courtsWrap .slot").forEach(function(el){
@@ -1115,7 +1144,7 @@ function renderPlay(){
   });
   $$("[data-lock]").forEach(function(b){
     b.onclick = function(){
-      var pr = b.dataset.lock.split("-"), c=S.current.courts[+pr[0]];
+      var pr = b.dataset.lock.split("-"), c=AB().current.courts[+pr[0]];
       var t = +pr[1]===0 ? c.t1 : c.t2;
       var k = E.pk(t[0],t[1]);
       var at = S.locks.findIndex(function(x){ return E.pk(x[0],x[1])===k; });
@@ -1127,11 +1156,12 @@ function renderPlay(){
 }
 
 /* ---------- ชั่วโมงใหม่ / แก้ไขชั่วโมง ---------- */
+function cntTxt(n){ return S.lang==="en" ? "("+n+" players)" : "("+n+" คน)"; }
 function memberPickerHTML(sel){
   return S.players.map(function(p){
     var L=lv(p);
     return '<button class="'+(sel[p.id]?"on":"")+'" data-pick="'+p.id+'">'+
-      '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+esc(p.name)+'</button>';
+      '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+gIcon(p)+esc(p.name)+'</button>';
   }).join("");
 }
 function bindPicker(sel, after){
@@ -1159,7 +1189,7 @@ function openNewHour(){
       '<div class="pickgrid" id="nhPick">'+memberPickerHTML(sel)+'</div></label>'+
     '<div class="row" style="margin-top:8px"><button class="btn gray sm" style="flex:1" id="nhCancel">ยกเลิก</button>'+
     '<button class="btn sm" style="flex:2" id="nhOk">เริ่มชั่วโมงใหม่</button></div>');
-  var upd = function(){ $("#nhCount").textContent = "("+Object.keys(sel).length+" คน)"; };
+  var upd = function(){ $("#nhCount").textContent = cntTxt(Object.keys(sel).length); };
   upd(); bindPicker(sel, upd);
   $("#nhCancel").onclick = closeModal;
   $("#nhOk").onclick = function(){
@@ -1169,7 +1199,7 @@ function openNewHour(){
     b.minutes = Math.max(15, +$("#nhMin").value||60);
     b.members = ids;
     S.blocks.push(b); S.activeBlock = S.blocks.length-1;
-    applyMembers(); S.current=null; S.locks=[]; selection=null;
+    applyMembers(); AB().current=null; S.locks=[]; selection=null;
     save(); closeModal(); render(); toast("เริ่ม "+b.name+" แล้ว 🏸");
   };
 }
@@ -1192,17 +1222,17 @@ function openHourEditor(i){
       (S.blocks.length>1 ? '<button class="btn danger sm" id="hbDel">ลบ</button>' : '')+
       '<button class="btn gray sm" style="flex:1" id="hbCancel">ยกเลิก</button>'+
       '<button class="btn sm" style="flex:1" id="hbOk">บันทึก</button></div>');
-  var upd = function(){ $("#hbCount").textContent = "("+Object.keys(sel).length+" คน)"; };
+  var upd = function(){ $("#hbCount").textContent = cntTxt(Object.keys(sel).length); };
   upd(); bindPicker(sel, upd);
   $("#hbCancel").onclick = closeModal;
   var del = $("#hbDel");
   if(del) del.onclick = function(){
-    if(!confirm("ลบ "+b.name+"? ตาที่เล่นในช่วงนี้จะถูกลบด้วย")) return;
+    if(!askConfirm("ลบ "+b.name+"? ตาที่เล่นในช่วงนี้จะถูกลบด้วย")) return;
     S.history = S.history.filter(function(h){ return (h.block||0) !== i; });
     S.history.forEach(function(h){ if((h.block||0) > i) h.block--; });
     S.blocks.splice(i,1);
     if(S.activeBlock >= S.blocks.length) S.activeBlock = S.blocks.length-1;
-    applyMembers(); S.current=null; recalc(); save(); closeModal(); render(); toast("ลบแล้ว");
+    applyMembers(); AB().current=null; recalc(); save(); closeModal(); render(); toast("ลบแล้ว");
   };
   $("#hbOk").onclick = function(){
     b.name = $("#hbName").value.trim() || b.name;
@@ -1212,7 +1242,7 @@ function openHourEditor(i){
     var f = $("#hbFee").value.trim();
     b.feeOverride = f==="" ? "" : Math.max(0,+f||0);
     b.members = Object.keys(sel);
-    if(i === S.activeBlock){ applyMembers(); S.current=null; }
+    if(i === S.activeBlock){ applyMembers(); AB().current=null; }
     save(); closeModal(); render(); toast("บันทึกแล้ว");
   };
 }
@@ -1220,12 +1250,12 @@ function openHourEditor(i){
 function isSel(ci,ti,pi){ return selection && selection.kind==="court" && selection.ci===ci && selection.ti===ti && selection.pi===pi; }
 function isSelBench(bi){ return selection && selection.kind==="bench" && selection.bi===bi; }
 function getAt(sel){
-  if(sel.kind==="court"){ var c=S.current.courts[sel.ci]; return (sel.ti===0?c.t1:c.t2)[sel.pi]; }
-  return S.current.resting[sel.bi];
+  if(sel.kind==="court"){ var c=AB().current.courts[sel.ci]; return (sel.ti===0?c.t1:c.t2)[sel.pi]; }
+  return AB().current.resting[sel.bi];
 }
 function setAt(sel, id){
-  if(sel.kind==="court"){ var c=S.current.courts[sel.ci]; (sel.ti===0?c.t1:c.t2)[sel.pi]=id; }
-  else S.current.resting[sel.bi]=id;
+  if(sel.kind==="court"){ var c=AB().current.courts[sel.ci]; (sel.ti===0?c.t1:c.t2)[sel.pi]=id; }
+  else AB().current.resting[sel.bi]=id;
 }
 function tapSlot(sel){
   if(!selection){ selection = sel; renderPlay(); return; }
@@ -1234,7 +1264,7 @@ function tapSlot(sel){
   setAt(selection, b); setAt(sel, a);
   selection = null;
   var W={}; S.players.forEach(function(p){ W[p.id]=lv(p).w; });
-  S.current.quality = E.roundQuality(S.current.courts, W, stats, S.history.length);
+  AB().current.quality = E.roundQuality(AB().current.courts, W, stats, S.history.length);
   save(); renderPlay(); toast("สลับแล้ว");
 }
 
@@ -1244,16 +1274,16 @@ function doGenerate(isRegen){
     courts:AB().courts, weights:S.weights, locks:S.locks
   });
   if(res.error){ toast(res.error); return; }
-  S.current = res; selection=null; save(); render();
+  AB().current = res; selection=null; save(); render();
   if(isRegen) toast("สุ่มผังใหม่แล้ว");
 }
 
 function commitRound(){
-  if(!S.current) return;
+  if(!AB().current) return;
   syncMembers();
-  S.history.push({ courts:S.current.courts.map(function(c){ return {t1:c.t1.slice(), t2:c.t2.slice()}; }),
-                   resting:(S.current.resting||[]).slice(), at:Date.now(), block:S.activeBlock });
-  S.current = null; S.locks = [];
+  S.history.push({ courts:AB().current.courts.map(function(c){ return {t1:c.t1.slice(), t2:c.t2.slice()}; }),
+                   resting:(AB().current.resting||[]).slice(), at:Date.now(), block:S.activeBlock });
+  AB().current = null; S.locks = [];
   S.players.forEach(function(p){ p.forceNext=false; });
   selection = null;
   recalc(); save(); render();
@@ -1319,7 +1349,7 @@ function renderStats(){
   $("#undoBtn").disabled = !S.history.length;
   $("#undoBtn").onclick = function(){
     if(!S.history.length) return;
-    if(!confirm("ยกเลิกตาที่ "+S.history.length+"? สถิติจะถูกคำนวณใหม่")) return;
+    if(!askConfirm("ยกเลิกตาที่ "+S.history.length+"? สถิติจะถูกคำนวณใหม่")) return;
     S.history.pop(); recalc(); save(); render(); toast("ยกเลิกแล้ว");
   };
 }
@@ -1432,6 +1462,7 @@ function renderMoney(rebuild){
   };
 }
 function copyText(txt){
+  if(S.lang==="en") txt = trText(txt);
   if(navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(txt).then(function(){ toast("คัดลอกแล้ว ✓"); },function(){ fallbackCopy(txt); });
   } else fallbackCopy(txt);
@@ -1479,15 +1510,289 @@ $$("#presetMode button").forEach(function(b){
 });
 
 $("#newDayBtn").onclick = function(){
-  if(!confirm("เริ่มวันใหม่? รายชื่อผู้เล่นจะถูกเก็บไว้ แต่สถิติ/ประวัติ/ชั่วโมง/ค่าใช้จ่ายจะถูกล้าง")) return;
+  if(!askConfirm("เริ่มวันใหม่? รายชื่อผู้เล่นจะถูกเก็บไว้ แต่สถิติ/ประวัติ/ชั่วโมง/ค่าใช้จ่ายจะถูกล้าง")) return;
   var keepCourts = AB().courts;
-  S.history=[]; S.current=null; S.locks=[];
+  S.history=[]; AB().current=null; S.locks=[];
   S.players.forEach(function(p){ p.forceNext=false; p.joinRound=0; });
   S.blocks=[ newBlock(1, keepCourts) ]; S.activeBlock=0;
   S.money.otherFee=0;
   syncMembers();
   recalc(); save(); render(); toast("เริ่มวันใหม่แล้ว 🏸");
 };
+
+/* ============================================================
+   สองภาษา TH/EN — โค้ดสร้างข้อความไทยเป็นหลัก แล้วแปลที่ DOM
+   (เก็บต้นฉบับไทยไว้ในโหนด สลับกลับได้โดยไม่ต้องโหลดใหม่)
+   ============================================================ */
+var I18N = [
+  // กฎเฉพาะที่ต้องมาก่อนกฎทั่วไป
+  [/↩️ ยกเลิกตาล่าสุด/g, '↩️ Undo last round'],
+  [/จำนวนคอร์ทของชั่วโมงที่กำลังเล่น/g, 'Courts for current hour'],
+  [/🏸 น้ำหนักระดับมือ/g, '🏸 Level weights'],
+  [/แก้รายชื่อ/g, 'Edit members'],
+  [/ค่าคอร์ท \(ระบุเอง\)/g, 'Court fee (manual)'],
+  [/([\d.]+) ชม\./g, '$1 hr'],
+  [/เช่น ต้น/g, 'e.g. Ton'],
+  [/ก๊วนแบดของเรา/g, 'Our badminton group'],
+  [/ต้น P\nเอ C\nบี N\nนุ่น BG/g, 'Ton P\nAe C\nBee N\nNun BG'],
+  [/^ต้น P$/, 'Ton P'],
+  [/^เอ,C$/, 'Ae,C'],
+  [/^\s*หรือ\s*$/, ' or '],
+  [/(\d+) ช่วง · รวม/g, '$1 blocks · total'],
+  [/^ชื่อ$/, 'Name'],
+  [/^เพศ$/, 'Gender'],
+  [/^จัดก๊วนแบด$/, 'Badminton Group'],
+  // ── ประโยคยาว/เฉพาะ (ต้องมาก่อน) ──
+  [/ตั้งไว้ (\d+) คอร์ท แต่มีคนอยู่ (\d+) คน — ตานี้ใช้ได้จริง (\d+) คอร์ท \(ต้องมี (\d+) คน จึงจะเต็มทุกคอร์ท\)/g, 'Set to $1 courts but only $2 players here — this round uses $3 court(s) (need $4 players to fill all)'],
+  [/คนพอสำหรับ (\d+) คอร์ท — ถ้าเพิ่มคอร์ทได้ ทุกคนจะได้ลงบ่อยขึ้น/g, 'Enough players for $1 courts — add a court and everyone plays more'],
+  [/ต้องมีผู้เล่นที่ 'มา' อย่างน้อย 4 คน \(ตอนนี้มี (\d+) คน\)/g, "Need at least 4 present players (currently $1)"],
+  [/แตะชื่อคนหนึ่ง แล้วแตะอีกคน = สลับตำแหน่งกัน \(สลับกับคนบนม้านั่งได้ด้วย\)/g, 'Tap one player then another to swap positions (bench players too)'],
+  [/เครื่องหมาย ✓ = อยู่ใน/g, '✓ = in'],
+  [/\(ชั่วโมงที่กำลังเล่น\) — คนกลับก่อนให้เอา ✓ ออก แล้วเขาจะไม่โดนหารค่าใช้จ่ายชั่วโมงถัดไป/g, "(current hour) — untick anyone who left so they won't share later costs"],
+  [/แตะ ✓ = มา\/ไม่มา\s*·\s*⚡ = บังคับให้ได้ลงตาหน้า\s*·\s*แตะชื่อเพื่อแก้ไข/g, 'Tap ✓ = present/absent · ⚡ = force into next round · tap name to edit'],
+  [/พิมพ์บรรทัดละคน ใส่ระดับมือต่อท้ายได้ เช่น/g, 'One name per line, add level after it e.g.'],
+  [/\(ไม่ใส่ = มือ P\)/g, '(default = P)'],
+  [/ลบรายชื่อ สถิติ ประวัติ และชั่วโมงทั้งหมด — ใช้ตอนมาตีครั้งใหม่แล้วสมาชิกไม่เหมือนเดิม/g, 'Deletes all players, stats, history and hours — use when starting a new session with different members'],
+  [/ใครกลับบ้านแล้วก็เอาออก ใครเพิ่งมาก็เพิ่มเข้า — ค่าใช้จ่ายชั่วโมงนี้จะหารเฉพาะคนที่เลือกไว้/g, "Remove who left, add who just arrived — this hour's costs are split among selected players only"],
+  [/คนมาสายหรือกลับก่อน จ่ายเฉพาะชั่วโมงที่ตัวเองอยู่ · ยุบเหลือ 1 คอร์ทในชั่วโมงสุดท้ายก็แค่แก้ช่อง “คอร์ท”/g, 'Late arrivals / early leavers pay only for their hours · dropping to 1 court in the last hour = just edit "Courts"'],
+  [/ราคาลูกไม่เท่ากันทุกวัน — แก้ตรงนี้ครั้งเดียว ทุกชั่วโมงคำนวณใหม่ให้เอง/g, 'Shuttle price varies by day — change it once here, every hour recalculates'],
+  [/แต่ละชั่วโมงตั้งคอร์ทแยกกันได้ — ปรับได้จากหน้า 🏸 จัดตา หรือแท็บ 💰 ค่าใช้จ่าย/g, 'Each hour has its own court count — adjust in 🏸 Play or 💰 Costs'],
+  [/สไลเดอร์ “คละมือ” ดันไปทางซ้าย = อยากให้ทั้งคอร์ทระดับใกล้กัน, ดันไปทางขวา = อยากให้มือหนักจับคู่มือเบา/g, '"Mix" slider left = similar levels per court, right = strong pairs with weak'],
+  [/ปรับได้ถ้าก๊วนคุณเห็นว่าช่องว่างระหว่างมือไม่ตรงกับความจริง/g, "Adjust if the gaps between levels don't match reality"],
+  [/ข้อมูลถูกบันทึกอัตโนมัติในเบราว์เซอร์เครื่องนี้.*/g, 'Data auto-saves in this browser'],
+  [/เบราว์เซอร์นี้บันทึกข้อมูลอัตโนมัติไม่ได้ — ถ้าปิดหน้านี้ข้อมูลจะหาย \(เปิดผ่านลิงก์เว็บใน Safari\/Chrome จะบันทึกได้ปกติ\)/g, "This browser can't auto-save — data is lost when closed (open via web link in Safari/Chrome to save normally)"],
+  [/ยังไม่มีผู้เล่น — เพิ่มชื่อด้านบนได้เลย/g, 'No players yet — add names above'],
+  [/ต้องมีผู้เล่นที่ 'มา' อย่างน้อย 4 คน<br>ไปที่แท็บ 👥 ผู้เล่น เพื่อเพิ่ม\/เช็คชื่อ/g, 'Need at least 4 present players<br>Go to 👥 Players to add/check in'],
+  [/กดปุ่มด้านล่างเพื่อจัดตานี้/g, 'Tap the button below to generate this round'],
+  [/ตานี้ทุกคนได้ลงครบ 🎉/g, 'Everyone plays this round 🎉'],
+  [/ยังไม่มีคนในชั่วโมงไหนเลย/g, 'No players in any hour yet'],
+  [/ไปแท็บ 👥 ผู้เล่น เช็คชื่อคนที่มาก่อน/g, 'Go to 👥 Players and check people in first'],
+  [/ยิ่งใกล้กันยิ่งเป็นธรรม|รวมทุกชั่วโมง/g, 'all hours combined'],
+  [/เคยคู่กันกี่ครั้ง/g, 'times paired together'],
+  [/เล่นไปสักตาก่อนนะ/g, 'Play a round first'],
+  [/ยังไม่มีข้อมูล/g, 'No data yet'],
+  [/ยังไม่มีประวัติ/g, 'No history yet'],
+  [/วางข้อความ JSON ที่เคยคัดลอกไว้ลงในช่องนี้/g, 'Paste the JSON text you copied earlier'],
+
+  // ── ยืนยัน/toast ──
+  [/สุ่มผังตานี้ใหม่ทั้งหมด\?/g, 'Reshuffle this entire round?'],
+  [/\(ผังปัจจุบันและการสลับมือที่ทำไว้จะหายไป\)/g, '(current layout and manual swaps will be lost)'],
+  [/ล้างข้อมูลผู้เล่นทั้งหมด\?/g, 'Clear ALL player data?'],
+  [/รายชื่อ สถิติ ประวัติ และชั่วโมงทั้งหมดจะถูกลบถาวร/g, 'All players, stats, history and hours will be permanently deleted'],
+  [/เริ่มวันใหม่\? รายชื่อผู้เล่นจะถูกเก็บไว้ แต่สถิติ\/ประวัติ\/ชั่วโมง\/ค่าใช้จ่ายจะถูกล้าง/g, 'Start a new day? Players are kept; stats/history/hours/costs are cleared'],
+  [/ยกเลิกตาที่ (\d+)\? สถิติจะถูกคำนวณใหม่/g, 'Undo round $1? Stats will be recalculated'],
+  [/ลบ (.+) ออกจากก๊วน\?/g, 'Remove $1 from the group?'],
+  [/ลบ (.+)\? ตาที่เล่นในช่วงนี้จะถูกลบด้วย/g, 'Delete $1? Rounds played in it will be deleted too'],
+  [/ล้างข้อมูลผู้เล่นแล้ว เริ่มก๊วนใหม่ได้เลย 🏸/g, 'Player data cleared — fresh start 🏸'],
+  [/บันทึกตาแล้ว → ตาที่ (\d+)/g, 'Round saved → Round $1'],
+  [/เริ่มวันใหม่แล้ว 🏸/g, 'New day started 🏸'],
+  [/สลับไป (.+)/g, 'Switched to $1'],
+  [/สุ่มผังใหม่แล้ว/g, 'Reshuffled'],
+  [/ปลดล็อกแล้ว/g, 'Unlocked'],
+  [/🔒 ล็อกคู่นี้ไว้ตาถัดไป/g, '🔒 Pair locked for next round'],
+  [/คัดลอกแล้ว — เอาไปวางในโน้ต\/ไลน์เก็บไว้ได้/g, 'Copied — paste into Notes/LINE to keep'],
+  [/คัดลอกแล้ว ✓/g, 'Copied ✓'],
+  [/นำเข้าสำเร็จ/g, 'Imported'],
+  [/ข้อมูลไม่ถูกต้อง|ไฟล์ไม่ถูกต้อง/g, 'Invalid data'],
+  [/ใส่ชื่อก่อนนะ/g, 'Enter a name first'],
+  [/เพิ่ม (\d+) คน/g, 'Added $1 players'],
+  [/เพิ่มแล้ว/g, 'Added'],
+  [/สลับแล้ว/g, 'Swapped'],
+  [/บันทึกแล้ว/g, 'Saved'],
+  [/ลบแล้ว/g, 'Deleted'],
+  [/ยกเลิกแล้ว/g, 'Cancelled'],
+  [/เปลี่ยนสไตล์แล้ว/g, 'Style changed'],
+  [/ต้องมีอย่างน้อย 4 คน/g, 'Need at least 4 players'],
+  [/เริ่ม (.+) แล้ว 🏸/g, 'Started $1 🏸'],
+  [/ตั้งเป็น (\d+) คอร์ท/g, 'Set to $1 courts'],
+  [/ยังไม่มีข้อมูลผู้เล่น/g, 'No player data yet'],
+  [/⚡ (.+) จะได้ลงตาหน้า/g, '⚡ $1 will play next round'],
+
+  // ── หัวข้อ/ปุ่ม ──
+  [/เพิ่มทีละหลายคน \(วางรายชื่อ\)/g, 'Bulk add (paste names)'],
+  [/เพิ่มทีละหลายคน/g, 'Bulk add'],
+  [/เพิ่มผู้เล่น/g, 'Add player'],
+  [/เพิ่มเข้าก๊วน/g, 'Add to group'],
+  [/เพิ่มทั้งหมด/g, 'Add all'],
+  [/🗑️ ล้างข้อมูลผู้เล่นทั้งหมด \(เริ่มก๊วนใหม่\)/g, '🗑️ Clear all player data (fresh start)'],
+  [/เริ่มวันใหม่ \(เก็บรายชื่อ ล้างสถิติ\)/g, 'New day (keep players, clear stats)'],
+  [/มาครบทุกคน/g, 'All present'],
+  [/ล้างสถานะ/g, 'Clear status'],
+  [/รายชื่อ/g, 'Players'],
+  [/ชื่อเล่น/g, 'Nickname'],
+  [/ระดับมือ/g, 'Skill level'],
+  [/เพศ \(ใช้ตอนจัดคู่ผสมในอนาคต\)/g, 'Gender (for future mixed pairing)'],
+  [/หญิง/g, 'F'], [/ชาย/g, 'M'],
+  [/แก้ไขผู้เล่น/g, 'Edit player'],
+  [/มาเล่น/g, 'Present'], [/พักยาว/g, 'On break'], [/ไม่มา/g, 'Absent'],
+  [/สถานะ/g, 'Status'],
+  [/ยกเลิก/g, 'Cancel'], [/บันทึก/g, 'Save'], [/ลบ/g, 'Delete'],
+  [/นำเข้า/g, 'Import'],
+
+  // จัดตา
+  [/จัดตานี้เลย/g, 'Generate round'],
+  [/จำนวนคอร์ทที่จองไว้/g, 'Courts booked'],
+  [/คอร์ทของ/g, 'Courts for '],
+  [/สุ่มใหม่/g, 'Reshuffle'],
+  [/จบตานี้ → ไปตาถัดไป/g, 'Finish → next round'],
+  [/ล้างผังตานี้/g, 'Clear this layout'],
+  [/ตานี้พัก/g, 'Resting'],
+  [/แตะเพื่อสลับเข้าคอร์ท/g, 'tap to swap in'],
+  [/🔒 คู่ที่ล็อกไว้สำหรับตานี้/g, '🔒 Locked pairs for this round'],
+  [/ปลดล็อก/g, 'Unlock'],
+  [/🔒 ล็อกแล้ว/g, '🔒 Locked'],
+  [/🔓 ล็อกคู่นี้/g, '🔓 Lock pair'],
+  [/สูสีมาก/g, 'Very close'], [/พอสูสี/g, 'Close'], [/ห่างกัน/g, 'Uneven'],
+  [/· ห่าง ([\d.]+)/g, '· gap $1'],
+  [/แต้มรวม ([\d.]+)/g, 'Team pts $1'],
+  [/ส่วนต่างเฉลี่ย ([\d.-]+)/g, 'Avg gap $1'],
+  [/คู่ที่เคยจับกันแล้ว (\d+) คู่/g, '$1 repeated pair(s)'],
+  [/ตาที่ (\d+)/g, 'Round $1'],
+  [/ชม\.ที่ (\d+)/g, 'Hr $1'],
+  [/ชม\.ใหม่/g, 'New hr'],
+  [/⏭️ เริ่มชั่วโมงใหม่ \(Hr (\d+)\)/g, '⏭️ Start new hour (Hr $1)'],
+  [/เริ่มชั่วโมงใหม่/g, 'Start new hour'],
+  [/🕐 แก้ไข (.+)/g, '🕐 Edit $1'],
+  [/แก้รายชื่อ/g, 'Edit members'],
+  [/กำลังเล่น/g, 'playing now'],
+  [/ใครเล่นชั่วโมงนี้/g, 'Who plays this hour'],
+  [/คนที่อยู่ช่วงนี้/g, 'Players in this hour'],
+  [/ชื่อช่วงเวลา/g, 'Hour name'],
+  [/ความยาว \(นาที\)/g, 'Length (min)'],
+  [/จำนวนคอร์ท/g, 'Courts'],
+
+  // สถิติ
+  [/📊 ภาพรวมก๊วน/g, '📊 Overview'],
+  [/⚖️ จำนวนตาที่ได้ลง/g, '⚖️ Games played'],
+  [/🤝 ตารางคู่ขา/g, '🤝 Partner matrix'],
+  [/🕘 ประวัติการเล่น/g, '🕘 History'],
+  [/↩️ ยกเลิกตาล่าสุด/g, '↩️ Undo last round'],
+  [/ตาที่เล่นไปแล้ว/g, 'rounds played'],
+  [/คนที่เล่นวันนี้/g, 'players today'],
+  [/ตาเฉลี่ย\/คน/g, 'avg games/player'],
+  [/ส่วนต่างมาก-น้อย/g, 'max−min gap'],
+  [/(\d+) ตา · พัก (\d+)/g, '$1 games · rest $2'],
+  [/พัก: /g, 'Rest: '],
+  [/(\d+) ตา/g, '$1 games'],
+
+  // ค่าใช้จ่าย
+  [/💵 ราคาของวันนี้/g, "💵 Today's prices"],
+  [/ค่าคอร์ท \(บาท\/คอร์ท\/ชม\.\)/g, 'Court rate (฿/court/hr)'],
+  [/ราคาลูกแบด \(บาท\/ลูก\)/g, 'Shuttle price (฿ each)'],
+  [/ค่าอื่น ๆ ทั้งวัน \(น้ำ ฯลฯ\) — หารเท่ากันทุกคน/g, 'Other costs (water etc.) — split equally'],
+  [/🕐 แยกตามชั่วโมง/g, '🕐 By hour'],
+  [/➕ เพิ่มชั่วโมง/g, '➕ Add hour'],
+  [/🧮 วิธีหารในแต่ละชั่วโมง/g, '🧮 Split method per hour'],
+  [/หารเท่ากันในแต่ละชั่วโมง/g, 'split equally per hour'],
+  [/หารตามจำนวนตาที่ลง/g, 'split by games played'],
+  [/หารเท่ากัน/g, 'Split equally'],
+  [/ปัดเศษขึ้นทีละ/g, 'Round up to'],
+  [/(\d+) บาท/g, '$1 ฿'],
+  [/ยอดรวมทั้งวัน \(฿\)/g, 'day total (฿)'],
+  [/คนที่ต้องจ่าย/g, 'people paying'],
+  [/เก็บได้จริง/g, 'collected'],
+  [/เหลือ\/ทบวันหน้า/g, 'surplus/carry over'],
+  [/ขาด/g, 'short'],
+  [/🧾 ใครจ่ายเท่าไหร่/g, '🧾 Who pays what'],
+  [/📄 คัดลอกข้อความสรุป \(ส่งเข้าไลน์\)/g, '📄 Copy summary (for LINE)'],
+  [/สรุปค่าใช้จ่าย/g, 'cost summary'],
+  [/ลูกละ (\d+) ฿ · คอร์ทละ (\d+) ฿\/ชม\./g, 'Shuttle $1 ฿ · court $2 ฿/hr'],
+  [/ลูกที่ใช้/g, 'Shuttles'],
+  [/ค่าคอร์ทเอง/g, 'Court fee (manual)'],
+  [/คอร์ท (\d[\d,]*) ฿/g, 'Court $1 ฿'],
+  [/\+ ลูก (\d[\d,]*) ฿/g, '+ shuttles $1 ฿'],
+  [/ตกคนละ ~(\d[\d,]*) ฿/g, '~$1 ฿ each'],
+  [/\(ระบุเอง\)/g, '(manual)'],
+  [/⚠️ ยังไม่มีคนในช่วงนี้/g, '⚠️ no players in this hour'],
+  [/(\d+) ช่วง · รวม ([\d.]+) ชม\. · (\d+) ลูก/g, '$1 blocks · $2 hr total · $3 shuttles'],
+  [/(\d+) คอร์ท (\d+) นาที, (\d+) ลูก, (\d+) คน/g, '$1 courts $2 min, $3 shuttles, $4 players'],
+  [/➕ ค่าอื่น ๆ (\d[\d,]*) ฿/g, '➕ other $1 ฿'],
+  [/รวม (\d[\d,]*) ฿ · หาร/g, 'Total $1 ฿ · '],
+  [/นาที/g, 'Min'],
+
+  // ตั้งค่า
+  [/⚙️ ตั้งค่าก๊วน/g, '⚙️ Group settings'],
+  [/ชื่อก๊วน/g, 'Group name'],
+  [/จำนวนคอร์ทของชั่วโมงที่กำลังเล่น/g, 'Courts for current hour'],
+  [/🎯 สไตล์การจัดคู่/g, '🎯 Pairing style'],
+  [/คละมือ\+สูสี/g, 'Mixed+Close'],
+  [/ระดับใกล้กันลงด้วยกัน|ระดับใกล้กัน (\d+)|ระดับใกล้กัน/g, 'Similar levels'],
+  [/สุ่มล้วน/g, 'Pure random'],
+  [/ความสูสีของสองฝั่ง —/g, 'Team balance —'],
+  [/คละมือหนัก\/มือเบาในคู่เดียวกัน —/g, 'Mix strong/weak in a pair —'],
+  [/เลี่ยงการซ้ำคู่ขา\/คู่แข่ง —/g, 'Avoid repeat partners/opponents —'],
+  [/คละมือ (\d+)/g, 'Mix $1'],
+  [/ปิด (\d+)/g, 'Off $1'],
+  [/🏸 น้ำหนักระดับมือ/g, '🏸 Level weights'],
+  [/ใช้คำนวณความสูสี/g, 'used for balance math'],
+  [/🔄 เริ่มวันใหม่/g, '🔄 New day'],
+
+  // ระดับมือ
+  [/มือใหม่ \/ หน้าบ้าน/g, 'Beginner'],
+  [/มือสังคม/g, 'Social'],
+  [/เริ่มเข้าที่/g, 'Improving'],
+  [/เล่นคล่อง/g, 'Intermediate'],
+  [/แข่งระดับต้น \/ เยาวชน/g, 'Early competitive / junior'],
+  [/แข่งระดับประเทศ/g, 'National level'],
+  [/แข่งระดับนานาชาติ/g, 'International level'],
+  [/มือ (BG|N|S|P|C|B|A)\b/g, 'Level $1'],
+
+  // เศษทั่วไป (สั้น ไว้ท้ายสุด)
+  [/· อยู่ (\d+) คน/g, '· $1 here'],
+  [/อยู่ (\d+) \/ ทั้งหมด (\d+) คน/g, '$1 in / $2 total'],
+  [/· ลงสนาม (\d+)/g, '· $1 playing'],
+  [/· พัก (\d+)( คน)?/g, '· $1 resting'],
+  [/\((\d+) คน\)/g, '($1 players)'],
+  [/(\d+) คอร์ท · (\d+) คน/g, '$1 courts · $2 ppl'],
+  [/(\d+) คน/g, '$1 players'],
+  [/(\d+) คอร์ท/g, '$1 courts'],
+  [/(\d+) ลูก/g, '$1 shuttles'],
+  [/มา (\d+)/g, '$1 here'],
+  [/คอร์ท(?= \d)/g, 'Court'],
+  [/คอร์ท/g, 'Courts'],
+  [/จัดตา/g, 'Play'],
+  [/ผู้เล่น/g, 'Players'],
+  [/สถิติ/g, 'Stats'],
+  [/ค่าใช้จ่าย/g, 'Costs'],
+  [/ตั้งค่า/g, 'Settings'],
+  [/ลูก/g, 'shuttles'],
+  [/^ช$/, 'M'],
+  [/^ญ$/, 'F']
+];
+
+function trText(str){
+  var out = str;
+  for(var i=0;i<I18N.length;i++) out = out.replace(I18N[i][0], I18N[i][1]);
+  return out;
+}
+function askConfirm(msg){ return window.confirm(S.lang==="en" ? trText(msg) : msg); }
+
+function applyLang(){
+  var en = S.lang === "en";
+  var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+  var node;
+  while((node = walker.nextNode())){
+    var tag = node.parentElement && node.parentElement.tagName;
+    if(tag === "SCRIPT" || tag === "STYLE" || tag === "TEXTAREA") continue;
+    if(en){
+      if(node._th === undefined) node._th = node.data;
+      if(/[ก-๛]/.test(node._th)) node.data = trText(node._th);
+    } else if(node._th !== undefined){
+      node.data = node._th;
+    }
+  }
+  $$("input[placeholder],textarea[placeholder]").forEach(function(el){
+    if(en){
+      if(el.dataset.thPh === undefined) el.dataset.thPh = el.placeholder;
+      el.placeholder = trText(el.dataset.thPh);
+    } else if(el.dataset.thPh !== undefined){
+      el.placeholder = el.dataset.thPh;
+    }
+  });
+  var th=$("#langTH"), enB=$("#langEN");
+  if(th){ th.classList.toggle("on", !en); enB.classList.toggle("on", en); }
+}
+
 /* ============================================================
    render
    ============================================================ */
@@ -1498,11 +1803,13 @@ function render(){
   else if(active==="tab-stats") renderStats();
   else if(active==="tab-money") renderMoney();
   else if(active==="tab-settings") renderSettings();
-  $("#roundPill").textContent = "ตาที่ " + (S.history.length + 1);
   $("#clubName").textContent = S.clubName || "จัดก๊วนแบด";
+  applyLang();
 }
 
 document.getElementById("logoImg").src = document.querySelector('link[rel="apple-touch-icon"]').href;
+$("#langTH").onclick = function(){ if(S.lang!=="th"){ S.lang="th"; save(); render(); } };
+$("#langEN").onclick = function(){ if(S.lang!=="en"){ S.lang="en"; save(); render(); } };
 load();
 paintSaveBar();
 render();
