@@ -153,6 +153,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .tag.gray{background:#e2e8f0;color:#475569}
 .grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 @media(min-width:520px){.grid4{grid-template-columns:repeat(4,1fr)}}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .pickgrid{display:flex;flex-wrap:wrap;gap:6px;max-height:46vh;overflow:auto;padding:2px}
 .pickgrid button{
   border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;
@@ -623,8 +624,13 @@ function roundQuality(courts, W, stats, round){
    แต่ละชั่วโมงมี: จำนวนคอร์ท, นาที, ลูกที่ใช้, และรายชื่อคนที่อยู่ช่วงนั้น
    ค่าใช้จ่ายของชั่วโมงไหน หารเฉพาะคนที่อยู่ชั่วโมงนั้น
    ============================================================ */
+function hasFeeOverride(b){
+  if(b.feeOverride === "" || b.feeOverride === null || b.feeOverride === undefined) return false;
+  var v = +b.feeOverride;
+  return isFinite(v) && v > 0;   // 0 = ให้คิดอัตโนมัติจากค่าคอร์ท/ชม.
+}
 function blockCost(b, cfg){
-  var hasOverride = b.feeOverride !== null && b.feeOverride !== undefined && b.feeOverride !== "";
+  var hasOverride = hasFeeOverride(b);
   var court = hasOverride ? (+b.feeOverride||0)
             : (+b.courts||0) * (+cfg.courtRate||0) * ((+b.minutes||60)/60);
   var shuttle = (+b.shuttles||0) * (+cfg.shuttlePrice||0);
@@ -706,6 +712,7 @@ root.BadmintonEngine = {
   generateRound: generateRound,
   computeCosts: computeCosts,
   blockCost: blockCost,
+  hasFeeOverride: hasFeeOverride,
   gamesInBlock: gamesInBlock,
   roundQuality: roundQuality
 };
@@ -801,6 +808,7 @@ function migrate(o){
     s.blocks = [b]; s.activeBlock = 0;
   }
   if(o.money && o.money.shuttlePrice !== undefined) s.money.shuttlePrice = +o.money.shuttlePrice;
+  (s.blocks||[]).forEach(function(bk){ if(!E.hasFeeOverride(bk)) bk.feeOverride = ""; });
   (s.history||[]).forEach(function(h){ if(h.block === undefined) h.block = 0; });
   if(o.current && s.blocks[s.activeBlock] && !s.blocks[s.activeBlock].current){
     s.blocks[s.activeBlock].current = o.current;
@@ -1211,11 +1219,10 @@ function openHourEditor(i){
   openModal(
     '<h2 style="font-size:16px;margin-bottom:10px">🕐 แก้ไข '+esc(b.name)+'</h2>'+
     '<label class="fld"><span>ชื่อช่วงเวลา</span><input type="text" id="hbName" value="'+esc(b.name)+'"></label>'+
-    '<div class="grid4">'+
+    '<div class="grid3">'+
       '<label class="fld"><span>คอร์ท</span><input type="number" id="hbCourts" min="1" max="10" value="'+b.courts+'"></label>'+
       '<label class="fld"><span>นาที</span><input type="number" id="hbMin" min="15" step="15" value="'+(b.minutes||60)+'"></label>'+
       '<label class="fld"><span>ลูกที่ใช้</span><input type="number" id="hbSh" min="0" value="'+(b.shuttles||0)+'"></label>'+
-      '<label class="fld"><span>ค่าคอร์ท (ระบุเอง)</span><input type="number" id="hbFee" min="0" placeholder="auto" value="'+(b.feeOverride===""||b.feeOverride===null||b.feeOverride===undefined?"":b.feeOverride)+'"></label>'+
     '</div>'+
     '<label class="fld"><span>คนที่อยู่ช่วงนี้ <b id="hbCount"></b></span>'+
       '<div class="pickgrid" id="hbPick">'+memberPickerHTML(sel)+'</div></label>'+
@@ -1240,8 +1247,6 @@ function openHourEditor(i){
     b.courts = Math.max(1,Math.min(10,+$("#hbCourts").value||1));
     b.minutes = Math.max(15,+$("#hbMin").value||60);
     b.shuttles = Math.max(0,+$("#hbSh").value||0);
-    var f = $("#hbFee").value.trim();
-    b.feeOverride = f==="" ? "" : Math.max(0,+f||0);
     b.members = Object.keys(sel);
     if(i === S.activeBlock){ applyMembers(); AB().current=null; }
     save(); closeModal(); render(); toast("บันทึกแล้ว");
@@ -1359,10 +1364,9 @@ function renderStats(){
    TAB: ค่าใช้จ่าย
    ============================================================ */
 function blockCalcHTML(b, i, m){
-  var src = S.blocks[i];
-  var auto = src.feeOverride===""||src.feeOverride===null||src.feeOverride===undefined;
+  var manual = E.hasFeeOverride(S.blocks[i]);
   return 'คอร์ท '+Math.round(b.courtCost).toLocaleString()+' ฿'+
-    (auto?' ('+b.courts+'×'+m.courtRate+'×'+(b.minutes/60).toFixed(b.minutes%60?1:0)+' ชม.)':' (ระบุเอง)')+
+    (manual?' (ระบุเอง)':' ('+b.courts+'×'+m.courtRate+'×'+(b.minutes/60).toFixed(b.minutes%60?1:0)+' ชม.)')+
     ' + ลูก '+Math.round(b.shuttleCost).toLocaleString()+' ฿ = <b style="color:var(--ink)">'+
     Math.round(b.total).toLocaleString()+' ฿</b>'+
     (b.headcount? ' · ตกคนละ ~'+Math.round(b.perHead).toLocaleString()+' ฿' : ' · ⚠️ ยังไม่มีคนในช่วงนี้');
@@ -1396,7 +1400,7 @@ function renderMoney(rebuild){
   if(rebuild || $$("#blockEditor .blockcard").length !== S.blocks.length){
     $("#blockEditor").innerHTML = r.blocks.map(function(b, i){
       var src = S.blocks[i];
-      var auto = src.feeOverride===""||src.feeOverride===null||src.feeOverride===undefined;
+      var manual = E.hasFeeOverride(src);
       return '<div class="blockcard'+(i===S.activeBlock?" on":"")+'">'+
         '<div class="row" style="margin-bottom:8px">'+
           '<b style="font-size:14px">'+esc(b.name)+'</b>'+
@@ -1404,11 +1408,10 @@ function renderMoney(rebuild){
           '<span class="tag gray" data-hc="'+i+'">'+b.headcount+' คน</span>'+
           '<button class="btn gray sm" style="margin-left:auto" data-editblk="'+i+'">แก้รายชื่อ</button>'+
         '</div>'+
-        '<div class="grid4">'+
+        '<div class="grid3">'+
           '<label class="fld" style="margin:0"><span>คอร์ท</span><input type="number" inputmode="numeric" min="1" max="10" value="'+src.courts+'" data-bf="courts" data-bi="'+i+'"></label>'+
           '<label class="fld" style="margin:0"><span>นาที</span><input type="number" inputmode="numeric" min="15" step="15" value="'+(src.minutes||60)+'" data-bf="minutes" data-bi="'+i+'"></label>'+
           '<label class="fld" style="margin:0"><span>ลูกที่ใช้</span><input type="number" inputmode="numeric" min="0" value="'+(src.shuttles||0)+'" data-bf="shuttles" data-bi="'+i+'"></label>'+
-          '<label class="fld" style="margin:0"><span>ค่าคอร์ทเอง</span><input type="number" inputmode="numeric" min="0" placeholder="'+Math.round(b.courtCost)+'" value="'+(auto?"":src.feeOverride)+'" data-bf="feeOverride" data-bi="'+i+'"></label>'+
         '</div>'+
         '<div class="muted tiny" style="margin-top:8px" data-calc="'+i+'">'+blockCalcHTML(b,i,m)+'</div></div>';
     }).join("");
@@ -1416,7 +1419,7 @@ function renderMoney(rebuild){
     $$("[data-bf]").forEach(function(inp){
       inp.addEventListener("input", function(){
         var b = S.blocks[+inp.dataset.bi], f = inp.dataset.bf, v = inp.value.trim();
-        if(f==="feeOverride") b[f] = v==="" ? "" : Math.max(0,+v||0);
+        if(f==="feeOverride") b[f] = (v==="" || +v<=0) ? "" : Math.max(0,+v);
         else if(f==="courts")  b[f] = v==="" ? b[f] : Math.max(1,Math.min(10,+v||1));
         else if(f==="minutes") b[f] = v==="" ? b[f] : Math.max(15,+v||60);
         else b[f] = Math.max(0,+v||0);
@@ -1615,7 +1618,6 @@ var I18N = [
   [/จำนวนคอร์ทของชั่วโมงที่กำลังเล่น/g, 'Courts for current hour'],
   [/🏸 น้ำหนักระดับมือ/g, '🏸 Level weights'],
   [/แก้รายชื่อ/g, 'Edit members'],
-  [/ค่าคอร์ท \(ระบุเอง\)/g, 'Court fee (manual)'],
   [/([\d.]+) ชม\./g, '$1 hr'],
   [/เช่น ต้น/g, 'e.g. Ton'],
   [/ก๊วนแบดของเรา/g, 'Our badminton group'],
