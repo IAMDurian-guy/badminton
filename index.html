@@ -172,6 +172,9 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .courtpick .cnum{min-width:34px;text-align:center;font-size:20px;font-weight:800;color:var(--accent-d)}
 .courtwarn{font-size:12px;color:#b45309;background:#fef3c7;border-radius:9px;padding:6px 10px;margin-top:8px}
 
+.courtdone{display:block;width:calc(100% - 20px);margin:0 10px 10px;background:var(--accent);color:#fff;
+  border-radius:10px;padding:10px;font-weight:700;font-size:13.5px;text-align:center;min-height:42px}
+.courtdone:active{transform:scale(.98)}
 .bench{display:flex;flex-wrap:wrap;gap:6px}
 .bench .slot{flex:1 1 46%;min-width:130px}
 
@@ -606,6 +609,45 @@ function generateRound(opts){
   };
 }
 
+/* ============================================================
+   สุ่มคนลงเฉพาะ "คอร์ทเดียว" (ใช้ตอนคอร์ทนั้นจบก่อนคอร์ทอื่น)
+   busyIds = คนที่ยังเล่นอยู่บนคอร์ทอื่น → ไม่ถูกเลือก
+   ============================================================ */
+function generateOneCourt(opts){
+  var players = opts.players, history = opts.history || [];
+  var round = history.length;
+  var stats = opts.stats || deriveStats(players, history);
+  var levels = opts.levels || DEFAULT_LEVELS;
+
+  var busy = {}; (opts.busyIds||[]).forEach(function(id){ busy[id]=1; });
+  var available = players.filter(function(p){
+    return p.present && !p.pause && !busy[p.id];
+  }).map(function(p){ return p.id; });
+  if(available.length < 4) return {error:"คนว่างไม่พอ 4 คน (ตอนนี้ว่าง "+available.length+" คน)"};
+
+  var forced = players.filter(function(p){
+    return p.forceNext && p.present && !p.pause && !busy[p.id];
+  }).map(function(p){ return p.id; });
+  (opts.locks||[]).forEach(function(pr){
+    if(!busy[pr[0]] && !busy[pr[1]]){ forced.push(pr[0]); forced.push(pr[1]); }
+  });
+
+  var sel = selectPlaying(available, 4, round, stats, forced, opts.rnd);
+
+  var W = {};
+  players.forEach(function(p){ W[p.id] = (levels[p.level] || levels[0]).w; });
+  var wIn = opts.weights || PRESETS.mix;
+  var ctx = {
+    W:W, st:stats, round:round,
+    w:{ bal:(wIn.wBal||0)/100 * 1.0, mix:(wIn.wMix||0)/100 * 0.45, rep:(wIn.wRep||0)/100 * 1.6 }
+  };
+  var usable = (opts.locks||[]).filter(function(pr){
+    return sel.playing.indexOf(pr[0])>=0 && sel.playing.indexOf(pr[1])>=0;
+  });
+  var res = assignCourts(sel.playing, 1, ctx, usable, opts.rnd);
+  return {court:res.courts[0], resting:sel.resting};
+}
+
 /* คุณภาพของตา: ส่วนต่างแต้มทีม + จำนวนคู่ซ้ำ */
 function roundQuality(courts, W, stats, round){
   var diffs = courts.map(function(c){
@@ -710,6 +752,7 @@ root.BadmintonEngine = {
   deriveStats: deriveStats,
   selectPlaying: selectPlaying,
   generateRound: generateRound,
+  generateOneCourt: generateOneCourt,
   computeCosts: computeCosts,
   blockCost: blockCost,
   hasFeeOverride: hasFeeOverride,
@@ -1114,6 +1157,7 @@ function renderPlay(){
         '<button class="lockbtn '+(lk?"on":"")+'" data-lock="'+ci+'-'+ti+'">'+(lk?"🔒 ล็อกแล้ว":"🔓 ล็อกคู่นี้")+'</button></div>';
       if(ti===0) html += '<div class="vs"><i class="ln"></i><span>VS</span><i class="ln"></i></div>';
     });
+    html += '<button class="courtdone" data-done="'+ci+'">✅ จบคอร์ทนี้ → สุ่มคู่ใหม่</button>';
     html += '</div>';
   });
   $("#courtsWrap").innerHTML = html;
@@ -1132,8 +1176,9 @@ function renderPlay(){
       '<span>ส่วนต่างเฉลี่ย '+ (qual.avgDiff!==undefined?qual.avgDiff.toFixed(1):"-") +'</span>'+
       '<span>คู่ที่เคยจับกันแล้ว '+ (qual.repeatPairs!==undefined?qual.repeatPairs:"-") +' คู่</span>'+
     '</div>'+
-    '<div class="hint" style="margin-top:8px">แตะชื่อคนหนึ่ง แล้วแตะอีกคน = สลับตำแหน่งกัน (สลับกับคนบนม้านั่งได้ด้วย)</div></div>'+
-    '<button class="btn btn-big block" id="commitBtn">✅ จบตานี้ → ไปตาถัดไป</button>'+
+    '<div class="hint" style="margin-top:8px">แตะชื่อคนหนึ่ง แล้วแตะอีกคน = สลับตำแหน่งกัน (สลับกับคนบนม้านั่งได้ด้วย)</div>'+
+    '<div class="hint" style="margin-top:6px">คอร์ทไหนจบก่อน กด “จบคอร์ทนี้” ที่คอร์ทนั้นได้เลย ระบบจะสุ่มคนที่รออยู่ลงไปทันที โดยไม่รบกวนคอร์ทที่ยังตีอยู่</div></div>'+
+    '<button class="btn btn-big block" id="commitBtn">✅ จบทุกคอร์ทพร้อมกัน → ตาถัดไป</button>'+
     '<button class="btn gray block sm" id="clearBtn" style="margin-top:8px">ล้างผังตานี้</button>';
 
   $("#commitBtn").onclick = commitRound;
@@ -1150,6 +1195,9 @@ function renderPlay(){
   });
   $$("#benchList .slot").forEach(function(el, i){
     el.onclick = function(){ tapSlot({kind:"bench", bi:i}); };
+  });
+  $$("[data-done]").forEach(function(b){
+    b.onclick = function(){ finishCourt(+b.dataset.done); };
   });
   $$("[data-lock]").forEach(function(b){
     b.onclick = function(){
@@ -1284,6 +1332,54 @@ function doGenerate(isRegen){
   if(isRegen) toast("สุ่มผังใหม่แล้ว");
 }
 
+/* จบเฉพาะคอร์ทที่เล่นเสร็จก่อน แล้วสุ่มคนใหม่ลงคอร์ทนั้นทันที
+   คอร์ทอื่นที่ยังตีอยู่ไม่ถูกแตะต้อง */
+function finishCourt(ci){
+  var cur = AB().current;
+  if(!cur || !cur.courts[ci]) return;
+  var c = cur.courts[ci];
+
+  // คนที่ยังเล่นอยู่บนคอร์ทอื่น = ห้ามถูกเลือก
+  var busy = [];
+  cur.courts.forEach(function(cc, i){ if(i !== ci) busy = busy.concat(cc.t1, cc.t2); });
+  var freeCount = S.players.filter(function(p){
+    return p.present && !p.pause && busy.indexOf(p.id) < 0;
+  }).length;
+  if(freeCount < 4){ toast("คนว่างไม่พอ 4 คน"); return; }
+
+  if(!askConfirm("จบคอร์ท "+(ci+1)+" แล้วสุ่มคนใหม่ลงคอร์ทนี้?\n(คอร์ทอื่นยังเล่นต่อตามปกติ)")) return;
+
+  syncMembers();
+  // บันทึกเกมของคอร์ทนี้ลงประวัติ
+  S.history.push({
+    courts:[{t1:c.t1.slice(), t2:c.t2.slice()}],
+    resting:(cur.resting||[]).slice(),
+    at:Date.now(), block:S.activeBlock, courtNo:ci+1, partial:true
+  });
+  recalc();
+
+  var res = E.generateOneCourt({
+    players:S.players, history:S.history, stats:stats, levels:S.levels,
+    weights:S.weights, locks:S.locks, busyIds:busy
+  });
+  if(res.error){ S.history.pop(); recalc(); toast(res.error); return; }
+
+  cur.courts[ci] = {t1:res.court.t1.slice(), t2:res.court.t2.slice()};
+  cur.resting = res.resting;
+  // ล็อกที่ถูกใช้ไปแล้วให้ปลดออก
+  var onCourt = res.court.t1.concat(res.court.t2);
+  S.locks = S.locks.filter(function(pr){
+    return !(onCourt.indexOf(pr[0])>=0 && onCourt.indexOf(pr[1])>=0);
+  });
+  S.players.forEach(function(p){ if(onCourt.indexOf(p.id)>=0) p.forceNext = false; });
+
+  var W={}; S.players.forEach(function(p){ W[p.id]=lv(p).w; });
+  cur.quality = E.roundQuality(cur.courts, W, stats, S.history.length);
+  selection = null;
+  save(); render();
+  toast("คอร์ท "+(ci+1)+" สุ่มคู่ใหม่แล้ว 🏸");
+}
+
 function commitRound(){
   if(!AB().current) return;
   syncMembers();
@@ -1308,8 +1404,9 @@ function renderStats(){
   var minG = gs.length ? Math.min.apply(null, gs) : 0;
   var avgG = gs.length ? gs.reduce(function(a,b){return a+b;},0)/gs.length : 0;
 
+  var totalGames = S.history.reduce(function(a2,h){ return a2 + ((h.courts||[]).length); }, 0);
   $("#kpis").innerHTML =
-    '<div class="kpi"><b>'+S.history.length+'</b><span>ตาที่เล่นไปแล้ว</span></div>'+
+    '<div class="kpi"><b>'+totalGames+'</b><span>เกมที่เล่นไปแล้ว</span></div>'+
     '<div class="kpi"><b>'+present.length+'</b><span>คนที่เล่นวันนี้</span></div>'+
     '<div class="kpi"><b>'+avgG.toFixed(1)+'</b><span>ตาเฉลี่ย/คน</span></div>'+
     '<div class="kpi"><b>'+(maxG-minG)+'</b><span>ส่วนต่างมาก-น้อย</span></div>';
@@ -1345,7 +1442,8 @@ function renderStats(){
     var r = S.history.length - i;
     var line = h.courts.map(function(c, ci){
       var nm = function(id){ var p=pById(id); return p?p.name:"?"; };
-      return '<div class="tiny" style="padding:2px 0"><b>C'+(ci+1)+':</b> '+esc(nm(c.t1[0]))+'+'+esc(nm(c.t1[1]))+' vs '+esc(nm(c.t2[0]))+'+'+esc(nm(c.t2[1]))+'</div>';
+      var cno = h.courtNo ? h.courtNo : (ci+1);
+      return '<div class="tiny" style="padding:2px 0"><b>C'+cno+':</b> '+esc(nm(c.t1[0]))+'+'+esc(nm(c.t1[1]))+' vs '+esc(nm(c.t2[0]))+'+'+esc(nm(c.t2[1]))+'</div>';
     }).join("");
     var rest = (h.resting||[]).map(function(id){ var p=pById(id); return p?p.name:"?"; }).join(", ");
     return '<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b style="font-size:13px">ตาที่ '+r+'</b>'+line+
@@ -1629,6 +1727,16 @@ var I18N = [
   [/^ชื่อ$/, 'Name'],
   [/^เพศ$/, 'Gender'],
   [/^จัดก๊วนแบด$/, 'Badminton Group'],
+  [/✅ จบคอร์ทนี้ → สุ่มคู่ใหม่/g, '✅ Finish this court → redraw'],
+  [/✅ จบทุกคอร์ทพร้อมกัน → ตาถัดไป/g, '✅ Finish all courts → next round'],
+  [/จบคอร์ท (\d+) แล้วสุ่มคนใหม่ลงคอร์ทนี้\?/g, 'Finish court $1 and draw new players for it?'],
+  [/\(คอร์ทอื่นยังเล่นต่อตามปกติ\)/g, '(other courts keep playing)'],
+  [/คอร์ทไหนจบก่อน กด “จบคอร์ทนี้” ที่คอร์ทนั้นได้เลย ระบบจะสุ่มคนที่รออยู่ลงไปทันที โดยไม่รบกวนคอร์ทที่ยังตีอยู่/g,
+   'Whichever court finishes first, tap "Finish this court" there — waiting players are drawn in immediately without touching the courts still in play'],
+  [/คอร์ท (\d+) สุ่มคู่ใหม่แล้ว 🏸/g, 'Court $1 redrawn 🏸'],
+  [/คนว่างไม่พอ 4 คน \(ตอนนี้ว่าง (\d+) คน\)/g, 'Not enough free players (only $1 available)'],
+  [/คนว่างไม่พอ 4 คน/g, 'Not enough free players'],
+  [/เกมที่เล่นไปแล้ว/g, 'games played'],
   [/🖼️ บันทึกสรุปเป็นรูปภาพ/g, '🖼️ Save summary as image'],
   [/บันทึกรูปแล้ว 📸/g, 'Image saved 📸'],
   [/📄 คัดลอกข้อความสรุป/g, '📄 Copy text summary'],
