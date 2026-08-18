@@ -84,10 +84,11 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:22px;padding:0 6px;
   border-radius:6px;font-size:12px;font-weight:800;color:#fff;letter-spacing:.3px;flex:none
 }
-.lvpick{display:flex;flex-wrap:wrap;gap:6px}
+.lvpick{display:flex;flex-wrap:wrap;gap:4px}
+.seg button,.iconbtn,.chk,.lockmini,.step{touch-action:manipulation}
 .lvpick button{
-  border-radius:9px;padding:8px 4px;font-weight:800;font-size:13px;color:#fff;opacity:.35;
-  flex:1 1 0;min-width:42px;border:2px solid transparent
+  border-radius:9px;padding:0 4px;min-height:46px;font-weight:800;font-size:14px;color:#fff;opacity:.35;
+  flex:1 1 0;min-width:42px;border:2px solid transparent;touch-action:manipulation
 }
 .lvpick button.on{opacity:1;border-color:var(--ink);transform:scale(1.03)}
 
@@ -907,18 +908,26 @@ var newLevelIdx = 3, newGender = "M";
 
 function renderLevelPicker(el, idx, onPick){
   el.innerHTML = "";
+  var btns = [];
   S.levels.forEach(function(L, i){
     var b=document.createElement("button");
+    b.type = "button";
     b.textContent = L.code;
     b.style.background = L.color;
     if(i===idx) b.classList.add("on");
-    b.addEventListener("click", function(){ onPick(i); });
+    // สลับไฮไลต์ในที่ (ห้ามสร้างปุ่มใหม่ระหว่างถูกกด ไม่งั้นบนมือถือจะเด้งกลับปุ่มแรก)
+    b.addEventListener("click", function(ev){
+      ev.preventDefault();
+      btns.forEach(function(x, k){ x.classList.toggle("on", k === i); });
+      onPick(i);
+    });
+    btns.push(b);
     el.appendChild(b);
   });
 }
 
 function renderPlayers(){
-  renderLevelPicker($("#newLevel"), newLevelIdx, function(i){ newLevelIdx=i; renderPlayers(); });
+  renderLevelPicker($("#newLevel"), newLevelIdx, function(i){ newLevelIdx = i; });
   $$("#newGender button").forEach(function(b){
     b.classList.toggle("on", b.dataset.g===newGender);
     b.onclick = function(){ newGender=b.dataset.g; renderPlayers(); };
@@ -1014,7 +1023,7 @@ function editPlayer(p){
     '<button class="btn sm" style="flex:1" id="eOk">บันทึก</button></div>');
   var tmp = {level:p.level, gender:p.gender, stat: p.pause ? "pause" : (p.present ? "in" : "out")};
   function paint(){
-    renderLevelPicker($("#eLevel"), tmp.level, function(i){ tmp.level=i; paint(); });
+    renderLevelPicker($("#eLevel"), tmp.level, function(i){ tmp.level = i; });
     $$("#eGender button").forEach(function(b){ b.classList.toggle("on", b.dataset.g===tmp.gender); b.onclick=function(){ tmp.gender=b.dataset.g; paint(); }; });
     $$("#eStat button").forEach(function(b){ b.classList.toggle("on", b.dataset.s===tmp.stat); b.onclick=function(){ tmp.stat=b.dataset.s; paint(); }; });
   }
@@ -1337,14 +1346,26 @@ function setAt(sel, id){
   if(sel.kind==="court"){ var c=AB().current.courts[sel.ci]; (sel.ti===0?c.t1:c.t2)[sel.pi]=id; }
   else AB().current.resting[sel.bi]=id;
 }
+function paintSelection(){
+  $$("#courtsWrap .team").forEach(function(team){
+    var ci=+team.dataset.c, ti=+team.dataset.t;
+    Array.prototype.slice.call(team.querySelectorAll(".slot")).forEach(function(el, pi){
+      el.classList.toggle("sel", isSel(ci,ti,pi));
+    });
+  });
+  $$("#benchList .bchip").forEach(function(el, i){ el.classList.toggle("sel", isSelBench(i)); });
+}
+var swapGuardAt = 0;
 function tapSlot(sel){
-  if(!selection){ selection = sel; renderPlay(); return; }
-  if(JSON.stringify(selection)===JSON.stringify(sel)){ selection=null; renderPlay(); return; }
+  if(Date.now() - swapGuardAt < 350) return;   // กันคลิกซ้ำที่ touch ยิงตามมาหลังสลับ
+  if(!selection){ selection = sel; paintSelection(); return; }
+  if(JSON.stringify(selection)===JSON.stringify(sel)){ selection=null; paintSelection(); return; }
   var a=getAt(selection), b=getAt(sel);
   setAt(selection, b); setAt(sel, a);
   selection = null;
   var W={}; S.players.forEach(function(p){ W[p.id]=lv(p).w; });
   AB().current.quality = E.roundQuality(AB().current.courts, W, stats, S.history.length);
+  swapGuardAt = Date.now();
   save(); renderPlay(); toast("สลับแล้ว");
 }
 
