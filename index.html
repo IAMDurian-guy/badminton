@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d9488">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -35,7 +35,7 @@ input,select,textarea{font-family:inherit;font-size:16px}
 /* ---------- header ---------- */
 header{
   flex:none;z-index:40;background:var(--accent-d);color:#fff;
-  padding:10px 14px;
+  padding:max(10px, env(safe-area-inset-top)) 14px 10px;
   display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(15,23,42,.15)
 }
 header .logo{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.55);flex:none}
@@ -232,22 +232,27 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 /* ---------- bottom nav ---------- */
 nav.bn{
   flex:none;z-index:50;background:#fff;border-top:1px solid var(--line);
-  display:flex;padding:6px 4px;box-shadow:0 -2px 10px rgba(15,23,42,.06)
+  display:flex;padding:5px 4px calc(5px + env(safe-area-inset-bottom) * 0.5);
+  box-shadow:0 -2px 10px rgba(15,23,42,.06)
 }
-nav.bn button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;color:var(--muted);font-size:10.5px;font-weight:600}
-nav.bn button .ic{font-size:19px;line-height:1}
-nav.bn button.on{color:var(--accent-d)}
+nav.bn button{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  min-height:48px;padding:2px 0;color:var(--muted);font-size:11.5px;font-weight:700;
+  border-radius:12px;touch-action:manipulation
+}
+nav.bn button .ic{font-size:23px;line-height:1}
+nav.bn button.on{color:var(--accent-d);background:var(--accent-l)}
 
 /* ---------- toast / modal ---------- */
 #toast{
-  position:fixed;left:50%;bottom:84px;transform:translateX(-50%);
+  position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom) * 0.5);transform:translateX(-50%);
   background:#0f172a;color:#fff;padding:10px 16px;border-radius:999px;font-size:13.5px;font-weight:600;
   z-index:90;opacity:0;pointer-events:none;transition:.2s;max-width:90vw;text-align:center
 }
 #toast.show{opacity:.95}
 .modal{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.45);display:none;align-items:flex-end;justify-content:center}
 .modal.show{display:flex}
-.modal .sheet{background:#fff;width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:16px;max-height:85dvh;overflow:auto}
+.modal .sheet{background:#fff;width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:16px 16px max(16px, env(safe-area-inset-bottom));max-height:85dvh;overflow:auto}
 @media(min-width:640px){
   .modal{align-items:center}
   .modal .sheet{border-radius:18px}
@@ -800,7 +805,7 @@ var E = window.BadmintonEngine;
 var $ = function(s){ return document.querySelector(s); };
 var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
 var KEY = "badminton_manager_v1";
-var APP_VERSION = "2026.08.17.4";
+var APP_VERSION = "2026.08.17.5";
 var APP_NAME = "MuanJoy";      /* ชื่อแอปถาวร โชว์บนหัวแอป/ไอคอน/รูปสรุป */   /* เลขเวอร์ชัน — ใช้ตรวจว่ามีไฟล์ใหม่บนเว็บหรือยัง */
 var storageOK = true;
 
