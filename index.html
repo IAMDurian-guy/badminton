@@ -121,22 +121,34 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .q-good{background:#dcfce7;color:#15803d}
 .q-mid{background:#fef3c7;color:#b45309}
 .q-bad{background:#fee2e2;color:#b91c1c}
-.team{padding:8px 10px;display:flex;flex-direction:column;gap:6px;position:relative}
+/* แถวทีม: 2 คนอยู่แถวเดียวกัน */
+.team{padding:7px 9px;display:flex;align-items:center;gap:6px;position:relative}
 .team.locked{background:#fffbeb}
+.team .plus{font-size:14px;font-weight:800;color:#cbd5e1;flex:none}
 .slot{
-  display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;background:#f8fafc;
-  border:2px solid transparent;transition:.12s
+  display:flex;align-items:center;gap:6px;padding:9px 8px;border-radius:10px;background:#f8fafc;
+  border:2px solid transparent;transition:.12s;flex:1 1 0;min-width:0
 }
-.slot .nm{flex:1;font-weight:700;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.slot .nm{flex:1;font-weight:700;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .slot .gm{font-size:11px;color:var(--muted);white-space:nowrap}
 .slot.sel{border-color:var(--accent);background:var(--accent-l);box-shadow:0 0 0 3px rgba(13,148,136,.15)}
-.vs{display:flex;align-items:center;gap:8px;padding:0 12px}
-.vs span{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:1px}
+.vs{display:flex;align-items:center;gap:8px;padding:0 14px}
+.vs span{font-size:10.5px;font-weight:800;color:var(--muted);letter-spacing:1px}
 .vs .ln{flex:1;height:1px;background:var(--line)}
-.teamfoot{display:flex;align-items:center;gap:6px;padding:0 12px 8px}
-.teamfoot .sum{font-size:11.5px;color:var(--muted)}
-.lockbtn{margin-left:auto;font-size:11.5px;padding:4px 9px;border-radius:8px;background:#f1f5f9;color:var(--muted);font-weight:700}
-.lockbtn.on{background:var(--warn);color:#fff}
+.lockmini{
+  width:32px;height:32px;flex:none;border-radius:9px;background:#f1f5f9;color:#94a3b8;
+  display:flex;align-items:center;justify-content:center;font-size:14px
+}
+.lockmini.on{background:var(--warn);color:#fff}
+/* แถบคนรอด้านบน */
+.benchbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.benchbar .lbl{font-size:12.5px;font-weight:700;color:var(--muted);flex:none}
+.bchip{
+  display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:10px;background:#f8fafc;
+  border:2px solid transparent;font-size:14.5px;font-weight:700
+}
+.bchip .gm{font-size:10.5px;color:var(--muted);font-weight:500}
+.bchip.sel{border-color:var(--accent);background:var(--accent-l);box-shadow:0 0 0 3px rgba(13,148,136,.15)}
 
 /* ---------- แถบชั่วโมง ---------- */
 .hourbar{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
@@ -250,8 +262,8 @@ nav.bn button.on{color:var(--accent-d)}
 <section class="tab active" id="tab-play">
   <div id="playHead"></div>
   <div id="lockList"></div>
-  <div id="courtsWrap"></div>
   <div id="benchWrap"></div>
+  <div id="courtsWrap"></div>
   <div id="playActions"></div>
 </section>
 
@@ -1046,7 +1058,15 @@ function slotHTML(id, sel){
   return '<div class="slot'+(sel?" sel":"")+'" data-id="'+p.id+'">'+
     '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+
     gIcon(p)+
-    '<span class="nm">'+esc(p.name)+'</span>'+
+    '<span class="nm">'+esc(p.name)+'</span></div>';
+}
+function benchChipHTML(id, sel){
+  var p = pById(id);
+  if(!p) return '';
+  var L = lv(p);
+  return '<div class="bchip'+(sel?" sel":"")+'" data-id="'+p.id+'">'+
+    '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+
+    gIcon(p)+esc(p.name)+
     '<span class="gm">'+(stats.games[p.id]||0)+' ตา</span></div>';
 }
 function teamSum(t){
@@ -1152,9 +1172,11 @@ function renderPlay(){
     [["t1",c.t1],["t2",c.t2]].forEach(function(pair, ti){
       var t = pair[1], lk = isLocked(t);
       html += '<div class="team'+(lk?" locked":"")+'" data-c="'+ci+'" data-t="'+ti+'">'+
-        slotHTML(t[0], isSel(ci,ti,0)) + slotHTML(t[1], isSel(ci,ti,1)) + '</div>'+
-        '<div class="teamfoot"><span class="sum">แต้มรวม '+(ti===0?s1:s2).toFixed(1)+'</span>'+
-        '<button class="lockbtn '+(lk?"on":"")+'" data-lock="'+ci+'-'+ti+'">'+(lk?"🔒 ล็อกแล้ว":"🔓 ล็อกคู่นี้")+'</button></div>';
+        slotHTML(t[0], isSel(ci,ti,0)) +
+        '<span class="plus">+</span>' +
+        slotHTML(t[1], isSel(ci,ti,1)) +
+        '<button class="lockmini '+(lk?"on":"")+'" data-lock="'+ci+'-'+ti+'" title="ล็อกคู่นี้">'+(lk?"🔒":"🔓")+'</button>'+
+      '</div>';
       if(ti===0) html += '<div class="vs"><i class="ln"></i><span>VS</span><i class="ln"></i></div>';
     });
     html += '<button class="courtdone" data-done="'+ci+'">✅ จบคอร์ทนี้ → สุ่มคู่ใหม่</button>';
@@ -1164,10 +1186,13 @@ function renderPlay(){
 
   // ม้านั่ง
   if(cur.resting && cur.resting.length){
-    $("#benchWrap").innerHTML = '<div class="card"><h2>🪑 ตานี้พัก <span class="sub">'+cur.resting.length+' คน · แตะเพื่อสลับเข้าคอร์ท</span></h2>'+
-      '<div class="bench" id="benchList">'+ cur.resting.map(function(id,i){ return slotHTML(id, isSelBench(i)); }).join("") +'</div></div>';
+    $("#benchWrap").innerHTML =
+      '<div class="card" style="padding:11px 12px"><div class="benchbar" id="benchList">'+
+        '<span class="lbl">🪑 รอลง ('+cur.resting.length+')</span>'+
+        cur.resting.map(function(id,i){ return benchChipHTML(id, isSelBench(i)); }).join("")+
+      '</div></div>';
   } else {
-    $("#benchWrap").innerHTML = '<div class="card"><div class="muted center tiny">ตานี้ทุกคนได้ลงครบ 🎉</div></div>';
+    $("#benchWrap").innerHTML = '<div class="card" style="padding:10px 12px"><div class="muted center tiny">ตานี้ทุกคนได้ลงครบ 🎉</div></div>';
   }
 
   var qual = cur.quality || {};
@@ -1189,11 +1214,12 @@ function renderPlay(){
     el.onclick = function(){
       var team = el.parentElement;
       var ci = +team.dataset.c, ti = +team.dataset.t;
-      var pi = Array.prototype.indexOf.call(team.children, el);
+      var slots = Array.prototype.slice.call(team.querySelectorAll(".slot"));
+      var pi = slots.indexOf(el);
       tapSlot({kind:"court", ci:ci, ti:ti, pi:pi});
     };
   });
-  $$("#benchList .slot").forEach(function(el, i){
+  $$("#benchList .bchip").forEach(function(el, i){
     el.onclick = function(){ tapSlot({kind:"bench", bi:i}); };
   });
   $$("[data-done]").forEach(function(b){
@@ -1727,6 +1753,8 @@ var I18N = [
   [/^ชื่อ$/, 'Name'],
   [/^เพศ$/, 'Gender'],
   [/^จัดก๊วนแบด$/, 'Badminton Group'],
+  [/🪑 รอลง \((\d+)\)/g, '🪑 Waiting ($1)'],
+  [/^ล็อกคู่นี้$/, 'Lock this pair'],
   [/✅ จบคอร์ทนี้ → สุ่มคู่ใหม่/g, '✅ Finish this court → redraw'],
   [/✅ จบทุกคอร์ทพร้อมกัน → ตาถัดไป/g, '✅ Finish all courts → next round'],
   [/จบคอร์ท (\d+) แล้วสุ่มคนใหม่ลงคอร์ทนี้\?/g, 'Finish court $1 and draw new players for it?'],
