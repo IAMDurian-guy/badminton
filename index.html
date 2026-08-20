@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0d9488">
+<meta name="theme-color" content="#0369a1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -13,17 +13,31 @@
 <title>MuanJoy — จัดก๊วนแบดมินตัน</title>
 <style>
 :root{
-  --bg:#eef2f5; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
-  --accent:#0d9488; --accent-d:#0f766e; --accent-l:#ccfbf1;
+  --bg:#eff6ff; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+  --soft:#f8fafc; --soft2:#f1f5f9;
+  --accent:#0ea5e9; --accent-d:#0369a1; --accent-l:#e0f2fe;
+  --grad:linear-gradient(120deg,#0ea5e9,#38bdf8);
+  --head:linear-gradient(120deg,#0369a1,#0ea5e9 60%,#38bdf8);
+  --teamA:#2563eb; --teamAbg:#eff6ff; --teamB:#f97316; --teamBbg:#fff7ed;
   --warn:#f59e0b; --danger:#dc2626; --ok:#16a34a;
   --r:14px; --sh:0 1px 3px rgba(15,23,42,.08),0 1px 2px rgba(15,23,42,.04);
 }
+html[data-theme="dark"]{
+  --bg:#0b1220; --card:#182234; --ink:#e8eefc; --muted:#93a4c4; --line:#2a3750;
+  --soft:#0f1a2b; --soft2:#141f33;
+  --accent:#22d3ee; --accent-d:#67e8f9; --accent-l:#0b3b45;
+  --grad:linear-gradient(120deg,#22d3ee,#a3e635);
+  --head:linear-gradient(120deg,#0e7490,#22d3ee 70%,#a3e635);
+  --teamA:#38bdf8; --teamAbg:#0e1d2f; --teamB:#fb7185; --teamBbg:#2a1420;
+  --warn:#fbbf24; --danger:#fb7185; --ok:#4ade80;
+  --sh:0 1px 3px rgba(0,0,0,.45);
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
-html{height:100%;background:#fff}   /* สีเดียวกับแถบแท็บ กันแถบเทาโผล่ใต้จอ */
+html{height:100%;background:var(--card)}   /* สีเดียวกับแถบแท็บ กันแถบเทาโผล่ใต้จอ */
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai","Sarabun",Roboto,sans-serif;
-  background:#fff; color:var(--ink); font-size:15px; line-height:1.5;
+  background:var(--card); color:var(--ink); font-size:15px; line-height:1.5;
   height:100vh; height:100dvh;            /* เต็มจอจริง ไม่เผื่อแถบเบราว์เซอร์ */
   display:flex; flex-direction:column; overflow:hidden;
   overscroll-behavior:none;
@@ -34,7 +48,7 @@ input,select,textarea{font-family:inherit;font-size:16px}
 
 /* ---------- header ---------- */
 header{
-  flex:none;z-index:40;background:var(--accent-d);color:#fff;
+  flex:none;z-index:40;background:var(--head);color:#fff;
   padding:max(10px, env(safe-area-inset-top)) 14px 10px;
   display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(15,23,42,.15)
 }
@@ -42,12 +56,12 @@ header .logo{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2p
 header h1{font-size:16px;font-weight:700;flex:1;letter-spacing:.2px}
 .langsw{display:flex;background:rgba(255,255,255,.16);border-radius:999px;padding:3px;gap:2px}
 .langsw button{padding:4px 11px;border-radius:999px;font-size:12.5px;font-weight:700;color:rgba(255,255,255,.75)}
-.langsw button.on{background:#fff;color:var(--accent-d)}
+.langsw button.on{background:var(--card);color:var(--accent-d)}
 
 /* ---------- layout ---------- */
 main{
   flex:1 1 auto; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain; width:100%; max-width:760px; margin:0 auto; padding:12px;
+  overscroll-behavior:contain; width:100%; margin:0 auto; padding:12px;
   background:var(--bg)
 }
 section.tab{display:none}
@@ -64,11 +78,11 @@ hr{border:none;border-top:1px solid var(--line);margin:12px 0}
 
 /* ---------- buttons ---------- */
 .btn{
-  background:var(--accent);color:#fff;border-radius:10px;padding:11px 16px;font-weight:600;
+  background:var(--grad);color:#fff;border-radius:10px;padding:11px 16px;font-weight:600;
   display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:.12s;min-height:44px
 }
 .btn:active{transform:scale(.97)}
-.btn.ghost{background:#fff;color:var(--accent-d);border:1.5px solid var(--accent);}
+.btn.ghost{background:var(--card);color:var(--accent-d);border:1.5px solid var(--accent);}
 .btn.gray{background:#e2e8f0;color:#334155}
 .btn.danger{background:var(--danger)}
 .btn.sm{padding:7px 11px;font-size:13px;min-height:36px;border-radius:9px}
@@ -80,7 +94,7 @@ hr{border:none;border-top:1px solid var(--line);margin:12px 0}
 label.fld{display:block;margin-bottom:10px}
 label.fld > span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px;font-weight:600}
 input[type=text],input[type=number],select,textarea{
-  width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)
+  width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)
 }
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
 input[type=range]{width:100%;accent-color:var(--accent)}
@@ -102,26 +116,26 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .plist{display:flex;flex-direction:column;gap:6px}
 .prow{
   display:flex;align-items:center;gap:9px;padding:9px 10px;border:1.5px solid var(--line);
-  border-radius:11px;background:#fff;transition:.12s
+  border-radius:11px;background:var(--card);transition:.12s
 }
-.prow.off{opacity:.45;background:#f8fafc}
+.prow.off{opacity:.45;background:var(--soft)}
 .prow .nm{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .prow .gtag{font-size:11px;color:var(--muted);white-space:nowrap}
 .chk{
   width:26px;height:26px;border-radius:8px;border:2px solid var(--line);display:flex;align-items:center;
-  justify-content:center;font-size:15px;color:#fff;flex:none;background:#fff
+  justify-content:center;font-size:15px;color:#fff;flex:none;background:var(--card)
 }
 .chk.on{background:var(--ok);border-color:var(--ok)}
 .gi{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:6px;
   font-size:10.5px;font-weight:800;color:#fff;flex:none}
 .gi.m{background:#3b82f6}.gi.f{background:#ec4899}
-.iconbtn{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:#f1f5f9;font-size:15px;flex:none}
+.iconbtn{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--soft2);font-size:15px;flex:none}
 .iconbtn.on{background:var(--warn);color:#fff}
 
 /* ---------- court cards ---------- */
-.court{border:2px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:11px;background:#fff}
+.court{border:2px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:11px;background:var(--card)}
 .court-head{
-  display:flex;align-items:center;gap:8px;padding:8px 11px;background:#f8fafc;border-bottom:1px solid var(--line)
+  display:flex;align-items:center;gap:8px;padding:8px 11px;background:var(--soft);border-bottom:1px solid var(--line)
 }
 .court-head .cname{font-weight:800;font-size:14px;color:var(--accent-d)}
 .court-head .qual{margin-left:auto;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px}
@@ -134,16 +148,16 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   flex:1 1 0;min-width:0;border:2px solid;border-radius:12px;padding:6px;
   display:flex;flex-direction:column;gap:5px
 }
-.teambox.a{border-color:#4f46e5;background:#eef2ff}
-.teambox.b{border-color:#e11d48;background:#fff1f2}
+.teambox.a{border-color:var(--teamA);background:var(--teamAbg)}
+.teambox.b{border-color:var(--teamB);background:var(--teamBbg)}
 .teambox .tlabel{display:flex;align-items:center;gap:4px;font-size:10.5px;font-weight:800;letter-spacing:.4px;padding:0 2px}
-.teambox.a .tlabel{color:#4f46e5}
-.teambox.b .tlabel{color:#e11d48}
+.teambox.a .tlabel{color:var(--teamA)}
+.teambox.b .tlabel{color:var(--teamB)}
 .teambox.locked{box-shadow:0 0 0 3px #fde68a}
 .vsmid{display:flex;align-items:center;justify-content:center;flex:none;width:20px}
 .vsmid span{font-size:10.5px;font-weight:800;color:#94a3b8;letter-spacing:.5px}
 .slot{
-  display:flex;align-items:center;gap:5px;padding:9px 7px;border-radius:9px;background:#fff;
+  display:flex;align-items:center;gap:5px;padding:9px 7px;border-radius:9px;background:var(--card);
   border:2px solid transparent;transition:.12s;flex:none
 }
 .slot .nm{flex:1;font-weight:700;font-size:15.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -158,7 +172,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .benchbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .benchbar .lbl{font-size:12.5px;font-weight:700;color:var(--muted);flex:none}
 .bchip{
-  display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:10px;background:#f8fafc;
+  display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:10px;background:var(--soft);
   border:2px solid transparent;font-size:14.5px;font-weight:700
 }
 .bchip .gm{font-size:10.5px;color:var(--muted);font-weight:500}
@@ -167,7 +181,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 /* ---------- แถบชั่วโมง ---------- */
 .hourbar{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
 .hchip{
-  flex:none;border:1.5px solid var(--line);border-radius:11px;padding:6px 11px;background:#fff;
+  flex:none;border:1.5px solid var(--line);border-radius:11px;padding:6px 11px;background:var(--card);
   font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-direction:column;align-items:flex-start;line-height:1.3
 }
 .hchip i{font-style:normal;font-size:10.5px;font-weight:500;opacity:.8}
@@ -183,22 +197,22 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .pickgrid{display:flex;flex-wrap:wrap;gap:6px;max-height:40dvh;overflow:auto;padding:2px}
 .pickgrid button{
   border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;
-  background:#fff;color:var(--muted);display:flex;align-items:center;gap:6px
+  background:var(--card);color:var(--muted);display:flex;align-items:center;gap:6px
 }
 .pickgrid button.on{border-color:var(--ok);background:#f0fdf4;color:var(--ink)}
 
 /* ---------- ตัวเลือกจำนวนคอร์ท ---------- */
-.courtpick{display:flex;align-items:center;gap:10px;background:#f8fafc;border-radius:12px;padding:9px 12px}
+.courtpick{display:flex;align-items:center;gap:10px;background:var(--soft);border-radius:12px;padding:9px 12px}
 .courtpick .lbl{font-size:13px;font-weight:700;flex:1}
 .courtpick .step{
-  width:38px;height:38px;border-radius:11px;background:#fff;border:1.5px solid var(--line);
+  width:38px;height:38px;border-radius:11px;background:var(--card);border:1.5px solid var(--line);
   font-size:20px;font-weight:700;color:var(--accent-d);display:flex;align-items:center;justify-content:center;flex:none
 }
 .courtpick .step:disabled{opacity:.35}
 .courtpick .cnum{min-width:34px;text-align:center;font-size:20px;font-weight:800;color:var(--accent-d)}
 .courtwarn{font-size:12px;color:#b45309;background:#fef3c7;border-radius:9px;padding:6px 10px;margin-top:8px}
 
-.courtdone{display:block;width:calc(100% - 20px);margin:0 10px 10px;background:var(--accent);color:#fff;
+.courtdone{display:block;width:calc(100% - 20px);margin:0 10px 10px;background:var(--grad);color:#fff;
   border-radius:10px;padding:10px;font-weight:700;font-size:13.5px;text-align:center;min-height:42px}
 .courtdone:active{transform:scale(.98)}
 .bench{display:flex;flex-wrap:wrap;gap:6px}
@@ -211,13 +225,13 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .srow .nm{width:88px;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .srow .val{width:56px;text-align:right;font-size:12px;color:var(--muted);white-space:nowrap}
 .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.kpi{background:#f8fafc;border-radius:11px;padding:10px}
+.kpi{background:var(--soft);border-radius:11px;padding:10px}
 .kpi b{display:block;font-size:20px;line-height:1.2}
 .kpi span{font-size:11.5px;color:var(--muted)}
 .matrix{overflow:auto;-webkit-overflow-scrolling:touch}
 .matrix table{border-collapse:collapse;font-size:11px}
 .matrix th,.matrix td{border:1px solid var(--line);padding:3px 5px;text-align:center;min-width:26px}
-.matrix th{background:#f8fafc;position:sticky;top:0;white-space:nowrap;font-weight:600}
+.matrix th{background:var(--soft);position:sticky;top:0;white-space:nowrap;font-weight:600}
 .matrix th.rh{position:sticky;left:0;z-index:2;text-align:left;max-width:78px;overflow:hidden}
 .matrix td.c1{background:#fef9c3}.matrix td.c2{background:#fed7aa}.matrix td.c3{background:#fecaca}
 
@@ -226,13 +240,13 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .mrow:last-child{border:none}
 .mrow .nm{flex:1;font-weight:600;font-size:14px}
 .mrow .amt{font-weight:800;font-size:15px}
-.seg{display:flex;background:#f1f5f9;border-radius:10px;padding:3px;gap:3px}
+.seg{display:flex;background:var(--soft2);border-radius:10px;padding:3px;gap:3px}
 .seg button{flex:1;padding:8px;border-radius:8px;font-size:13px;font-weight:600;color:var(--muted)}
-.seg button.on{background:#fff;color:var(--accent-d);box-shadow:var(--sh)}
+.seg button.on{background:var(--card);color:var(--accent-d);box-shadow:var(--sh)}
 
 /* ---------- bottom nav ---------- */
 nav.bn{
-  flex:none;z-index:50;background:#fff;border-top:1px solid var(--line);
+  flex:none;z-index:50;background:var(--card);border-top:1px solid var(--line);
   display:flex;padding:5px 4px calc(5px + env(safe-area-inset-bottom) * 0.5);
   box-shadow:0 -2px 10px rgba(15,23,42,.06)
 }
@@ -253,7 +267,24 @@ nav.bn button.on{color:var(--accent-d);background:var(--accent-l)}
 #toast.show{opacity:.95}
 .modal{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.45);display:none;align-items:flex-end;justify-content:center}
 .modal.show{display:flex}
-.modal .sheet{background:#fff;width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:16px 16px max(16px, env(safe-area-inset-bottom));max-height:85dvh;overflow:auto}
+.modal .sheet{background:var(--card);width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:16px 16px max(16px, env(safe-area-inset-bottom));max-height:85dvh;overflow:auto}
+/* ---------- จอคอมพิวเตอร์: ใช้พื้นที่เต็มจอ แบ่งเป็นหลายคอลัมน์ ---------- */
+@media(min-width:900px){
+  main{padding:14px 18px}
+  nav.bn button{max-width:220px;margin:0 auto}
+  #courtsWrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(430px,1fr));gap:12px;align-items:start}
+  #courtsWrap .court{margin-bottom:0}
+  .plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
+  #blockEditor{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px}
+  #blockEditor .blockcard{margin-bottom:0}
+  #fairList,#moneyList{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:0 26px}
+  #historyList{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 20px}
+  .kpis{grid-template-columns:repeat(4,1fr)}
+  .slot .nm{font-size:16.5px}
+}
+@media(min-width:1500px){
+  #courtsWrap{grid-template-columns:repeat(auto-fill,minmax(460px,1fr))}
+}
 @media(min-width:640px){
   .modal{align-items:center}
   .modal .sheet{border-radius:18px}
@@ -265,6 +296,43 @@ nav.bn button.on{color:var(--accent-d);background:var(--accent-l)}
 #noSaveBar:not(:empty){background:#fef3c7;border-bottom:1px solid #fcd34d;color:#92400e;padding:9px 14px;font-size:12.5px;font-weight:600;flex:none;z-index:39}
 .hint{background:#f0fdfa;border-left:3px solid var(--accent);padding:8px 10px;border-radius:8px;font-size:12.5px;color:#134e4a}
 .empty{text-align:center;color:var(--muted);padding:26px 10px;font-size:14px}
+
+/* ---------- ปรับเฉพาะโหมดกลางคืน ---------- */
+html[data-theme="dark"] header h1{color:#04212a}
+html[data-theme="dark"] header .logo{border-color:rgba(0,0,0,.35)}
+html[data-theme="dark"] .langsw{background:rgba(0,0,0,.18)}
+html[data-theme="dark"] .langsw button{color:rgba(4,33,42,.6)}
+html[data-theme="dark"] .langsw button.on{background:#04212a;color:#67e8f9}
+html[data-theme="dark"] .themebtn{background:rgba(0,0,0,.18);color:#04212a}
+html[data-theme="dark"] .btn{color:#04212a}
+html[data-theme="dark"] .btn.ghost{background:transparent;color:var(--accent-d);border-color:var(--accent)}
+html[data-theme="dark"] .btn.gray{background:var(--soft2);color:var(--ink)}
+html[data-theme="dark"] .btn.danger{background:#be123c;color:#fff}
+html[data-theme="dark"] .courtdone{color:#04212a}
+html[data-theme="dark"] .hint{background:#0e2a2f;color:#a5f3fc}
+html[data-theme="dark"] .courtwarn{background:#3a2f10;color:#fcd34d}
+html[data-theme="dark"] .q-good{background:#0d3b2a;color:#6ee7b7}
+html[data-theme="dark"] .q-mid{background:#3a2f10;color:#fcd34d}
+html[data-theme="dark"] .q-bad{background:#3d1620;color:#fda4af}
+html[data-theme="dark"] .tag.gray{background:var(--soft2);color:var(--muted)}
+html[data-theme="dark"] .prow.off{background:var(--soft)}
+html[data-theme="dark"] .lockmini{background:rgba(255,255,255,.14)}
+html[data-theme="dark"] .lv{filter:saturate(.92)}
+html[data-theme="dark"] #toast{background:#e8eefc;color:#0b1220}
+html[data-theme="dark"] .matrix td.c1{background:#3a3410;color:#fde68a}
+html[data-theme="dark"] .matrix td.c2{background:#3d2a12;color:#fed7aa}
+html[data-theme="dark"] .matrix td.c3{background:#3d1620;color:#fecaca}
+html[data-theme="dark"] .pickgrid button.on{background:#0d3b2a;border-color:var(--ok);color:var(--ink)}
+html[data-theme="dark"] .blockcard.on{background:var(--accent-l)}
+html[data-theme="dark"] #noSaveBar:not(:empty){background:#3a2f10;border-color:#a16207;color:#fcd34d}
+html[data-theme="dark"] .modal{background:rgba(0,0,0,.6)}
+html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{background:var(--soft);color:var(--ink)}
+html[data-theme="dark"] .seg button.on{background:var(--accent-l);color:var(--accent-d)}
+html[data-theme="dark"] .empty{color:var(--muted)}
+.themebtn{
+  width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.18);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:16px;touch-action:manipulation
+}
 </style>
 </head>
 <body>
@@ -272,6 +340,7 @@ nav.bn button.on{color:var(--accent-d);background:var(--accent-l)}
 <header>
   <img class="logo" id="logoImg" alt="">
   <h1 id="clubName">MuanJoy</h1>
+  <button id="themeBtn" class="themebtn" title="สลับโหมดกลางคืน">🌙</button>
   <div class="langsw"><button id="langTH" class="on">TH</button><button id="langEN">EN</button></div>
 </header>
 
@@ -390,6 +459,11 @@ nav.bn button.on{color:var(--accent-d);background:var(--accent-l)}
     <label class="fld"><span>ชื่อก๊วน (ใช้ในรูปสรุปค่าใช้จ่าย)</span><input type="text" id="clubNameInput" placeholder="MuanJoy"></label>
     <label class="fld"><span>จำนวนคอร์ทของชั่วโมงที่กำลังเล่น</span><input type="number" id="courtCount" min="1" max="10" step="1"></label>
     <div class="hint">แต่ละชั่วโมงตั้งคอร์ทแยกกันได้ — ปรับได้จากหน้า 🏸 จัดตา หรือแท็บ 💰 ค่าใช้จ่าย</div>
+    <label class="fld" style="margin-top:12px"><span>🎨 โหมดสี</span>
+      <div class="seg" id="themeSeg">
+        <button data-t="light">☀️ กลางวัน</button><button data-t="dark">🌙 กลางคืน</button><button data-t="auto">ตามเครื่อง</button>
+      </div>
+    </label>
     <button class="btn gray block sm" id="newDayBtn" style="margin-top:10px">🔄 เริ่มวันใหม่ (เก็บรายชื่อ ล้างสถิติ)</button>
     <hr>
     <button class="btn ghost block sm" id="checkUpdBtn">🔃 ตรวจหาเวอร์ชันใหม่</button>
@@ -806,7 +880,7 @@ var E = window.BadmintonEngine;
 var $ = function(s){ return document.querySelector(s); };
 var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
 var KEY = "badminton_manager_v1";
-var APP_VERSION = "2026.08.17.7";
+var APP_VERSION = "2026.08.18.3";
 var APP_NAME = "MuanJoy";      /* ชื่อแอปถาวร โชว์บนหัวแอป/ไอคอน/รูปสรุป */   /* เลขเวอร์ชัน — ใช้ตรวจว่ามีไฟล์ใหม่บนเว็บหรือยัง */
 var storageOK = true;
 
@@ -818,6 +892,7 @@ function blankState(){
   return {
     clubName:"MuanJoy",
     lang:"th",
+    theme:"light",
     players:[],
     history:[],
     locks:[],
@@ -890,6 +965,7 @@ function migrate(o){
     s.blocks = [b]; s.activeBlock = 0;
   }
   if(o.money && o.money.shuttlePrice !== undefined) s.money.shuttlePrice = +o.money.shuttlePrice;
+  if(!s.themeInit){ s.theme = "light"; s.themeInit = 1; }   /* เริ่มที่โหมดกลางวันเสมอ */
   (s.blocks||[]).forEach(function(bk){ if(!E.hasFeeOverride(bk)) bk.feeOverride = ""; });
   (s.history||[]).forEach(function(h){ if(h.block === undefined) h.block = 0; });
   if(o.current && s.blocks[s.activeBlock] && !s.blocks[s.activeBlock].current){
@@ -1013,7 +1089,7 @@ $("#bulkBtn").onclick = function(){
     '<p class="muted tiny" style="margin:0 0 8px">พิมพ์บรรทัดละคน ใส่ระดับมือต่อท้ายได้ เช่น <b>ต้น P</b> หรือ <b>เอ,C</b> (ไม่ใส่ = มือ P)</p>'+
     '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">'+
       S.levels.map(function(L){
-        return '<span style="display:inline-flex;align-items:center;gap:5px;background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:3px 8px;font-size:11.5px">'+
+        return '<span style="display:inline-flex;align-items:center;gap:5px;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:3px 8px;font-size:11.5px">'+
           '<span class="lv" style="background:'+L.color+'">'+esc(L.code)+'</span>'+esc(L.note)+'</span>';
       }).join("")+
     '</div>'+
@@ -1501,7 +1577,7 @@ function renderStats(){
     ps.forEach(function(a){
       h += '<tr><th class="rh">'+esc(a.name)+'</th>';
       ps.forEach(function(b){
-        if(a.id===b.id){ h+='<td style="background:#f1f5f9">–</td>'; return; }
+        if(a.id===b.id){ h+='<td style="background:var(--soft2)">–</td>'; return; }
         var n = stats.partner[E.pk(a.id,b.id)]||0;
         var cls = n>=3?"c3":(n===2?"c2":(n===1?"c1":""));
         h += '<td class="'+cls+'">'+(n||"")+'</td>';
@@ -1662,7 +1738,7 @@ function costImage(){
   // พื้นหลัง
   x.fillStyle = "#ffffff"; x.fillRect(0,0,W,H);
   // หัว
-  x.fillStyle = "#0f766e"; x.fillRect(0,0,W,headH);
+  x.fillStyle = "#0369a1"; x.fillRect(0,0,W,headH);
   var dstr = new Date().toLocaleDateString(en?"en-GB":"th-TH",{day:"numeric",month:"short",year:"numeric"});
   var logo = document.getElementById("logoImg");
   var lw = 64, lx = pad, ly = (headH-lw)/2, tx = pad;
@@ -1701,11 +1777,11 @@ function costImage(){
     txt((i+1)+". "+row.name, cName, y+rowH/2, 15, "#0f172a", true);
     txt(hrs, cHours, y+rowH/2, 13, "#64748b");
     txt(String(row.games), cGames, y+rowH/2, 14, "#64748b", false, "right");
-    txt(row.pay.toLocaleString(), cPay, y+rowH/2, 16, "#0f766e", true, "right");
+    txt(row.pay.toLocaleString(), cPay, y+rowH/2, 16, "#0369a1", true, "right");
     y += rowH;
   });
   // สรุปท้าย
-  x.fillStyle = "#0f766e"; x.fillRect(0,y,W,totH);
+  x.fillStyle = "#0369a1"; x.fillRect(0,y,W,totH);
   txt(L.total+" "+Math.round(r.total).toLocaleString()+" ฿", pad, y+30, 17, "#ffffff", true);
   txt(L.collected+" "+r.collected.toLocaleString()+" ฿ · "+L.diff+" "+(r.diff>=0?"+":"")+Math.round(r.diff)+" ฿",
       pad, y+58, 13.5, "rgba(255,255,255,.85)");
@@ -1749,6 +1825,10 @@ function renderSettings(){
   $("#wMix").value = S.weights.wMix; $("#wMixV").textContent = (S.weights.wMix>0?"คละมือ ":(S.weights.wMix<0?"ระดับใกล้กัน ":"ปิด "))+Math.abs(S.weights.wMix);
   $("#wRep").value = S.weights.wRep; $("#wRepV").textContent = S.weights.wRep;
 
+  $$("#themeSeg button").forEach(function(b2){
+    b2.classList.toggle("on", b2.dataset.t === (S.theme||"auto"));
+    b2.onclick = function(){ S.theme = b2.dataset.t; save(); applyTheme(); render(); };
+  });
   $("#verText").textContent = APP_VERSION;
   $("#checkUpdBtn").onclick = function(){ toast("กำลังตรวจสอบ…"); checkUpdate(true); };
   $("#levelWeights").innerHTML = S.levels.map(function(L,i){
@@ -1812,6 +1892,13 @@ var I18N = [
   [/กำลังตรวจสอบ…/g, 'Checking…'],
   [/กำลังอัปเดต…/g, 'Updating…'],
   [/^ทีม (A|B)$/, 'Team $1'],
+  [/🎨 โหมดสี/g, '🎨 Color mode'],
+  [/^ตามเครื่อง$/, 'System'],
+  [/☀️ กลางวัน/g, '☀️ Light'],
+  [/🌙 กลางคืน/g, '🌙 Dark'],
+  [/🌙 โหมดกลางคืน/g, '🌙 Dark mode'],
+  [/☀️ โหมดกลางวัน/g, '☀️ Light mode'],
+  [/สลับโหมดกลางคืน/g, 'Toggle dark mode'],
   [/🪑 รอลง \((\d+)\)/g, '🪑 Waiting ($1)'],
   [/^ล็อกคู่นี้$/, 'Lock this pair'],
   [/✅ จบคอร์ทนี้ → สุ่มคู่ใหม่/g, '✅ Finish this court → redraw'],
@@ -2082,6 +2169,33 @@ function applyLang(){
 }
 
 /* ============================================================
+   ธีมสี: Sky Pop (สว่าง) / Night Court (กลางคืน)
+   theme = "auto" → ตามระบบเครื่อง · "light" / "dark" → บังคับเอง
+   ============================================================ */
+function prefersDark(){
+  return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+}
+function effTheme(){
+  if(S.theme === "dark" || S.theme === "light") return S.theme;
+  if(S.theme === "auto") return prefersDark() ? "dark" : "light";
+  return "light";   /* ค่าเริ่มต้น = กลางวัน */
+}
+function applyTheme(){
+  var t = effTheme();
+  document.documentElement.setAttribute("data-theme", t);
+  var mc = document.querySelector('meta[name="theme-color"]');
+  if(mc) mc.setAttribute("content", t === "dark" ? "#0e7490" : "#0369a1");
+  var btn = document.getElementById("themeBtn");
+  if(btn) btn.textContent = t === "dark" ? "☀️" : "🌙";
+}
+if(window.matchMedia){
+  var _mq = window.matchMedia("(prefers-color-scheme: dark)");
+  var _onMq = function(){ if(S.theme === "auto") applyTheme(); };
+  if(_mq.addEventListener) _mq.addEventListener("change", _onMq);
+  else if(_mq.addListener) _mq.addListener(_onMq);
+}
+
+/* ============================================================
    ตรวจหาเวอร์ชันใหม่อัตโนมัติ
    (แก้ปัญหาไอคอนหน้าจอโฮมบน iPhone ค้างเวอร์ชันเก่า)
    ============================================================ */
@@ -2129,9 +2243,15 @@ function render(){
 }
 
 document.getElementById("logoImg").src = document.querySelector('link[rel="apple-touch-icon"]').href;
+$("#themeBtn").onclick = function(){
+  S.theme = (effTheme() === "dark") ? "light" : "dark";
+  save(); applyTheme(); render();
+  toast(effTheme() === "dark" ? "🌙 โหมดกลางคืน" : "☀️ โหมดกลางวัน");
+};
 $("#langTH").onclick = function(){ if(S.lang!=="th"){ S.lang="th"; save(); render(); } };
 $("#langEN").onclick = function(){ if(S.lang!=="en"){ S.lang="en"; save(); render(); } };
 load();
+applyTheme();
 paintSaveBar();
 render();
 checkUpdate(false);
